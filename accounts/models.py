@@ -1,7 +1,4 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -9,6 +6,7 @@ import os
 from django.conf import settings
 
 # Create your models here.
+
 class User(AbstractUser):
     SEOUL = '서울'
     INCHEON = '인천'
@@ -32,8 +30,11 @@ class User(AbstractUser):
     ]
 
     followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
+    
     def profile_image_path(instance, filename):
         return f'profile/{instance.pk}/{filename}'
+    
+    
     image = ProcessedImageField(upload_to=profile_image_path, blank=True, null=True)
     region = models.CharField(max_length=10, choices=REGION_CHOICES, default=SEOUL)
     address = models.CharField(max_length=200)
@@ -43,6 +44,7 @@ class User(AbstractUser):
         if self.image:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(User, self).delete(*args, **kargs)
+
 
     def save(self, *args, **kwargs):
         if self.id:
