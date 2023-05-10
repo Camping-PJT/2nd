@@ -3,8 +3,6 @@
 {% block style %}{% endblock style %}
 {% block head %}{% endblock head %}
 {% block content %}
-<h1>{{ user }}</h1>
-<a href="{% url 'accounts:index' %}">홈 </a>
 <a href="{% url 'accounts:login' %}">로그인</a>
 <a href="{% url 'accounts:logout' %}">로그아웃</a>
 <a href="{% url 'accounts:signup' %}">회원가입</a>
