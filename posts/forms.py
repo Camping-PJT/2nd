@@ -43,18 +43,18 @@ class PostForm(forms.ModelForm):
         )
     )
 
-    address = forms.CharField(
-        max_length=200, 
-        label='주소(필수)', 
-        widget=forms.TextInput(
-            attrs={
-                'required': True, 
-                'placeholder': '정확한 주소를 입력해주세요.', 
-                'class': 'form-control',
-                'style' : 'width: 600px;'
-            }
-        )
-    )
+    # address = forms.CharField(
+    #     max_length=200, 
+    #     label='주소(필수)', 
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             'required': True, 
+    #             'placeholder': '정확한 주소를 입력해주세요.', 
+    #             'class': 'form-control',
+    #             'style' : 'width: 600px;'
+    #         }
+    #     )
+    # )
     category = forms.ChoiceField(
         choices=Post.CATEGORY_CHOICES, 
         label='카테고리(필수)', 
@@ -116,7 +116,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('category', 'nature', 'city', 'title', 'content', 'address', 'phone',  'open_hour', 'close_hour', 'tags')
+        fields = ('category', 'nature', 'city', 'title', 'content', 'phone',  'open_hour', 'close_hour', 'tags')
         widgets = {
             'tags': TagWidget(attrs={
                 'class': 'form-control', 
