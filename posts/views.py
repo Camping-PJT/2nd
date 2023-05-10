@@ -5,6 +5,7 @@ from .forms import PostForm,  PostImageForm, DeleteImageForm, FacilityForm
 import os
 from utils.map import get_latlng_from_address
 
+
 def index(request):
     posts = Post.objects.order_by('-pk')
     post_images = []
@@ -18,7 +19,6 @@ def index(request):
         'post_images': post_images,
     }
     return render(request, 'posts/index.html', context)
-
 
 
 def create(request):
