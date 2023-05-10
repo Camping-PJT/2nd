@@ -1,63 +1,54 @@
 {% extends 'base.html' %} 
 {% load static %}
-{% block title %}{% endblock title %} 
+{% block title %}캠핑가조 : 회원정보 수정{% endblock title %} 
 {% block style %}{% endblock style %}
 {% block head %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock head %}
 {% block content %}
-<div class="container mt-5">
-  <h4>회원정보 수정</h4>
-  <hr />
-  <form
-    action="{% url 'accounts:update' %}"
-    method="post"
-    enctype="multipart/form-data"
+<h4>회원정보 수정</h4>
+<form
+  action="{% url 'accounts:update' %}"
+  method="post"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  {% if user.profile_image %}
+  <img
+    class="p-1 rounded-circle"
+    src="{{ user.profile_image.url }}"
+    alt="profile_image"
+    style="width: 140px; height: 140px"
+  />
+  {% else %}
+  <img
+    class="p-1 rounded-circle"
+    src="{% static 'image/blank-profile-image.png' %}"
+    class="img-fluid"
+    style="width: 140px; height: 140px"
+    alt="blank-profile-image"
+  />
+  {% endif %}
+  {{ form.as_p }}
+  <a href="{% url 'accounts:change_password' %}" class="btn btn-primary"
+    >비밀번호 변경</a
   >
-    {% csrf_token %}
-    <div class="my-3">
-      {% if user.profile_image %}
-      <img
-        class="p-1 rounded-circle"
-        src="{{ user.profile_image.url }}"
-        alt="profile_image"
-        style="width: 140px; height: 140px"
-      />
-      {% else %}
-      <img
-        class="p-1 rounded-circle"
-        src="{% static 'image/blank-profile-image.png' %}"
-        class="img-fluid"
-        style="width: 140px; height: 140px"
-        alt="blank-profile-image"
-      />
-      {% endif %}
-    </div>
-    {{ form.as_p }}
-    <a href="{% url 'accounts:change_password' %}" class="btn btn-primary"
-      >비밀번호 변경</a
+    <input
+      type="submit"
+      class="btn btn-outline-info"
+      value="변경사항 저장"
     >
-    <div class="text-center my-5">
-      <button
-        type="submit"
-        class="border bg-info text-white"
-        style="padding: 1.2rem 10rem"
-      >
-        변경사항 저장
-      </button>
-    </div>
-  </form>
-</div>
+    </input>
+</form>
 <form action="{% url 'accounts:delete' %}" method="POST" id="delete">
   {% csrf_token %}
-  <input type="hidden" name="next" value="{{ request.path }}" />
   <input
-    class="btn btn-outline-danger my-3"
+    class="btn btn-outline-danger"
     onclick="confirmDelete(event)"
     type="submit"
     value="회원 탈퇴"
-    style="width: 200px; margin-left: 12px"
-  />
+  >
+  </input>
 </form>
 {% endblock content %}
 {% block script %}
