@@ -1,92 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="container mt-5">
-      <h4>프로필 수정하기</h4>
-      <hr />
-      <form
-        action="{% url 'accounts:update' %}"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        {% csrf_token %}
-        <div class="my-3">
-          {% if user.profile_image %}
-          <img
-            class="p-1 rounded-circle"
-            src="{{ user.profile_image.url }}"
-            alt="profile_image"
-            style="width: 140px; height: 140px"
-          />
-          {% comment %} {% else %}
-          <img
-            class="p-1 rounded-circle"
-            src="{% static 'img/blank-profile-image.png' %}"
-            class="img-fluid"
-            style="width: 140px; height: 140px"
-            alt="blank-profile-image"
-          />
-          {% endcomment %} {% endif %}
-        </div>
-        {{ form.as_p }}
-        <a href="{% url 'accounts:change_password' %}" class="btn btn-primary"
-          >비밀번호 변경</a
-        >
-        <div class="text-center my-5">
-          <button
-            type="submit"
-            class="border bg-info text-white"
-            style="padding: 1.2rem 10rem"
-          >
-            변경사항 저장
-          </button>
-        </div>
-      </form>
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}캠핑가조 : 회원정보 수정{% endblock title %} 
+{% block style %}{% endblock style %}
+{% block head %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock head %}
+{% block content %}
+<h4>회원정보 수정</h4>
+<form
+  action="{% url 'accounts:update' %}"
+  method="post"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  {% if user.image %}
+  <img
+    class="p-1 rounded-circle"
+    src="{{ user.image.url }}"
+    alt="profile"
+    style="width: 140px; height: 140px"
+  />
+  {% else %}
+  <img
+    class="p-1 rounded-circle"
+    src="{% static 'image/blank-profile-image.png' %}"
+    class="img-fluid"
+    style="width: 140px; height: 140px"
+    alt="blank_profile"
+  />
+  {% endif %}
+  {{ form.as_p }}
+  <p>상세 주소</p>
+    <div class="d-flex mb-3">
+      <input class="form-control" type="text" name="address_address" id="address_address" placeholder="주소"><br>
+      <input class="form-control" type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기" style="width:150px"><br>
     </div>
-    <form action="{% url 'accounts:delete' %}" method="POST" id="delete">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ request.path }}" />
-      <input
-        class="btn btn-outline-danger my-3"
-        onclick="confirmDelete(event)"
-        type="submit"
-        value="회원 탈퇴"
-        style="width: 200px; margin-left: 12px"
-      />
-    </form>
-  </body>
-  <script>
-    function confirmDelete(event) {
-      event.preventDefault()
-
-      if (confirm("정말로 탈퇴하시겠습니까?")) {
-        document.querySelector("#delete").submit()
-      }
-    }
-  </script>
-  <script>
-    // 파일 선택시, 이미지 미리보기
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader()
-
-        reader.onload = function (e) {
-          $("#profile-image-preview").attr("src", e.target.result)
-          $("#profile-image-preview").show()
-        }
-
-        reader.readAsDataURL(input.files[0])
-      }
-    }
-
-    $("#id_profile_image").change(function () {
-      readURL(this)
-    })
-  </script>
-</html>
+    <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+      <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+    </div>
+    <div class="d-flex">  
+      <input class="form-control" type="text" name="address_postcode" id="address_postcode" placeholder="우편번호">
+      <input class="form-control" type="text" name="address_detail" id="address_detail" placeholder="상세주소">
+      <input class="form-control" type="text" name="address_extra" id="address_extra" placeholder="참고항목">
+    </div>
+  <a href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
+    <input
+      type="submit"
+      value="변경사항 저장"
+    >
+    </input>
+</form>
+<form action="{% url 'accounts:delete' %}" method="POST" id="delete">
+  {% csrf_token %}
+  <input
+    onclick="confirmDelete(event)"
+    type="submit"
+    value="회원 탈퇴"
+  >
+  </input>
+</form>
+<input type="submit" value="뒤로가기" onclick=window.history.back()>
+{% endblock content %}
+{% block script %}
+<script src="{% static 'js/update_01.js' %}"></script>
+<script src="{% static 'js/update_02.js' %}"></script> 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="{% static 'js/address.js' %}"></script>
+{% endblock script %}

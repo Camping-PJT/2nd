@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, authenticate
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth import get_user_model
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordChangeForm
@@ -14,6 +14,24 @@ def index(request):
     return render(request, 'accounts/index.html')
 
 
+# def signup(request):
+#     if request.user.is_authenticated:
+#         return redirect('accounts:index')
+
+#     if request.method == 'POST':
+#         form = CustomUserCreationForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             user = form.save()
+#             auth_login(request, user)
+#             return redirect('accounts:index')
+#     else:
+#         form = CustomUserCreationForm()
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'accounts/signup.html', context)
+
+
 def signup(request):
     if request.user.is_authenticated:
         return redirect('accounts:index')
@@ -22,7 +40,9 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            auth_login(request, user)
+            authenticated_user = authenticate(
+                request, username=user.username, password=form.cleaned_data['password1'])
+            auth_login(request, authenticated_user)
             return redirect('accounts:index')
     else:
         form = CustomUserCreationForm()

@@ -3,35 +3,22 @@ from django.contrib.auth import get_user_model
 from imagekit.forms import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django import forms
+from django.contrib.postgres.forms import HStoreField
 
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserChangeForm):
         model = get_user_model()
-        fields = ('username', 'name', 'phonenumber', 'email', 'region',
-                  'address', 'image',)
-        
-    SEOUL = '서울'
-    INCHEON = '인천'
-    BUSAN = '부산'
-    ULSAN = '울산'
-    DAEGU = '대구'
-    GWANGJU = '광주'
-    DAEJEON = '대전'
-    SEJONG = '세종'
-    JEJU = '제주도'
-    GYEONGGI = '경기도'
-    GANGWON = '강원도'
-    CHUNGBUK = '충청북도'
-    CHUNGNAM = '충청남도'
-    JEONBUK = '전라북도'
-    JEONNAM = '전라남도'
-    GYEONGBUK = '경상북도'
-    GYEONGNAM = '경상남도'    
+        fields = ('username', 'password1', 'password2', 'name', 'email', 'image', 'is_owner', 'region',)
+    
     REGION_CHOICES = [
-        (SEOUL, '서울'), (INCHEON, '인천'), (BUSAN, '부산'), (ULSAN, '울산'), (DAEGU, '대구'), (GWANGJU, '광주'), (DAEJEON, '대전'), (SEJONG, '세종'), (JEJU, '제주도'), (GYEONGGI, '경기도'), (GANGWON, '강원도'), (CHUNGBUK, '충청북도'), (CHUNGNAM, '충청남도'), (JEONBUK, '전라북도'), (JEONNAM, '전라남도'), (GYEONGBUK, '경상북도'),(GYEONGNAM, '경상남도'),
-    ]    
-
+        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('세종', '세종'), ('제주도', '제주도'), ('경기도', '경기도'), ('강원도', '강원도'), ('충청북도', '충청북도'), ('충청남도', '충청남도'), ('전라북도', '전라북도'), ('전라남도', '전라남도'), ('경상북도', '경상북도'),('경상남도', '경상남도'),
+    ]
+    
+    USER_TYPE_CHOICES = [
+        ('사장님', '사장님'), ('고객', '고객'),
+    ]
+     
     username = forms.CharField(label='ID', label_suffix='', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     password1 = forms.CharField(label='비밀번호', label_suffix='', widget=forms.PasswordInput(
@@ -40,15 +27,10 @@ class CustomUserCreationForm(UserCreationForm):
         attrs={'class': 'form-control'}))
     name = forms.CharField(label='이름', label_suffix='', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    phonenumber = forms.CharField(label='전화번호', label_suffix='', widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
     email = forms.EmailField(label='이메일', label_suffix='', widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
     region = forms.ChoiceField(label='사는 지역(시/도)', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
-        attrs={'class': 'form-control'}))
-
-    address = forms.CharField(label='자세한 주소', label_suffix='', widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
+        attrs={'class': 'form-select'}))
     image = ProcessedImageField(
         spec_id='profile_image_thumbnail',
         processors=[ResizeToFill(70, 70)],
@@ -59,53 +41,45 @@ class CustomUserCreationForm(UserCreationForm):
         label='프로필 이미지',
         label_suffix='',
     )
+    is_owner = forms.ChoiceField(label='사장님 여부', label_suffix='', choices=USER_TYPE_CHOICES, widget=forms.Select(
+        attrs={'class': 'form-select'}))
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
         model = get_user_model()
-        fields = ('phonenumber', 'email', 'region', 'address', 'image',)
+        fields = ('image', 'email', 'is_owner', 'region',)
         
-    SEOUL = '서울'
-    INCHEON = '인천'
-    BUSAN = '부산'
-    ULSAN = '울산'
-    DAEGU = '대구'
-    GWANGJU = '광주'
-    DAEJEON = '대전'
-    SEJONG = '세종'
-    JEJU = '제주도'
-    GYEONGGI = '경기도'
-    GANGWON = '강원도'
-    CHUNGBUK = '충청북도'
-    CHUNGNAM = '충청남도'
-    JEONBUK = '전라북도'
-    JEONNAM = '전라남도'
-    GYEONGBUK = '경상북도'
-    GYEONGNAM = '경상남도'    
     REGION_CHOICES = [
-        (SEOUL, '서울'), (INCHEON, '인천'), (BUSAN, '부산'), (ULSAN, '울산'), (DAEGU, '대구'), (GWANGJU, '광주'), (DAEJEON, '대전'), (SEJONG, '세종'), (JEJU, '제주도'), (GYEONGGI, '경기도'), (GANGWON, '강원도'), (CHUNGBUK, '충청북도'), (CHUNGNAM, '충청남도'), (JEONBUK, '전라북도'), (JEONNAM, '전라남도'), (GYEONGBUK, '경상북도'),(GYEONGNAM, '경상남도'),
-    ]    
-
-    phonenumber = forms.CharField(label='전화번호', label_suffix='', widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
+        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('세종', '세종'), ('제주도', '제주도'), ('경기도', '경기도'), ('강원도', '강원도'), ('충청북도', '충청북도'), ('충청남도', '충청남도'), ('전라북도', '전라북도'), ('전라남도', '전라남도'), ('경상북도', '경상북도'),('경상남도', '경상남도'),
+    ]
+    
+    USER_TYPE_CHOICES = [
+        ('사장님', '사장님'), ('고객', '고객'),
+    ]
+    
     email = forms.EmailField(label='이메일', label_suffix='', widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
     region = forms.ChoiceField(label='사는 지역(시/도)', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
-        attrs={'class': 'form-control'}))
-    address = forms.CharField(label='자세한 주소', label_suffix='', widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
+        attrs={'class': 'form-select'}))
     image = ProcessedImageField(
         spec_id='profile_image_thumbnail',
         processors=[ResizeToFill(70, 70)],
         format='JPEG',
-        options={'quality': 90},
+        options={'quality': 200},
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'custom-file-input'}),
         label='프로필 이미지',
         label_suffix='',
     )
-
+    is_owner = forms.ChoiceField(label='사장님 여부', label_suffix='', choices=USER_TYPE_CHOICES, widget=forms.Select(
+        attrs={'class': 'form-select'}))
+    
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields.pop('password')
+ 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     class Meta(UserChangeForm):
@@ -118,3 +92,6 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         attrs={'class': 'form-control'}))
     new_password2 = forms.CharField(label='새 비밀번호 확인', label_suffix='', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
+    
+    
+    
