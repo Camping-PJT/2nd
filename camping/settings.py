@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'schedules',
     'imagekit',
     'taggit',
-    # 'taggit_templatetags2',
+    'taggit_templatetags2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +45,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    
+    #allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    #provider
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.kakao',
 ]
 
 TAGGIT_CASE_INSENSITIVE = True
@@ -151,3 +161,13 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     },
 }
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'  # 로그인 후 리다이렉트 될 경로
