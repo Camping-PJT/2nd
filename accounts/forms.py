@@ -8,28 +8,11 @@ from django import forms
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserChangeForm):
         model = get_user_model()
-        fields = ('username', 'name', 'phonenumber', 'email', 'region',
+        fields = ('username', 'name', 'phone', 'email', 'region',
                   'address', 'image',)
         
-    SEOUL = '서울'
-    INCHEON = '인천'
-    BUSAN = '부산'
-    ULSAN = '울산'
-    DAEGU = '대구'
-    GWANGJU = '광주'
-    DAEJEON = '대전'
-    SEJONG = '세종'
-    JEJU = '제주도'
-    GYEONGGI = '경기도'
-    GANGWON = '강원도'
-    CHUNGBUK = '충청북도'
-    CHUNGNAM = '충청남도'
-    JEONBUK = '전라북도'
-    JEONNAM = '전라남도'
-    GYEONGBUK = '경상북도'
-    GYEONGNAM = '경상남도'    
     REGION_CHOICES = [
-        (SEOUL, '서울'), (INCHEON, '인천'), (BUSAN, '부산'), (ULSAN, '울산'), (DAEGU, '대구'), (GWANGJU, '광주'), (DAEJEON, '대전'), (SEJONG, '세종'), (JEJU, '제주도'), (GYEONGGI, '경기도'), (GANGWON, '강원도'), (CHUNGBUK, '충청북도'), (CHUNGNAM, '충청남도'), (JEONBUK, '전라북도'), (JEONNAM, '전라남도'), (GYEONGBUK, '경상북도'),(GYEONGNAM, '경상남도'),
+        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('세종', '세종'), ('제주도', '제주도'), ('경기도', '경기도'), ('강원도', '강원도'), ('충청북도', '충청북도'), ('충청남도', '충청남도'), ('전라북도', '전라북도'), ('전라남도', '전라남도'), ('경상북도', '경상북도'),('경상남도', '경상남도'),
     ]    
 
     username = forms.CharField(label='ID', label_suffix='', widget=forms.TextInput(
@@ -40,13 +23,12 @@ class CustomUserCreationForm(UserCreationForm):
         attrs={'class': 'form-control'}))
     name = forms.CharField(label='이름', label_suffix='', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    phonenumber = forms.CharField(label='전화번호', label_suffix='', widget=forms.TextInput(
+    phone = forms.CharField(label='전화번호', label_suffix='', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     email = forms.EmailField(label='이메일', label_suffix='', widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
     region = forms.ChoiceField(label='사는 지역(시/도)', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
         attrs={'class': 'form-control'}))
-
     address = forms.CharField(label='자세한 주소', label_suffix='', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     image = ProcessedImageField(
@@ -64,31 +46,13 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
         model = get_user_model()
-        fields = ('phonenumber', 'email', 'region', 'address', 'image',)
+        fields = ('phone', 'email', 'region', 'address', 'image',)
         
-    SEOUL = '서울'
-    INCHEON = '인천'
-    BUSAN = '부산'
-    ULSAN = '울산'
-    DAEGU = '대구'
-    GWANGJU = '광주'
-    DAEJEON = '대전'
-    SEJONG = '세종'
-    JEJU = '제주도'
-    GYEONGGI = '경기도'
-    GANGWON = '강원도'
-    CHUNGBUK = '충청북도'
-    CHUNGNAM = '충청남도'
-    JEONBUK = '전라북도'
-    JEONNAM = '전라남도'
-    GYEONGBUK = '경상북도'
-    GYEONGNAM = '경상남도'    
     REGION_CHOICES = [
-        (SEOUL, '서울'), (INCHEON, '인천'), (BUSAN, '부산'), (ULSAN, '울산'), (DAEGU, '대구'), (GWANGJU, '광주'), (DAEJEON, '대전'), (SEJONG, '세종'), (JEJU, '제주도'), (GYEONGGI, '경기도'), (GANGWON, '강원도'), (CHUNGBUK, '충청북도'), (CHUNGNAM, '충청남도'), (JEONBUK, '전라북도'), (JEONNAM, '전라남도'), (GYEONGBUK, '경상북도'),(GYEONGNAM, '경상남도'),
-    ]    
-
-    phonenumber = forms.CharField(label='전화번호', label_suffix='', widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
+        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('세종', '세종'), ('제주도', '제주도'), ('경기도', '경기도'), ('강원도', '강원도'), ('충청북도', '충청북도'), ('충청남도', '충청남도'), ('전라북도', '전라북도'), ('전라남도', '전라남도'), ('경상북도', '경상북도'),('경상남도', '경상남도'),
+    ]
+    phone = forms.CharField(label='전화번호', label_suffix='', widget=forms.TextInput(
+        attrs={'class': 'form-control'}))   
     email = forms.EmailField(label='이메일', label_suffix='', widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
     region = forms.ChoiceField(label='사는 지역(시/도)', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
@@ -105,7 +69,7 @@ class CustomUserChangeForm(UserChangeForm):
         label='프로필 이미지',
         label_suffix='',
     )
-
+    
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     class Meta(UserChangeForm):
