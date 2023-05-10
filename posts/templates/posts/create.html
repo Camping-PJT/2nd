@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Post Create
+{% endblock title %}
+
+{% block style %}
+<style>
+
+</style>
+{% endblock style %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/posts_create.css' %}">
+{% endblock head %}
+
+{% block content %}
+<h1>게시글을 작성해주세요!</h1>
+
+
+
+<form action="{% url 'posts:create' %}" method='POST' enctype='multipart/form-data'>
+  {% csrf_token %}
+  {{ post_form.as_p }}
+  {{ facility_form }}
+  {{ image_form.as_p }}
+  <input type="submit" value="등록">
+  <input type="submit" value="뒤로가기" onclick=window.history.back()>
+</form>
+{% endblock content %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock script %}

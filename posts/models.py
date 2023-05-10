@@ -40,16 +40,6 @@ class Post(models.Model):
     RIVERSIDE = '강변'
     LAKE = '호수'
     NATURE_CHOICES = [(VALLEY, '계곡'), (SEA, '바다'), (MOUNTAIN, '산'), (RIVERSIDE, '강변'), (LAKE, '호수')]
-    WIFI =  '와이파이'
-    STORE = '매점'
-    SHOWER = '샤워시설'
-    ELECTRO =  '전기'
-    WARM = '온수제공'
-    LEND = '대여'
-    WOOD = '장작'
-    SINK = '개수대'
-    TOILET = '화장실'
-    FACILITY_CHOICES = [(WIFI, '와이파이'), (STORE, '매점'), (SHOWER, '샤워시설'), (ELECTRO, '전기'), (WARM, '온수제공'), (LEND, '대여'), (WOOD, '장작'), (SINK, '개수대'), (TOILET, '화장실')]
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
     visit_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='visit_posts')
@@ -58,7 +48,7 @@ class Post(models.Model):
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
     city = models.CharField(max_length=10, choices=CITY_CHOICES)
     nature = models.CharField(max_length=10, choices=NATURE_CHOICES)
-    facility = models.CharField(max_length=10, choices=FACILITY_CHOICES)
+    
     address = models.CharField(max_length=200)
     phoneNumberRegex = RegexValidator(regex=r'^0[1-9]\d{0,2}-\d{3,4}-\d{4}$')
     phone = models.CharField(validators=[phoneNumberRegex], max_length=14)
@@ -76,6 +66,22 @@ class Post(models.Model):
             image.delete()
         super(Post, self).delete(*args, **kargs)
 
+
+class Facility(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    WIFI =  '와이파이'
+    STORE = '매점'
+    SHOWER = '샤워시설'
+    ELECTRO =  '전기'
+    WARM = '온수제공'
+    LEND = '대여'
+    WOOD = '장작'
+    SINK = '개수대'
+    TOILET = '화장실'
+    FACILITY_CHOICES = [(WIFI, '와이파이'), (STORE, '매점'), (SHOWER, '샤워시설'), (ELECTRO, '전기'), (WARM, '온수제공'), (LEND, '대여'), (WOOD, '장작'), (SINK, '개수대'), (TOILET, '화장실')]
+    facility = models.CharField(max_length=10, choices=FACILITY_CHOICES)
+    def __str__(self):
+        return self.get_facility_display()
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
