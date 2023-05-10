@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{post.title}}
+{% endblock title %}
+
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+
+{{ post.title }}
+{% for facility in facilities %}
+{{ facility }}
+{% endfor %}
+
+{% endblock content %}
