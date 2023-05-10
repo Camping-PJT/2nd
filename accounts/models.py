@@ -8,8 +8,25 @@ from django.conf import settings
 # Create your models here.
 
 class User(AbstractUser):
+    SEOUL = '서울'
+    INCHEON = '인천'
+    BUSAN = '부산'
+    ULSAN = '울산'
+    DAEGU = '대구'
+    GWANGJU = '광주'
+    DAEJEON = '대전'
+    SEJONG = '세종'
+    JEJU = '제주도'
+    GYEONGGI = '경기도'
+    GANGWON = '강원도'
+    CHUNGBUK = '충청북도'
+    CHUNGNAM = '충청남도'
+    JEONBUK = '전라북도'
+    JEONNAM = '전라남도'
+    GYEONGBUK = '경상북도'
+    GYEONGNAM = '경상남도'
     REGION_CHOICES = [
-        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('세종', '세종'), ('제주도', '제주도'), ('경기도', '경기도'), ('강원도', '강원도'), ('충청북도', '충청북도'), ('충청남도', '충청남도'), ('전라북도', '전라북도'), ('전라남도', '전라남도'), ('경상북도', '경상북도'),('경상남도', '경상남도'),
+        (SEOUL, '서울'), (INCHEON, '인천'), (BUSAN, '부산'), (ULSAN, '울산'), (DAEGU, '대구'), (GWANGJU, '광주'), (DAEJEON, '대전'), (SEJONG, '세종'), (JEJU, '제주도'), (GYEONGGI, '경기도'), (GANGWON, '강원도'), (CHUNGBUK, '충청북도'), (CHUNGNAM, '충청남도'), (JEONBUK, '전라북도'), (JEONNAM, '전라남도'), (GYEONGBUK, '경상북도'),(GYEONGNAM, '경상남도'),
     ]
 
     followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
