@@ -14,5 +14,26 @@
 {% for facility in facilities %}
 {{ facility }}
 {% endfor %}
-
+<div class="map" id="map" style="width:400px; height:400px;" data-longitude="{{ longitude }}" data-latitude="{{ latitude }}"></div>
 {% endblock content %}
+
+{% block script %}
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
+<script>
+  const longitude = document.getElementById('map').dataset.longitude;
+  const latitude = document.getElementById('map').dataset.latitude;
+  const container = document.getElementById('map');
+  const options = {
+      center: new kakao.maps.LatLng(latitude, longitude),
+      level: 3
+  };
+  const map = new kakao.maps.Map(container, options);
+  const markerPosition = new kakao.maps.LatLng(latitude, longitude);
+  const marker = new kakao.maps.Marker({
+      position: markerPosition
+  });
+  marker.setMap(map);
+
+</script>
+
+{% endblock script %}
