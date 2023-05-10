@@ -29,7 +29,7 @@ class CustomUserCreationForm(UserCreationForm):
         attrs={'class': 'form-control'}))
     email = forms.EmailField(label='이메일', label_suffix='', widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
-    region = forms.ChoiceField(label='사는 지역(시/도)', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
+    region = forms.ChoiceField(label='선호지역', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
         attrs={'class': 'form-select'}))
     image = ProcessedImageField(
         spec_id='profile_image_thumbnail',
@@ -60,7 +60,7 @@ class CustomUserChangeForm(UserChangeForm):
     
     email = forms.EmailField(label='이메일', label_suffix='', widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
-    region = forms.ChoiceField(label='사는 지역(시/도)', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
+    region = forms.ChoiceField(label='선호지역', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
         attrs={'class': 'form-select'}))
     image = ProcessedImageField(
         spec_id='profile_image_thumbnail',
