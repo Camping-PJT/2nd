@@ -4,6 +4,7 @@ from .models import Post, PostImage, Facility
 from .forms import PostForm,  PostImageForm, DeleteImageForm, FacilityForm
 import os
 
+
 def index(request):
     posts = Post.objects.order_by('-pk')
     post_images = []
@@ -17,7 +18,6 @@ def index(request):
         'post_images': post_images,
     }
     return render(request, 'posts/index.html', context)
-
 
 
 def create(request):
