@@ -4,14 +4,15 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from django.utils import timezone
 from datetime import timedelta,datetime
-from ckeditor.fields import RichTextField
+from imagekit.models import ProcessedImageField
+import os
 
 
 class Review(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    content = RichTextField()
+    content = models.CharField(max_length=500)
     rating = models.IntegerField(default=5, validators=[MinValueValidator(1), MaxValueValidator(5)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,3 +39,21 @@ class Review(models.Model):
         self.post.rating = (self.post.rating*self.post.reviews.count() + self.rating) / (self.post.reviews.count() + 1)
         self.post.save()
         super(Review, self).save(*args, **kwargs)
+
+
+
+class ReviewImage(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+
+    def review_image_path(instance, filename):
+        return f'reviews/{instance.review.user.username}/{filename}'
+
+    image = ProcessedImageField(upload_to=review_image_path, blank=True, null=True,)
+    
+    def delete(self, *args, **kargs):
+        if self.image:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+            dir_path = os.path.dirname(os.path.join(settings.MEDIA_ROOT, self.image.name))
+            if not os.listdir(dir_path):
+                os.rmdir(dir_path)
+        super(ReviewImage, self).delete(*args, **kargs)

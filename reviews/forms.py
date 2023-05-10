@@ -1,6 +1,5 @@
 from django import forms
 from .models import Review
-from ckeditor.widgets import CKEditorWidget
 
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(
@@ -14,7 +13,12 @@ class ReviewForm(forms.ModelForm):
 
     content = forms.CharField(
         label = '리뷰 내용',
-        widget = CKEditorWidget())
+        widget = forms.Textarea(
+            attrs = {
+                'class': 'form-control',
+            }
+        )
+    )
     
     
     rating = forms.IntegerField(
