@@ -2,15 +2,3 @@
   display: none;
 } */
 
-.ck-editor__editable {height: 400px;}
-
-.ck-content {font-size: 12px;}
-
-.create-form input:not([type='checkbox']), .create-form select {
-  width: 835px;
-}
-
-.create-label {
-  display:block; 
-  margin-top: 20px;
-}
