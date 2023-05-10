@@ -38,8 +38,8 @@ def create(request):
             address = request.POST.get('address')
             post.address = address
 
-            city = request.POST.get('id_city')
-            post.city = city
+            # city = request.POST.get('id_city')
+            post.city = address.split(' ')[0]
 
             post.save()
 

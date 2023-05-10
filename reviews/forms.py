@@ -12,9 +12,9 @@ class ReviewForm(forms.ModelForm):
         )
     )
 
-    content = forms.CharField(
-        label = '리뷰 내용',
-        widget = CKEditorWidget())
+    # content = forms.CharField(
+    #     label = '리뷰 내용',
+    #     widget = CKEditorWidget())
     
     
     rating = forms.IntegerField(
