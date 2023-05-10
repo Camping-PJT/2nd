@@ -15,4 +15,10 @@
 {{ facility }}
 {% endfor %}
 
+{% comment %} reviews {% endcomment %}
+{% for review in reviews %}
+  <h1>{{ review.title }}</h1>
+  <p>{{ review.content|safe }}</p>
+{% endfor %}
+
 {% endblock content %}

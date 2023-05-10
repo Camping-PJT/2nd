@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, PostImage, Facility
 from .forms import PostForm,  PostImageForm, DeleteImageForm, FacilityForm
 import os
+from reviews.models import Review
 
 def index(request):
     posts = Post.objects.order_by('-pk')
@@ -53,9 +54,11 @@ def detail(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
     post = Post.objects.get(pk=post_pk)
     facilities = Facility.objects.filter(post=post)
+    reviews = Review.objects.filter(post=post)
     context = {
         'kakao_script_key': kakao_script_key,
         'post': post,
         'facilities': facilities,
+        'reviews': reviews
     }
     return render(request, 'posts/detail.html', context)
