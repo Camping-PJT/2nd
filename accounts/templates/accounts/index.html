@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>{{ user }}</h1>
+    <a href="{% url 'accounts:index' %}">홈 </a>
+    <a href="{% url 'accounts:login' %}">로그인</a>
+    <a href="{% url 'accounts:logout' %}">로그아웃</a>
+    <a href="{% url 'accounts:signup' %}">회원가입</a>
+    <a href="{% url 'accounts:update' %}">회원정보수정</a>
+    <a href="{% url 'accounts:profile' user %}">{{ user }}</a>
+    {% comment %} <a href="{% url 'posts:post_create'%}">create</a> {%
+    endcomment %} {% comment %} {% for post in posts %}
+    <a href="{% url 'posts:detail'post.pk %}">detail</a>
+    {% endfor %} {% endcomment %}
+  </body>
+</html>
