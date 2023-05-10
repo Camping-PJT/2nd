@@ -6,31 +6,15 @@
 {% block content %}
 <h4>{{ person }}의 프로필</h4>
 {% if user.image %}
-<img
-  class="p-1 rounded-circle"
-  src="{{ user.image.url }}"
-  alt="image"
-  style="width: 200px"
-/>
+<img src="{{ user.image.url }}" alt="image"/>
 {% else %}
-<img
-  class="p-1 rounded-circle"
-  src="{% static 'imag/blank-profile-image.png' %}"
-  class="img-fluid"
-  style="width: 70px; height: 70px"
-  alt="blank-profile-image"
-  style="width: 200px"
-/>
+<img src="{% static 'image/blank-profile-image.png' %}" alt="blank-profile-image"/>
 {% endif %} {% if request.user != person %}
 <form action="{% url 'accounts:follow' person.pk %}" method="post">
   {% csrf_token %} {% if request.user in person.followers.all %}
   <input class="mt-3 btn btn-primary" type="submit" value="팔로우 취소" />
   {% else %}
-  <input
-    class="mt-3 btn btn-outline-primary"
-    type="submit"
-    value="팔로우"
-  />
+  <input type="submit" value="팔로우"/>
   {% endif %}
 </form>
 {% endif %} 팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}

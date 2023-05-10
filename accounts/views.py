@@ -10,10 +10,6 @@ from posts.models import Post
 # Create your views here.
 
 
-def index(request):
-    return render(request, 'accounts/index.html')
-
-
 # def signup(request):
 #     if request.user.is_authenticated:
 #         return redirect('accounts:index')
@@ -34,18 +30,18 @@ def index(request):
 
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('accounts:index')
-
+        return redirect('posts:index')
+    
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save()
-            authenticated_user = authenticate(
-                request, username=user.username, password=form.cleaned_data['password1'])
-            auth_login(request, authenticated_user)
-            return redirect('accounts:index')
+            user = form.save(commit=False)
+            user.address = request.POST.get('address')
+            user.save()
+            return redirect('accounts:login')
     else:
         form = CustomUserCreationForm()
+
     context = {
         'form': form,
     }
@@ -54,13 +50,13 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('accounts:index')
+        return redirect('posts:index')
 
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('accounts:index')
+            return redirect('posts:index')
     else:
         form = AuthenticationForm()
     context = {
@@ -72,14 +68,13 @@ def login(request):
 @login_required
 def logout(request):
     auth_logout(request)
-    return redirect('accounts:index')
+    return redirect('posts:index')
 
 
 @login_required
 def delete(request):
     request.user.delete()
-    auth_logout(request)
-    return redirect('accounts:index')
+    return redirect('posts:index')
 
 
 @login_required
@@ -89,7 +84,7 @@ def update(request):
             request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('accounts:index')
+            return redirect('accounts:profile',request.user.username)
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
@@ -105,7 +100,7 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            return redirect('accounts:index')
+            return redirect('posts:index')
     else:
         form = CustomPasswordChangeForm(request.user)
     context = {
@@ -118,10 +113,8 @@ def change_password(request):
 def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
-    # reviews = Review.objects.order_by('-pk')
     context = {
         'person': person,
-        # 'reviews': reviews,
     }
     return render(request, 'accounts/profile.html', context)
 

@@ -66,17 +66,17 @@ class PostForm(forms.ModelForm):
             }
         )
     )
-    city = forms.ChoiceField(
-        choices=Post.CITY_CHOICES, 
-        label='지역(필수)', 
-        widget=forms.Select(
-            attrs={
-                'required': True,
-                'class': 'form-select',
-                'style' : 'width: 600px;'
-            }
-        )
-    )
+    # city = forms.ChoiceField(
+    #     choices=Post.CITY_CHOICES, 
+    #     label='지역(필수)', 
+    #     widget=forms.Select(
+    #         attrs={
+    #             'required': True,
+    #             'class': 'form-select',
+    #             'style' : 'width: 600px;'
+    #         }
+    #     )
+    # )
     phone = forms.CharField(
         max_length=14, 
         required = False,
@@ -116,7 +116,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('category', 'nature', 'city', 'title', 'content', 'phone',  'open_hour', 'close_hour', 'tags')
+        fields = ('category', 'nature', 'title', 'content', 'phone',  'open_hour', 'close_hour', 'tags')
         widgets = {
             'tags': TagWidget(attrs={
                 'class': 'form-control', 

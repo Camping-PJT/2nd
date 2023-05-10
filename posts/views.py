@@ -38,6 +38,9 @@ def create(request):
             address = request.POST.get('address')
             post.address = address
 
+            city = request.POST.get('id_city')
+            post.city = city
+
             post.save()
 
             for tag in tags:
