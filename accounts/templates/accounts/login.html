@@ -4,17 +4,11 @@
 {% block head %}{% endblock head %}
 {% block content %}
 <h4>로그인</h4>
-<form action="{% url 'accounts:login' %}" method="post">
-  {% csrf_token %} ID
-  <input type="text" class="form-control" name="username" id="username" />
-  비밀번호
-  <input
-    type="password"
-    class="form-control"
-    name="password"
-    id="password"
-  />
-  <input type="submit" value="로그인" />
+<form action="{% url 'accounts:login' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <input type="submit" value="로그인">
+  <input type="submit" value="Back" onclick=window.history.back()>
 </form>
 <a type="button" href="{% url 'accounts:signup' %}">회원가입</a>
 {% load socialaccount %}

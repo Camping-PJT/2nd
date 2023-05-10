@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from imagekit.forms import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django import forms
-from django.contrib.postgres.forms import HStoreField
+# from django.contrib.postgres.forms import HStoreField
 
 
 class CustomUserCreationForm(UserCreationForm):

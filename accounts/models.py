@@ -46,6 +46,7 @@ class User(AbstractUser):
     image = ProcessedImageField(upload_to=profile_image_path, blank=True, null=True)
     region = models.CharField(max_length=10, choices=REGION_CHOICES, default='서울')
     is_owner = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='고객')
+    address = models.CharField(max_length=200)
 
 
     def delete(self, *args, **kargs):
