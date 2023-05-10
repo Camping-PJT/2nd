@@ -3,6 +3,8 @@
 {% block title %} 리뷰작성 {% endblock title %}
 
 {% block content %}
+{% load static %}
+
   <div>
     <form action="{% url 'reviews:create' post.pk %}" method="POST">
       {% csrf_token %}

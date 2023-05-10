@@ -3,6 +3,7 @@
 {% block title %} 리뷰수정 {% endblock title %}
 
 {% block content %}
+{% load static %}
   <div>
     <form action="{% url 'reviews:update' review.pk %}" method='POST'>
       {% csrf_token %}
