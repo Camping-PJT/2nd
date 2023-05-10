@@ -40,7 +40,8 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            authenticated_user = authenticate(request, username=user.username, password=form.cleaned_data['password1'])
+            authenticated_user = authenticate(
+                request, username=user.username, password=form.cleaned_data['password1'])
             auth_login(request, authenticated_user)
             return redirect('accounts:index')
     else:
