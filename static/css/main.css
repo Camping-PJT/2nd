@@ -349,10 +349,26 @@ input[type=search]::-webkit-search-cancel-button {
   grid-template-columns: 250px auto;
 }
 
+.map--title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.map--title span {
+  color: rgba(245, 118, 8);
+}
+
 .map--img {
   border-right: 1px solid gainsboro;
   padding:10px;
 }
+
+.mapwrap {
+  margin-top: 10px;
+  text-align: center;
+}
+
 
 
 /* footer */
