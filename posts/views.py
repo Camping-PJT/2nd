@@ -8,6 +8,7 @@ from utils.map import get_latlng_from_address
 from django.http import JsonResponse
 from reviews.models import Review, Emote
 from django.db.models import Prefetch
+from taggit.models import Tag
 
 
 
@@ -120,6 +121,22 @@ def likes(request, post_pk):
     return JsonResponse(context)
 
 
+@login_required
+def visits(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    if request.user in post.visit_users.all():
+        post.visit_users.remove(request.user)
+        is_visited = False
+    else:
+        post.visit_users.add(request.user)
+        is_visited = True
+    context = {
+        'is_visited': is_visited,
+        'visits_count': post.visit_users.count(),
+        }
+    return JsonResponse(context)
+
+
 
 @login_required
 def update(request, post_pk):
@@ -196,3 +213,23 @@ def search(request):
         context = {}
 
     return render(request, 'posts/search.html', context)
+
+
+def tagged_posts(request, tag_pk):
+    tag = Tag.objects.get(pk=tag_pk)
+    posts = Post.objects.filter(tags=tag)
+
+    post_images = []
+    for post in posts:
+        images = PostImage.objects.filter(post=post)
+        if images:
+            post_images.append((post, images[0]))
+        else:
+            post_images.append((post,''))
+
+
+    context = {
+        'tag': tag, 
+        'posts': posts,
+        }
+    return render(request, 'posts/tagged_posts.html', context)

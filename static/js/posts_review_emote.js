@@ -1,6 +1,6 @@
 const reviewLikeForms = document.querySelectorAll('.review-like-forms')
 const reviewDislikeForms = document.querySelectorAll('.review-dislike-forms')
-const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+const r_csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
 reviewLikeForms.forEach((form) => {
   form.addEventListener('submit', (event) => {
@@ -10,7 +10,7 @@ reviewLikeForms.forEach((form) => {
     axios({
       method: 'post',
       url: `/reviews/${ reviewId }/emotes/1/`,
-      headers: {'X-CSRFToken': csrftoken,},
+      headers: {'X-CSRFToken': r_csrftoken,},
     })
     .then((response) => {
       const isChecked = response.data.is_checked
@@ -47,7 +47,7 @@ reviewDislikeForms.forEach((form) => {
     axios({
       method: 'post',
       url: `/reviews/${ reviewId }/emotes/2/`,
-      headers: {'X-CSRFToken': csrftoken,},
+      headers: {'X-CSRFToken': r_csrftoken,},
     })
     .then((response) => {
       const isChecked = response.data.is_checked
