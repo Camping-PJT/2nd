@@ -23,7 +23,7 @@ nav {
 }
 
 section {
-  padding-bottom: 20px;
+  padding-bottom: 5rem;
 }
 
 
@@ -118,7 +118,7 @@ header {
   display: none;
 }
 
-@media (max-width: 1140px) {
+@media only screen and (max-width: 1140px) {
   #full-navbar {
     display: none;
   }
@@ -128,13 +128,13 @@ header {
   }
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .nav--menu a{
     font-size: 12px;
   }
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .nav--logo--img{
     width: 150px;
     height: 150px;

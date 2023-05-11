@@ -1,10 +1,11 @@
 {% extends 'base.html' %} 
-{% load static %}
 {% block title %}캠핑가조 : 프로필{% endblock title %} 
-{% block style %}{% endblock style %}
+{% load static %}
 {% block head %}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 {% endblock head %}
+
 {% block content %}
 <h4>{{ person }}의 프로필</h4>
 {% if user.image %}
@@ -23,6 +24,15 @@
     {% endif %}
   {% endif %}
 </form>
+
+{% endif %} 팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
+{% if request.user == person %}
+  <a href="{% url 'accounts:update' %}">수정</a>
+  <form action="{% url 'accounts:delete' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="탈퇴" onclick="return confirm('탈퇴 시, 더 이상 서비스를 이용하실 수 없습니다.\n정말 탈퇴하시겠습니까?')">
+  </form> 
+
 
 {% if request.user != person %}
 <div>
@@ -46,6 +56,7 @@
 <div id="follower-list">
   <ul id="follower-ul"></ul>
 </div>
+
 {% endif %}
 {% endblock content %}
 {% block script %}
