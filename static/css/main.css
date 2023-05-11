@@ -384,3 +384,8 @@ footer p {
 footer a {
   text-decoration: none;
 }
+
+/* detail */
+.text-orange {
+  color: orange;
+}
