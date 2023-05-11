@@ -65,7 +65,8 @@
   <div>
     {{ review.created_string }}
     {{ review.title }}
-    {{ review.content }}
+    {{ review.content|safe }}
+  <hr>
   </div>
 
   {% comment %} emote {% endcomment %}
