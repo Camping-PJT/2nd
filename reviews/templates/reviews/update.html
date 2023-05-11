@@ -4,11 +4,19 @@
 
 {% block content %}
   <div>
-    <form action="{% url 'reviews:update' review.pk %}">
+    <form action="{% url 'reviews:update' review.pk %}" method="POST">
       {% csrf_token %}
+      {{ review_form.media }}
       {{ review_form.as_p }}
       <input type="submit" value='리뷰수정'>
     </form>
   </div>
 
+  <link rel="stylesheet" type="text/css" href="{% static 'css/posts_create.css' %}">
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+  <script>
+    ClassicEditor.create( document.querySelector( '#editor' ), {
+      language: "ko"
+    } );
 {% endblock content %}

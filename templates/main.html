@@ -25,7 +25,7 @@
           <div class="nav--accounts">
             <a href="{% url 'main' %}">Home</a>
             {% if request.user.is_authenticated %}
-              <span><a href="{% url 'accounts:profile' user %}">user</a>님, 안녕하세요!</span>
+              <span style="color:white;"><a href="{% url 'accounts:profile' user %}">{{ user }}{{ request.user.is_owner}} 안녕하세요!</a></span>
               <a href="{% url 'accounts:logout' %}">Logout</a>
             {% else %}
               <a href="{% url 'accounts:signup' %}">Join</a>

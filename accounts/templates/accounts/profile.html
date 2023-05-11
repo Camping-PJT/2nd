@@ -1,22 +1,64 @@
 {% extends 'base.html' %} 
-{% load static %}
 {% block title %}캠핑가조 : 프로필{% endblock title %} 
-{% block style %}{% endblock style %}
-{% block head %}{% endblock head %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% endblock head %}
+
 {% block content %}
 <h4>{{ person }}의 프로필</h4>
 {% if user.image %}
 <img src="{{ user.image.url }}" alt="image"/>
 {% else %}
 <img src="{% static 'image/blank-profile-image.png' %}" alt="blank-profile-image"/>
-{% endif %} {% if request.user != person %}
-<form action="{% url 'accounts:follow' person.pk %}" method="post">
-  {% csrf_token %} {% if request.user in person.followers.all %}
-  <input class="mt-3 btn btn-primary" type="submit" value="팔로우 취소" />
-  {% else %}
-  <input type="submit" value="팔로우"/>
+{% endif %} 
+
+<form id="follow-form" data-user-id="{{ person.pk }}" data-username="{{ person.username }}" action="{% url 'accounts:follow' person.pk %}" method="post">
+  {% csrf_token %} 
+  {% if request.user != person %}
+    {% if request.user in person.followers.all %}
+      <input type="submit" value="언팔로우">
+    {% else %}
+      <input type="submit" value="팔로우">
+    {% endif %}
   {% endif %}
 </form>
+
 {% endif %} 팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
+{% if request.user == person %}
+  <a href="{% url 'accounts:update' %}">수정</a>
+  <form action="{% url 'accounts:delete' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="탈퇴" onclick="return confirm('탈퇴 시, 더 이상 서비스를 이용하실 수 없습니다.\n정말 탈퇴하시겠습니까?')">
+  </form> 
+
+
+{% if request.user != person %}
+<div>
+팔로잉 :<span id="followings-count">{{ person.followings.all|length }}</span>
+팔로워 :<span id="followers-count">{{ person.followers.all|length }}</span>
+</div>
+<div id="following-list">
+  <ul id="following-ul"></ul>
+</div>
+<div id="follower-list">
+  <ul id="follower-ul"></ul>
+</div>
+{% else %}
+<div>
+팔로잉 :<span id="followings-count">{{ user.followings.all|length }}</span>
+팔로워 :<span id="followers-count">{{ user.followers.all|length }}</span>
+</div>
+<div id="following-list">
+  <ul id="following-ul"></ul>
+</div>
+<div id="follower-list">
+  <ul id="follower-ul"></ul>
+</div>
+
+{% endif %}
 {% endblock content %}
-{% block script %}{% endblock script %}
+{% block script %}
+<script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
+{% endblock script %}

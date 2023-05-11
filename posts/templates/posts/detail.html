@@ -29,10 +29,86 @@
   {% endif %}
 </div>
 <div class="map" id="map" style="width:400px; height:400px;" data-longitude="{{ longitude }}" data-latitude="{{ latitude }}"></div>
+
+
+{% comment %} 리뷰 {% endcomment %}
+<a href="{% url 'reviews:create' post.pk %}">리뷰 작성</a>
+<p>리뷰수 - {{ reviews|length }}</p>
+{% for review in reviews %}
+
+  {% comment %} 리뷰 수정, 삭제 {% endcomment %}
+  <div>
+    {% if request.user == review.user %}
+      <a href="{% url 'reviews:update' review.pk %}">리뷰수정</a>
+      <form action="{% url 'reviews:delete' review.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+      </form>
+    {% endif %}
+  </div>
+  {% comment %} 프로필 {% endcomment %}
+  <div>
+    <a href="{% url 'accounts:profile' review.user %}">
+      {% if review.user.image %}
+        <img src="{{ review.user.image.url }}" alt="">
+      {% else %}
+      <img src="{% static 'profile_no_image.png' %}" alt="">
+      {% endif %}
+      <p>{{ review.user}}</p>
+    </a>
+  </div>
+
+  {% comment %} rating {% endcomment %}
+  <div>
+    {{ review.rate_to_star }}{{ review.rate_to_empty_star}}
+  </div>
+  <div>
+    {{ review.created_string }}
+    {{ review.title }}
+    {{ review.content }}
+  </div>
+
+  {% comment %} emote {% endcomment %}
+  
+    <div class="d-flex">
+      <form class="review-like-forms d-flex" data-review-id="{{ review.pk }}">
+        {% csrf_token %}
+        <button type="submit" class="btn-like" id="review-like-{{ review.pk }}">
+          {% if request.user.is_authenticated and review.like_exist %}
+          <i class="bi bi-hand-thumbs-up-fill text-orange"></i> 
+          <span>{{ review.likes|length }}</span>
+          {% else %}
+          <i class="bi bi-hand-thumbs-up"></i>
+          <span>{{ review.likes|length }}</span>
+          {% endif %}
+        </button>
+      </form>
+      <form class="review-dislike-forms d-flex" data-review-id="{{ review.pk }}">
+        <button type="submit" class="btn-dislike" id="review-dislike-{{ review.pk }}">
+          {% if request.user.is_authenticated and review.dislike_exist %}
+          <i class="bi bi-hand-thumbs-down-fill text-orange"></i> 
+          <span>{{ review.dislikes|length }}</span>
+          {% else %}
+          <i class="bi bi-hand-thumbs-down"></i>
+          <span>{{ review.dislikes|length }}</span> 
+          {% endif %}
+        </button>
+      </form>
+    </div>
+ 
+
+
+{% endfor %}
+
+{{ post.content}}
+
 {% endblock content %}
 
 {% block script %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
 <script src="{% static '/js/posts_detail_map.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/posts_detail_likes.js' %}" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static '/js/posts_review_emote.js' %}" type="text/javascript"></script>
+
 {% endblock script %}

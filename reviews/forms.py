@@ -17,13 +17,14 @@ class ReviewForm(forms.ModelForm):
     #     widget = CKEditorWidget())
     
     
-    rating = forms.IntegerField(
+    rating = forms.ChoiceField(
         label = '평점',
         widget = forms.Select(
             attrs = {
-                'class': 'form-control'
+                'class': 'form-select'
             }
-        )
+        ),
+        choices = ((1,1), (2,2), (3,3), (4,4), (5,5))
     )
     class Meta:
         model = Review
