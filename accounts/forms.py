@@ -4,7 +4,7 @@ from imagekit.forms import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django import forms
 from django.forms.widgets import ClearableFileInput
-# from django.contrib.postgres.forms import HStoreField
+
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -76,6 +76,7 @@ class CustomUserChangeForm(UserChangeForm):
         label='프로필 이미지',
         label_suffix='',
     )
+
     is_owner = forms.ChoiceField(label='유저 타입', label_suffix='', choices=USER_TYPE_CHOICES, widget=forms.Select(
         attrs={'class': 'select--box','style' : 'width:195px;'}))
     
@@ -89,7 +90,6 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     class Meta(UserChangeForm):
         model = get_user_model()
         fields = ('old_password', 'new_password1', 'new_password2',)
-      
     old_password = forms.CharField(label=False, label_suffix='', widget=forms.PasswordInput(
         attrs={'class': 'form-box','placeholder' : '기존 비밀번호','style' : 'width:400px;'}))
     new_password1 = forms.CharField(label=False, label_suffix='', widget=forms.PasswordInput(
@@ -119,3 +119,4 @@ class CustomAuthenticationForm(AuthenticationForm):
         )
     )
     
+
