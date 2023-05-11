@@ -130,14 +130,42 @@ class PostForm(forms.ModelForm):
         help_texts = {
             'tags': '',
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Retrieve the instance being edited
+        instance = kwargs.get('instance')
+        
+        # Set the initial value for the address field
+        if instance and instance.address:
+            self.initial['address'] = instance.address
 
 
 class FacilityForm(forms.ModelForm):
     FACILITY_CHOICES = Facility.FACILITY_CHOICES
     facilities = forms.MultipleChoiceField(choices=FACILITY_CHOICES, widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = Facility
         fields = ('facilities',)
+
+class DeleteFacilityForm(forms.Form):
+    delete_facilities = forms.MultipleChoiceField(
+        choices=[],
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label='삭제할 편의시설 선택'
+    )
+
+    def __init__(self, post, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['delete_facilities'].choices = [
+            (facility.pk, str(facility)) for facility in Facility.objects.filter(post=post)
+        ]
+
+    def clean_delete_facilities(self):
+        delete_f_ids = self.cleaned_data.get('delete_facilities', [])
+        return delete_f_ids
 
 
 

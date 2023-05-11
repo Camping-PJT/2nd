@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Update
+{% endblock title %}
+
+
+{% block content %}
+
+  <div>
+    <h1>게시글을 수정해주세요.</h1>
+      <form action="{% url 'posts:update' post.pk %}" method='POST' enctype='multipart/form-data'>
+        <input type="text" id="s_address" placeholder="주소" name="address" value="{{ post.address }}">
+        <input type="button" onclick="search_address_map()" value="주소 검색"><br>
+        <div id="map" style="width:300px; height:300px; display:none"></div>
+        {% csrf_token %}
+        {{ post_form.as_p}}
+        {{ facility_form }}
+        {{ image_form.as_p }}
+        {{ delete_form.as_p }}
+        {{ delete_facility_form }}
+        <input type="submit">
+      </form>
+  </div>
+
+{% endblock content %}
+
+{% block script %}
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="{% static '/js/posts_update.js' %}" type="text/javascript"></script>
+{% endblock script %}
