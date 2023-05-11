@@ -47,7 +47,7 @@
       {% comment %} search {% endcomment %}
 
       <div class="search--box">
-        <form action="" class="search">
+        <form action="{% url 'posts:search' %}" class="search">
           {% csrf_token %}
             <input type="search" placeholder='   캠핑장 검색' name='q' style="padding-left:10px;">
             <button class="search--btn" type="submit">
