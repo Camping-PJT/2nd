@@ -1,22 +1,34 @@
 {% extends 'base.html' %} 
-{% load static %}
-{% block title %}캠핑가조 : 회원정보 수정{% endblock title %} 
-{% block style %}{% endblock style %}
-{% block head %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{% endblock head %}
-{% block content %}
-<h4>회원정보 수정</h4>
-<form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="text" id="s_address" placeholder="주소" name="address">
-  <input type="button" onclick="search_address()" value="주소 검색"><br>
-  <input type="submit" value="Save">
-  <a href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
-  <input type="submit" value="Back" onclick=window.history.back()>
-</form>
+{% block title %}Update{% endblock title %} 
 
+{% load static %}
+
+{% block head %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">  
+{% endblock head %}
+
+{% block content %}
+<div class="accounts--box">
+  <p class="accounts--title">회원정보 수정</p>
+  <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ form.last_name }}</p>
+    <p>{{ form.email }}</p>
+    <p class="label--box">{{ form.region.label}}</p><p class="label--box">{{ form.is_owner.label}}</p>
+    <div class="d-flex gap-1">{{ form.region }}{{ form.is_owner }}</div>
+    <div class="mt-2">{{ form.image.label}}{{ form.image }}</div>
+    <div class="address--box">
+      <input type="text" id="s_address" placeholder="주소" name="address" value="{{ user.address }}" class="form-address">
+      <input type="button" onclick="search_address()" value="주소 검색" class="address--btn">
+    </div>
+    <div class="btn--box">
+      <input type="submit" value="저장" class="accounts--btn">
+      <a type="button" href="{% url 'accounts:change_password' %}" class="accounts--btn">비밀번호 변경</a>
+      <input type="submit" value="뒤로가기"  class="accounts--btn" onclick=window.history.back()>
+    </div>
+  </form>
+</div>
 {% endblock content %}
 {% block script %}
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

@@ -1,0 +1,129 @@
+@font-face {
+  font-family: 'TAEBAEKmilkyway';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/TAEBAEKmilkyway.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.accounts--box { 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.accounts--title {
+  font-family: 'TAEBAEKmilkyway';
+  font-size: 3rem;
+}
+
+.form-box{
+  display: block;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  appearance: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+.select--box {
+  display: block;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-box:focus {
+  border-color: rgb(138, 147, 202);
+  outline: none;
+  box-shadow: 0.5px 0.5px 10px 1px #3839435c;
+}
+
+.select--box:focus {
+  border-color: rgb(138, 147, 202);
+  outline: none;
+  box-shadow: 0.5px 0.5px 10px 1px #3839435c;
+}
+
+.accounts--btn {
+  font-family: 'TAEBAEKmilkyway';
+  color: #383943;
+  font-size: 1.2rem;
+  background-color: #fff0;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+}
+
+.btn--box {
+  margin: 10px auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.social--login { 
+  text-decoration: none;
+}
+
+.social--logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.label--box {
+  width: 200px;
+  margin-bottom: 0;
+  display: inline-block;
+}
+
+input[type=file]::file-selector-button {
+  display: none;
+}
+
+.address--box {
+  margin-top: 10px;
+  display: flex;
+}
+
+.form-address {
+  display: block;
+  width: 300px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-address:focus {
+  border-color: rgb(138, 147, 202);
+  outline: none;
+  box-shadow: 0.5px 0.5px 10px 1px #3839435c;
+}
+
+.address--btn {
+  width: 100px;
+  color: #383943;
+  font-size: 1rem;
+  background-color: #fff0;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+}
