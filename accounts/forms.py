@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from imagekit.forms import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django import forms
+# from django.contrib.postgres.forms import HStoreField
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -73,8 +74,7 @@ class CustomUserChangeForm(UserChangeForm):
     )
     is_owner = forms.ChoiceField(label='사장님 여부', label_suffix='', choices=USER_TYPE_CHOICES, widget=forms.Select(
         attrs={'class': 'form-select'}))
-    address = forms.CharField(label='주소', max_length=200, widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -92,3 +92,6 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         attrs={'class': 'form-control'}))
     new_password2 = forms.CharField(label='새 비밀번호 확인', label_suffix='', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
+    
+    
+    
