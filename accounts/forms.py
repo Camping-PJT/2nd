@@ -33,9 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
         attrs={'class': 'select--box','style' : 'width:195px;'}))
     image = ProcessedImageField(
         spec_id='profile_image_thumbnail',
-        processors=[ResizeToFill(70, 70)],
         format='JPEG',
-        options={'quality': 200},
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-box','style' : 'width:400px;'}),
         label='프로필 이미지',
@@ -68,9 +66,7 @@ class CustomUserChangeForm(UserChangeForm):
         attrs={'class': 'select--box','style' : 'width:195px;'}))
     image = ProcessedImageField(
         spec_id='profile_image_thumbnail',
-        processors=[ResizeToFill(70, 70)],
         format='JPEG',
-        options={'quality': 200},
         required=False,
         widget=CustomClearableFileInput(attrs={'class': 'form-box','style' : 'width:400px;'}),
         label='프로필 이미지',
