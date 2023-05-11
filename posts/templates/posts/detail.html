@@ -95,6 +95,7 @@
   // 비동기 리뷰 좋아요/싫어요
   const reviewLikeForms = document.querySelectorAll('.review-like-forms')
   const reviewDislikeForms = document.querySelectorAll('.review-dislike-forms')
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
   reviewLikeForms.forEach((form) => {
     form.addEventListener('submit', (event) => {
