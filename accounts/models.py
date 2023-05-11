@@ -30,10 +30,10 @@ class User(AbstractUser):
     ]
 
     OWNER = '사장님'
-    CUSTOMER = '고객'
+    CUSTOMER = '고객님'
     USER_TYPE_CHOICES = [
         (OWNER, '사장님'),
-        (CUSTOMER, '고객'),
+        (CUSTOMER, '고객님'),
     ]
     
     followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)

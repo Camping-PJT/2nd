@@ -1,23 +1,33 @@
 {% extends 'base.html' %} 
-{% block title %}캠핑가조 : 로그인{% endblock title %} 
-{% block style %}{% endblock style %}
-{% block head %}{% endblock head %}
+{% block title %}Login{% endblock title %} 
+
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">  
+{% endblock head %}
+
+
+
 {% block content %}
-<h4>로그인</h4>
-<form action="{% url 'accounts:login' %}" method="POST">
-  {% csrf_token %}
-  {{ form.as_p}}
-  <input type="submit" value="로그인">
-  <input type="submit" value="Back" onclick=window.history.back()>
-</form>
-<a type="button" href="{% url 'accounts:signup' %}">회원가입</a>
-{% load socialaccount %}
-<a href="{% provider_login_url 'kakao' method='oauth2' %}">
-  카카오톡 회원가입
-</a>
-<a href="{% provider_login_url 'google' method='oauth2' %}">
-  구글 회원가입
-</a>
-<input type="submit" value="뒤로가기" onclick="window.history.back()" />
+<div class="accounts--box">
+  <p class="accounts--title">
+    {% load socialaccount %}
+    <a href="{% provider_login_url 'kakao' method='oauth2' %}" class="social--login">
+      <img src="{% static 'image/Kakao.png' %}" alt="" class="social--logo">
+    </a>
+    로그인
+    <a href="{% provider_login_url 'google' method='oauth2' %}" class="social--login">
+      <img src="{% static 'image/google.png' %}" alt="" class="social--logo">
+    </a>
+  </p>
+  <form action="{% url 'accounts:login' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <div class="btn--box">
+      <input type="submit" value="로그인" class="accounts--btn">
+      <a type="button" href="{% url 'accounts:signup' %}" class="accounts--btn">회원가입</a>
+      <input type="submit" value="뒤로가기"  class="accounts--btn" onclick=window.history.back()>
+    </div>
+  </form>
+</div>
 {% endblock content %}
-{% block script %}{% endblock script %}
