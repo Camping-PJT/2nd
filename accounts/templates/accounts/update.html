@@ -10,13 +10,12 @@
 <form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="text" id="s_address" placeholder="주소" name="address">
+  <input type="text" id="s_address" placeholder="주소" name="address" value="{{ user.address }}">
   <input type="button" onclick="search_address()" value="주소 검색"><br>
   <input type="submit" value="Save">
   <a href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
   <input type="submit" value="Back" onclick=window.history.back()>
 </form>
-
 {% endblock content %}
 {% block script %}
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

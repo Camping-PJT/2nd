@@ -6,6 +6,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth import get_user_model
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordChangeForm
 from posts.models import Post
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -31,7 +32,7 @@ from posts.models import Post
 def signup(request):
     if request.user.is_authenticated:
         return redirect('posts:index')
-    
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -86,7 +87,7 @@ def update(request):
             user = form.save(commit=False)
             user.address = request.POST.get('address')
             user.save()
-            return redirect('accounts:profile',request.user.username)
+            return redirect('accounts:profile', request.user.username)
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
@@ -117,16 +118,50 @@ def profile(request, username):
     person = User.objects.get(username=username)
     context = {
         'person': person,
+        'followings': person.followings.all(),
+        'followers': person.followers.all(),
     }
     return render(request, 'accounts/profile.html', context)
 
 
+@login_required
 def follow(request, user_pk):
     User = get_user_model()
     person = User.objects.get(pk=user_pk)
 
-    if request.user in person.followers.all():
-        person.followers.remove(request.user)
-    else:
-        person.followers.add(request.user)
+    if person != request.user:
+        if request.user in person.followers.all():
+            person.followers.remove(request.user)
+            is_followed = False
+        else:
+            person.followers.add(request.user)
+            is_followed = True
+        context = {
+            'is_followed': is_followed,
+            'followings_count': person.followings.count(),
+            'followers_count': person.followers.count(),
+        }
+        return JsonResponse(context)
     return redirect('accounts:profile', person.username)
+
+
+@login_required
+def following_list(request, username):
+    User = get_user_model()
+    person = User.objects.get(username=username)
+    followings = person.followings.all()
+    context = {
+        'followings': followings,
+        }
+    return render(request, 'accounts/following_list.html', context)
+
+
+@login_required
+def followers_list(request, username):
+    User = get_user_model()
+    person = User.objects.get(username=username)
+    followers = person.followers.all()
+    context = {
+        'followers': followers,
+        }
+    return render(request, 'accounts/followers_list.html', context)
