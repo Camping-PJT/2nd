@@ -127,3 +127,12 @@ input[type=file]::file-selector-button {
   text-decoration: none;
   text-align: center;
 }
+
+.errorlist li {
+  width: 400px;
+  list-style: none;
+}
+
+.errorlist {
+  padding: 0;
+}

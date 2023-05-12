@@ -1,66 +1,248 @@
 {% extends 'base.html' %} 
-{% block title %}캠핑가조 : 프로필{% endblock title %} 
+{% block title %}Profile{% endblock title %} 
 {% load static %}
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">  
+  <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {% endblock head %}
 
 {% block content %}
+  <div class="profile--container">
 
-<h4>{{ person }}의 프로필</h4>
-{% if user.image %}
-<img src="{{ user.image.url }}" alt="image"/>
-{% else %}
-<img src="{% static 'image/blank-profile-image.png' %}" alt="blank-profile-image"/>
-{% endif %} 
+    {% comment %} 탭 {% endcomment %}
+    <div class="profile--content">
+      <input type="radio" name="tabmenu" id="tab01" checked>
+      <label for="tab01">Profile</label>
+      <input type="radio" name="tabmenu" id="tab02">
+      <label for="tab02">Content</label>
 
-<form id="follow-form" data-user-id="{{ person.pk }}" data-username="{{ person.username }}" action="{% url 'accounts:follow' person.pk %}" method="post">
-  {% csrf_token %} 
-  {% if request.user != person %}
-    {% if request.user in person.followers.all %}
-      <input type="submit" value="언팔로우">
-  {% else %}
-      <input type="submit" value="팔로우">
-    {% endif %}
-  {% endif %}
-</form>
+      {% comment %} 첫번째 탭 {% endcomment %}
+      <div class="profile--card card1">
+        <div class="box1">
+          <div class="profile--card--left">
+            <p>이름 : {{ person.last_name }}</p>
+            <p>이메일 : {{ person.email }}</p>
+            <p>선호지역 : {{ person.region }}</p>
+            {% if person == request.user %}
+              <p>
+                주소 : {{ person.address }}
+                <a data-toggle="tooltip" class="tip--btn" title="안심하세요.&#10;주소는 본인에게만 나타납니다."><i class="bi bi-info-circle"></i></a>
+              </p>
+            {% endif %}
+            <div class="d-flex gap-3">
+                <p>팔로잉 :<button type="button" class="profile--card--btn" data-bs-toggle="modal" data-bs-target="#followingsModal"><p id="followings-count">{{ person.followings.all|length }}</p></button></p>
+                <p>팔로워 :<button type="button" class="profile--card--btn" data-bs-toggle="modal" data-bs-target="#followersModal"><p id="followers-count">{{ person.followers.all|length }}</p></button></p>
+            </div>
+            {% if request.user != person %}
+              <form id="follow-form" data-user-id="{{ person.pk }}" data-username="{{ person.username }}" action="{% url 'accounts:follow' person.pk %}" method="post">
+                {% csrf_token %} 
+                  {% if request.user in person.followers.all %}
+                  <input class="profile--followbtn" type="submit" value="Unfollow">
+                  {% else %}
+                    {% if request.user.is_authenticated %}
+                      <input class="profile--followbtn" type="submit" value="Follow">
+                    {% else %}
+                      <input class="profile--followbtn" type="submit" value="Follow" disabled>
+                    {% endif %}
+                {% endif %}
+              </form>
+            {% else %}
+              <a href="{% url 'schedules:calendar' %}" class="profile--followbtn"><i class="bi bi-calendar-plus"></i></a>
+            {% endif %}
+          </div>
 
-팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
-{% if request.user == person %}
-  <a href="{% url 'accounts:update' %}">수정</a>
-  <form action="{% url 'accounts:delete' %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="탈퇴" onclick="return confirm('탈퇴 시, 더 이상 서비스를 이용하실 수 없습니다.\n정말 탈퇴하시겠습니까?')">
-  </form> 
-{% endif %}
+          {% comment %} 첫번째 탭 오른쪽 {% endcomment %}
+          <div class="profile--card--right">
+            <div class="profile--imgbox">
+              {% if user.image %}
+                <img src="{{ user.image.url }}" alt="image"/>
+              {% else %}
+                <img src="{% static 'image/profile-none.png' %}" alt="blank-profile-image"/>
+              {% endif %} 
+            </div>
+            <h4 id="logged-in-username">
+              {{ person }}
+              {% if request.user.is_owner == '사장님' %}
+                <img src="{% static 'image/ceo.png' %}" alt="" class="user--icon">
+              {% endif %}
+            </h4>
+            <div class="d-flex">
+              {% if request.user == person %}
+                <a href="{% url 'accounts:update' %}" class="profile--card--btn">수정</a>
+                <form action="{% url 'accounts:delete' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="submit" class="profile--card--btn" value="탈퇴" onclick="return confirm('탈퇴 시, 더 이상 서비스를 이용하실 수 없습니다.\n정말 탈퇴하시겠습니까?')">
+                </form> 
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
 
-{% if request.user != person %}
-  <div>
-  팔로잉 :<span id="followings-count">{{ person.followings.all|length }}</span>
-  팔로워 :<span id="followers-count">{{ person.followers.all|length }}</span>
+      {% comment %} 두번째 탭 {% endcomment %}
+      <div class="profile--card card2">
+        <div class="box2">
+          <div class="visit--camp">
+            <h3>방문한 캠핑장</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">캠핑장</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% comment %} {% for post in  %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
+                  </tr>
+                {% empty %}
+                  <h3>게시글이 없습니다.</h3>
+                {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+          <div class="like--camp">
+            <h3>방문할 캠핑장</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">캠핑장</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% comment %} {% for post in  %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
+                  </tr>
+                {% empty %}
+                  <h3>게시글이 없습니다.</h3>
+                {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+          <div class="write--camp">
+            <h3>작성한 게시글</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">글 제목</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% comment %} {% for review in  %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></td>
+                  </tr>
+                {% empty %}
+                  <h3>게시글이 없습니다.</h3>
+                {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <div id="following-list">
-    <ul id="following-ul"></ul>
+
+{% comment %} Modal창 구역 {% endcomment %}
+<!-- 팔로워 Modal -->
+<div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content profile--modal--box">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5"  id="followersModalLabel">팔로워</h1>
+      </div>
+      <div class="modal-body row" id = "f_follower_list">
+        {% if request.user != person %}
+          <div id="follower-list">
+            <ul id="follower-ul"></ul>
+          </div>
+        {% else %}
+          <ul id="follower-ul">
+            {% for follower in followers %}
+            <li class="follow--modal">
+                <a href="{% url 'accounts:profile' follower.username %}">
+                  {% if follower.image %}
+                    <div class="profile--image rounded-circle">
+                      <img src="{{ follower.image.url }}" alt="follower image" class="object-fit-fill profile">
+                    </div>
+                  {% else %}
+                    <div class="profile--image rounded-circle">
+                      <img src="{% static 'image/profile-none.png' %}" alt="follower image" class="object-fit-fill profile">
+                    </div>
+                  {% endif %}
+                  {{ follower.username }}
+                </a>
+            </li>
+            {% empty %}
+            <p class="ms-2">팔로워가 없습니다.</p>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="profile--followbtn" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-  <div id="follower-list">
-    <ul id="follower-ul"></ul>
+</div>
+<!-- 팔로잉 Modal -->
+<div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="followingsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content profile--modal--box">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="followingsModalLabel">팔로잉</h1>
+      </div>
+      <div class="modal-body row">
+        {% if request.user != person %}
+          <div id="following-list">
+            <ul id="following-ul"></ul>
+          </div>
+        {% else %}
+          <ul id="following-ul">
+            {% for following in followings %}
+            <li class="follow--modal">
+                <a href="{% url 'accounts:profile' following.username %}">
+                  {% if following.image %}
+                    <div class="profile--image rounded-circle">
+                      <img src="{{ following.image.url }}" alt="following image" class="object-fit-fill profile">
+                    </div>
+                  {% else %}
+                    <div class="profile--image rounded-circle">
+                      <img src="{% static 'image/profile-none.png' %}" alt="following image" class="object-fit-fill profile">
+                    </div>
+                  {% endif %}
+                  {{ following.username }}
+                </a>
+            </li>
+            {% empty %}
+            <p class="ms-2">팔로잉이 없습니다.</p>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="profile--followbtn" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
-{% else %}
-  <div>
-  팔로잉 :<span id="followings-count">{{ user.followings.all|length }}</span>
-  팔로워 :<span id="followers-count">{{ user.followers.all|length }}</span>
-  </div>
-  <div id="following-list">
-    <ul id="following-ul"></ul>
-  </div>
-  <div id="follower-list">
-    <ul id="follower-ul"></ul>
-  </div>
-{% endif %}
+</div>
 
 {% endblock content %}
 
 {% block script %}
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
 <script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
 {% endblock script %}

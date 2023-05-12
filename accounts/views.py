@@ -9,25 +9,6 @@ from django.http import JsonResponse
 
 # Create your views here.
 
-
-# def signup(request):
-#     if request.user.is_authenticated:
-#         return redirect('accounts:index')
-
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             user = form.save()
-#             auth_login(request, user)
-#             return redirect('accounts:index')
-#     else:
-#         form = CustomUserCreationForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'accounts/signup.html', context)
-
-
 def signup(request):
     if request.user.is_authenticated:
         return redirect('posts:index')
@@ -69,7 +50,7 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('posts:index')
-
+    
 
 @login_required
 def delete(request):
@@ -115,10 +96,12 @@ def change_password(request):
 def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
+    followers = person.followers.all()
+    followings = person.followings.all()
     context = {
         'person': person,
-        'followings': person.followings.all(),
-        'followers': person.followers.all(),
+        'followers':followers,
+        'followings':followings,
     }
     return render(request, 'accounts/profile.html', context)
 

@@ -60,27 +60,22 @@ footer {
   background-color: rgba(0, 0, 0, 0.3);
   height: 20%;
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: repeat(2, minmax(max-content, auto));
   align-items: center;
 }
 
 .logo {
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
 }
 
 .logo img {
-  width: 100%;
-  height: 100%;
+  width: 150px;
+  height: 150px;
 }
 
 .logo a{
-  width: 50%;
-  height: 80%;
+  width: 150px;
+  height: 150px;
 }
 
 
@@ -115,11 +110,19 @@ footer {
   color: white;
   text-decoration: none;
   font-size: 1.6em;
+  margin-right: 30px;
 }
 
 @media only screen and (max-width: 768px) {
   .category a {
     font-size: 1.2em;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .logo img  {
+    width: 120px;
+  height: 120px;
   }
 }
 
@@ -194,12 +197,16 @@ input[type=search]::-webkit-search-cancel-button {
 
 @media only screen and (max-width: 768px) {
   .search--box {
-    width: 90%;
+    width: 80%;
     margin-top: 50px;
+    height: 50px;
   }
 
   .search input {
-    width: 100%; 
+    width: 100%;
+    line-height: 46px;
+    height: 46px;
+    font-size: 1.2rem;
   }
 }
 

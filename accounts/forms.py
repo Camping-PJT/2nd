@@ -32,14 +32,11 @@ class CustomUserCreationForm(UserCreationForm):
     region = forms.ChoiceField(label='선호지역', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
         attrs={'class': 'select--box','style' : 'width:195px;'}))
     image = ProcessedImageField(
-        spec_id='profile_image_thumbnail',
-        processors=[ResizeToFill(70, 70)],
-        format='JPEG',
-        options={'quality': 200},
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-box','style' : 'width:400px;'}),
         label='프로필 이미지',
         label_suffix='',
+        spec_id='image_size',
     )
     is_owner = forms.ChoiceField(label='유저 타입', label_suffix='', choices=USER_TYPE_CHOICES, widget=forms.Select(
         attrs={'class': 'select--box','style' : 'width:195px;'}))
@@ -67,14 +64,11 @@ class CustomUserChangeForm(UserChangeForm):
     region = forms.ChoiceField(label='선호지역', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
         attrs={'class': 'select--box','style' : 'width:195px;'}))
     image = ProcessedImageField(
-        spec_id='profile_image_thumbnail',
-        processors=[ResizeToFill(70, 70)],
-        format='JPEG',
-        options={'quality': 200},
         required=False,
         widget=CustomClearableFileInput(attrs={'class': 'form-box','style' : 'width:400px;'}),
         label='프로필 이미지',
         label_suffix='',
+        spec_id='image_size',
     )
 
     is_owner = forms.ChoiceField(label='유저 타입', label_suffix='', choices=USER_TYPE_CHOICES, widget=forms.Select(
