@@ -96,8 +96,12 @@ def change_password(request):
 def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
+    followers = person.followers.all()
+    followings = person.followings.all()
     context = {
         'person': person,
+        'followers':followers,
+        'followings':followings,
     }
     return render(request, 'accounts/profile.html', context)
 

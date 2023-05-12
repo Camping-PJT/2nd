@@ -32,7 +32,7 @@ Post Create
 {% endblock content %}
 
 {% block script %}
-<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="{% static '/js/posts_create.js' %}" type="text/javascript"></script>
 

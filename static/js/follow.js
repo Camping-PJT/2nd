@@ -20,9 +20,9 @@ form.addEventListener('submit', function (event) {
       const isFollowed = response.data.is_followed;
       const followBtn = document.querySelector('#follow-form > input[type=submit]');
       if (isFollowed === true) {
-        followBtn.value = '언팔로우';
+        followBtn.value = 'Unfollow';
       } else {
-        followBtn.value = '팔로우';
+        followBtn.value = 'Follow';
       }
       const followingsCountData = response.data.followings_count;
       const followersCountData = response.data.followers_count;
