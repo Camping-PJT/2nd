@@ -10,6 +10,10 @@
 {% block content %}
   <div class="profile--container">
 
+    {% if request.user.is_owner == '사장님' %}
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBkmM_pvHuCUximGpTrWXB39N8hyZ2oTMqHH3vLaq6i92V8g/viewform?usp=sf_link">가게 등록 설문</a>
+    {% endif %}
+    
     {% comment %} 탭 {% endcomment %}
     <div class="profile--content">
       <input type="radio" name="tabmenu" id="tab01" checked>
@@ -80,9 +84,6 @@
           </div>
         </div>
       </div>
-
-      {% comment %} google {% endcomment %}
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBkmM_pvHuCUximGpTrWXB39N8hyZ2oTMqHH3vLaq6i92V8g/viewform?usp=sf_link">가게 등록 설문</a>
 
 
       {% comment %} 두번째 탭 {% endcomment %}
