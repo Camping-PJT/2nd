@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordChangeForm, CustomAuthenticationForm
 from posts.models import Post
 from django.http import JsonResponse
+import os
 
 # Create your views here.
 
@@ -120,6 +121,7 @@ def profile(request, username):
         'followings': person.followings.all(),
         'followers': person.followers.all(),
     }
+
     return render(request, 'accounts/profile.html', context)
 
 
