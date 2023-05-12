@@ -1,15 +1,24 @@
 {% extends 'empty.html' %}
 {% load static %}
-{% block title %}캠핑가조 : 프로필{% endblock title %}
 {% block content %}
-<div id="follower-list">팔로워 리스트</div>
 <ul id="follower-ul">
   {% for follower in followers %}
-  <li>{{ follower.username }}</li>
+  <li class="follow--modal">
+      <a href="{% url 'accounts:profile' follower.username %}">
+        {% if follower.image %}
+          <div class="profile--image rounded-circle">
+            <img src="{{ follower.image.url }}" alt="follower image" class="object-fit-fill profile">
+          </div>
+        {% else %}
+          <div class="profile--image rounded-circle">
+            <img src="{% static 'image/profile-none.png' %}" alt="follower image" class="object-fit-fill profile">
+          </div>
+        {% endif %}
+        {{ follower.username }}
+      </a>
+  </li>
   {% empty %}
-  <li>empty</li>
+  <p class="ms-2">팔로워가 없습니다.</p>
   {% endfor %}
 </ul>
 {% endblock content %}
-{% block script %}
-{% endblock script %}

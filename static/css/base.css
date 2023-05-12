@@ -95,6 +95,7 @@ header {
 }
 
 .nav--tap--box{
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,6 +113,9 @@ header {
   font-size: 18px;
   font-weight: 600;
   word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #reduced-navbar {

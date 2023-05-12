@@ -40,12 +40,12 @@ class User(AbstractUser):
     
     
     def profile_image_path(instance, filename):
-        return f'profile/{instance.pk}/{filename}'
+        return f'profile/{instance.username}/{filename}'
     
     
     image = ProcessedImageField(upload_to=profile_image_path, blank=True, null=True)
     region = models.CharField(max_length=10, choices=REGION_CHOICES, default='서울')
-    is_owner = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='고객')
+    is_owner = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='고객님')
     address = models.CharField(max_length=200)
 
 

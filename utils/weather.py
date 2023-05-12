@@ -2,14 +2,14 @@ import json
 import requests
 import os
 
-def weather_json(city, apikey):
-    api = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={apikey}&lang=kr&units=metric'
+def weather_json(w_city, apikey):
+    api = f'http://api.openweathermap.org/data/2.5/weather?q={w_city}&appid={apikey}&lang=kr&units=metric'
     response = requests.get(api)
     return response.json()
 
 
-def pm_json(city, apikey):
-    location_api = f'http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={apikey}'
+def pm_json(w_city, apikey):
+    location_api = f'http://api.openweathermap.org/geo/1.0/direct?q={w_city}&limit=5&appid={apikey}'
     location_response = requests.get(location_api)
     location_api_result = location_response.json()
     lat = location_api_result[0]['lat']
@@ -20,14 +20,14 @@ def pm_json(city, apikey):
     return response.json()
 
 
-def weather(city='Seoul'):
+def weather(w_city='Seoul'):
     apikey = os.getenv("weather_api")
-    weather_api = weather_json(city, apikey)
-    pm_api = pm_json(city, apikey)
+    weather_api = weather_json(w_city, apikey)
+    pm_api = pm_json(w_city, apikey)
     pm2_5 = pm_api['list'][0]['components']['pm2_5']
     pm10 = pm_api['list'][0]['components']['pm10']
 
-    cities = [
+    w_cities = [
     {'name': '서울', 'value': 'SEOUL'},
     {'name': '부산', 'value': 'BUSAN'},
     {'name': '대구', 'value': 'DAEGU'},
@@ -69,7 +69,7 @@ def weather(city='Seoul'):
     else:
         ultrafine_dust = '확인불가'
     context = {
-        'city': city,
+        'w_city': w_city,
         'weather': weather_api['weather'][0]['description'],
         'temp': round(weather_api['main']['temp'], 1), 
         'feels_like': round(weather_api['main']['feels_like'], 1),
@@ -78,7 +78,7 @@ def weather(city='Seoul'):
         'humidity': weather_api['main']['humidity'],
         'fine_dust': fine_dust,
         'ultrafine_dust': ultrafine_dust,
-        'cities': cities,
+        'w_cities': w_cities,
         'icon': f"https://openweathermap.org/img/wn/{weather_api['weather'][0]['icon']}@2x.png",
     }
 

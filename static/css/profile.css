@@ -1,0 +1,259 @@
+@font-face {
+  font-family: 'TAEBAEKmilkyway';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/TAEBAEKmilkyway.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.profile--container {
+  width: 100%;
+  height: 500px;
+  margin-top: 10px;
+}
+
+.tab--group {
+  display: flex;
+}
+.profile--content{
+  width: 70%;
+  height: 500px;
+  margin: 0 auto;
+}
+
+.profile--card {
+  border: 1px solid #383943;
+  border-radius: 1rem;
+  border-top-left-radius: 0;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;
+  display: none;
+  height: 500px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"] + label {
+  border: 1px solid #383943;
+  border-bottom: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.2) 2px -5px 10px;
+  display: inline-block;
+  padding: 10px;
+  background: #383943;
+  color: rgba(255, 255, 255, 0.5);
+  width: 80px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="radio"]:checked + label {
+  background: white;
+  color: #383943;
+  box-shadow: 0.6px 5px  white;
+}
+
+input[id="tab01"]:checked ~ .card1 {
+  display: block;
+}
+input[id="tab02"]:checked ~ .card2 {
+  display: block;
+}
+
+.box1 {
+  padding: 100px;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(max-content, auto));
+}
+
+@media only screen and (max-width: 768px) {
+  .box1 {
+    grid-template-columns: repeat(1, minmax(max-content, auto));
+    padding: 10px;
+  }
+
+  .profile--card--right  {
+    grid-row: 1;
+  }
+
+  .profile--content {
+    height: auto;
+  }
+
+  .profile--card {
+    height: auto;
+  }
+
+}
+
+
+.profile--card--left {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile--card--left p {
+  font-size: 20px;
+  font-family: 'TAEBAEKmilkyway';
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+  .profile--card--left {
+    align-items: center;
+    justify-content: start;
+  }
+  
+  .profile--card--left p {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+}
+
+
+.user--icon {
+  width: 30px;
+  height: 25px;
+}
+
+.profile--card--right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile--card--right h4 {
+  font-size: 27px;
+  color: #383943;
+  font-weight: 600;
+  margin: 0;
+}
+
+.profile--imgbox{
+  border-radius: 20px;
+  overflow: hidden;
+  width: 200px;
+  height: 230px;
+  line-height: 200px;
+}
+
+.profile--imgbox img {
+  width: 200px;
+  height: 230px;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .profile--card--right {
+    justify-content: start;
+  }
+  
+  .profile--card--right h4 {
+    font-size: 22px;
+  }
+
+  .profile--imgbox{
+    width: 150px;
+    height: 180px;
+    line-height: 150px;
+  }
+  
+  .profile--imgbox img {
+    width: 150px;
+    height: 180px;
+  }
+
+}
+
+.tip--btn {
+  color: #47474bcb;
+  margin-left: 5px;
+}
+
+.tooltip-inner{white-space: pre-wrap;}
+
+.profile--card--btn {
+  color: #383943;
+  background: #fff0;
+  border: none;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0;
+  height: 25px;
+  line-height: 25px;
+  margin: 10px;
+}
+
+#follower-ul {
+  padding: 0;
+}
+
+#following-ul {
+  padding: 0;
+}
+
+.follow--modal {
+  list-style: none;
+  width: 50px;
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+}
+
+.follow--modal a{
+  text-decoration: none;
+  color: #383943;
+}
+
+.profile--followbtn {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #383943;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border: 2px solid #47474bcb;
+  text-align: center;
+}
+
+.box2 {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  padding: 10px;
+  height: 100%;
+}
+
+.box2 h3 {
+  text-align: center;
+  color: #383943;
+}
+
+.like--camp {
+  border-left: 2px dotted #383943;
+  border-right: 2px dotted #383943;
+}
+
+@media only screen and (max-width: 768px) {
+  .box2 {
+    grid-template-columns: repeat(1, minmax(max-content, auto));
+  }
+
+  .like--camp {
+    border-top: 2px dotted #383943;
+    border-bottom: 2px dotted #383943;
+    border-left: none;
+    border-right: none;
+  }
+
+}

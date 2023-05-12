@@ -7,27 +7,10 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordC
 from posts.models import Post
 from django.http import JsonResponse
 from schedules.models import Schedule
+import os
+
 
 # Create your views here.
-
-
-# def signup(request):
-#     if request.user.is_authenticated:
-#         return redirect('accounts:index')
-
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             user = form.save()
-#             auth_login(request, user)
-#             return redirect('accounts:index')
-#     else:
-#         form = CustomUserCreationForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'accounts/signup.html', context)
-
 
 def signup(request):
     if request.user.is_authenticated:
@@ -70,7 +53,7 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('posts:index')
-
+    
 
 @login_required
 def delete(request):
@@ -124,6 +107,7 @@ def profile(request, username):
         'followers': person.followers.all(),
         'schedules': schedules,
     }
+
     return render(request, 'accounts/profile.html', context)
 
 
