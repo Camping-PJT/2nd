@@ -89,21 +89,6 @@ input[id="tab02"]:checked ~ .card2 {
     height: auto;
   }
 
-  .profile--card--left p {
-    font-size: 12px;
-  }
-
-  .profile--imgbox{
-    width: 150px;
-    height: 180px;
-    line-height: 150px;
-  }
-  
-  .profile--imgbox img {
-    width: 150px;
-    height: 180px;
-  }
-
 }
 
 
@@ -119,6 +104,19 @@ input[id="tab02"]:checked ~ .card2 {
   font-family: 'TAEBAEKmilkyway';
   font-weight: 600;
 }
+
+@media only screen and (max-width: 768px) {
+  .profile--card--left {
+    align-items: center;
+    justify-content: start;
+  }
+  
+  .profile--card--left p {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+}
+
 
 .user--icon {
   width: 30px;
@@ -151,6 +149,29 @@ input[id="tab02"]:checked ~ .card2 {
 .profile--imgbox img {
   width: 200px;
   height: 230px;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .profile--card--right {
+    justify-content: start;
+  }
+  
+  .profile--card--right h4 {
+    font-size: 22px;
+  }
+
+  .profile--imgbox{
+    width: 150px;
+    height: 180px;
+    line-height: 150px;
+  }
+  
+  .profile--imgbox img {
+    width: 150px;
+    height: 180px;
+  }
+
 }
 
 .tip--btn {
