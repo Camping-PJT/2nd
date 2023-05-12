@@ -2,72 +2,135 @@
 {% block title %}{% endblock title %} 
 {% load static %}
 {% block head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 {% endblock head %}
 {% block content %}
 <meta charset='utf-8' />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<link href='{% static "css/main.min.css" %}' rel='stylesheet' />
-<script src='{% static "js/ko.js" %}'></script>
-<script src='{% static "js/main.min.js" %}'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js"></script>
-<script src='{% static "js/calendar.js" %}'></script>
-<div id='calendar'></div>
-<div id='wrap'>
-  <!-- 드래그 박스 -->
-  <div id='external-events'>
-    <h4>Draggable Events</h4>
-    <div id='external-events-list'></div>
-  </div>
-  <!-- calendar 태그 -->
-  <div id='calendar-wrap'>
-  </div>
-</div>
+<script src='{% static "js/index.global.js" %}'></script>
 <script>
-(function(){
-  $(function(){
-    // 드래그 박스 취득
-    var containerEl = $('#external-events-list')[0];
-    // 설정하기
-    new FullCalendar.Draggable(containerEl, {
-      itemSelector: '.fc-event',
-      eventData: function(eventEl) {
-        return {
-          title: eventEl.innerText.trim()
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    locale: 'ko',
+    // droppable: true, 
+    // editable: true,
+    businessHours: true,
+    dayMaxEvents: true, 
+    events: function(info, successCallback, failureCallback) {
+      // AJAX 요청을 통해 서버에서 데이터를 가져옴
+      $.ajax({
+        url: '/schedules/get_schedule_data/',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          // 가져온 데이터를 이벤트 목록에 추가
+          var events = response.map(function(schedule) {
+            return {
+              title: schedule.title,
+              start: schedule.start,
+              end: schedule.end,
+              // allDay: true, 
+            };
+          });
+          successCallback(events);
+        },
+        error: function(xhr, status, error) {
+          failureCallback(xhr, status, error);
         }
+      });
+    },
+    eventClick: function(info) {
+      if (info.event.url) {
+        window.location.href = info.event.url;
       }
-    });
-    // 드래그 아이템 추가하기
-    for(var i=1; i<=5;i++) {
-      var $div = $("<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'></div>");
-      $event = $("<div class='fc-event-main'></div>").text("Event "+i);
-      $('#external-events-list').append($div.append($event));
     }
-    // calendar element 취득
-    var calendarEl = $('#calendar1')[0];
-    // full-calendar 생성하기
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      // 해더에 표시할 툴바
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
-      initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
-      locale: 'ko', // 한국어 설정
-      editable: true, // 수정 가능
-      droppable: true,  // 드래그 가능
-      drop: function(arg) { // 드래그 엔 드롭 성공시
-        // 드래그 박스에서 아이템을 삭제한다.
-        arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-      }
-    });
-    // 캘린더 랜더링
-    calendar.render();
   });
-})();
+  calendar.render();
+});
 </script>
+
+<div class="p-5">
+
+  <!-- 진짜 달력 본체 -->
+  <div id='calendar'></div>
+
+  <hr>
+  <form method="POST" action="{% url 'schedules:create' %}">
+  {% csrf_token %}
+  <label for="post">캠핑 장소:</label>
+  <select name="post_id" id="post">
+    {% for post in posts %}
+    <option value="{{ post.id }}">{{ post.title }}</option>
+    {% endfor %}
+  </select>
+  <label for="start">시작일:</label>
+  <input type="datetime-local" name="start" id="start">
+  <label for="end">종료일:</label>
+  <input type="datetime-local" name="end" id="end">
+  <label for="description">메모:</label>
+  <input type="textarea" name="description" id="description">
+  <input type="submit" value="일정 생성">
+  </form>
+  <hr>
+
+  <ul style="list-style-type: none; padding: 0; margin: 0;">
+    {% for schedule in schedules %}
+    <li>
+      <a href="{% url 'posts:detail' post_pk=schedule.post.pk %}"><span>{{ schedule.title }}</span></a>
+      <span>{{ schedule.start|date:"m월 d일" }}</span>~
+      <span>{{ schedule.end|date:"m월 d일" }}</span>
+  
+      <!-- Button trigger modal -->
+      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ schedule.id }}">일정 변경</button>
+      <a href="{% url 'schedules:delete' schedule.id %}">삭제</a>
+  
+      <!-- Modal -->
+      <div class="modal fade mt-5" id="exampleModal{{ schedule.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">일정 변경</h1>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="{% url 'schedules:update' schedule.id %}">
+                {% csrf_token %}
+                <p>
+                  <label for="post">캠핑 장소:</label>
+                  <select name="post_id" id="post">
+                    {% for post in posts %}
+                    <option value="{{ post.id }}" {% if post.id == schedule.post.id %}selected{% endif %}>{{ post.title }}</option>
+                    {% endfor %}
+                  </select>
+                </p>
+                <p>
+                  <label for="start">시작일:</label>
+                  <input type="datetime-local" name="start" id="start" value="{{ schedule.start|date:'Y-m-d\TH:i' }}"> 
+                </p>
+                <p>
+                  <label for="end">종료일:</label>
+                  <input type="datetime-local" name="end" id="end" value="{{ schedule.end|date:'Y-m-d\TH:i' }}">
+                </p>
+                <p>
+                  <label for="description">메모:</label>
+                  <input type="textarea" name="description" id="description" value="{{ schedule.description }}">
+                </p>
+                <div class="modal-footer">
+                  <input type="submit" class="btn btn-primary" value="일정 변경">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>  
+    {% endfor %}
+  </ul>
+</div>
+
 {% endblock content %}
 {% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
 {% endblock script %}
-
-

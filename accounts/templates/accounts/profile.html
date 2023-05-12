@@ -26,7 +26,6 @@
   {% endif %}
 </form>
 
-팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}
 {% if request.user == person %}
   <a href="{% url 'accounts:update' %}">수정</a>
   <form action="{% url 'accounts:delete' %}" method="POST">

@@ -1,0 +1,21 @@
+{% comment %} {% extends 'base.html' %}
+{% block title %}{% endblock title %}
+{% load static %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+
+<form method="POST" action="{% url 'schedules:update' schedule.id %}">
+  {% csrf_token %}
+  <label for="start">시작일:</label>
+  <input type="datetime-local" name="start" id="start"> 
+  <label for="end">종료일:</label>
+  <input type="datetime-local" name="end" id="end">
+  <input type="submit" value="일정 변경">
+  <label for="description">메모:</label>
+  <input type="text" name="description" id="description">
+</form>
+
+{% endblock content %}
+{% block script %}
+{% endblock script %} {% endcomment %}
