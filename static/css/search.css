@@ -1,0 +1,126 @@
+.search--page {
+  padding-top: 30px;
+  width: 80%;
+  margin: auto;
+}
+
+.search--page h2 {
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.search--img--box {
+  width: 200px;
+  margin: 25px 25px;
+}
+
+.search--img {
+  width: 200px;
+  height: 200px;
+}
+
+.content--box {
+  display: block;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 250px auto;
+  background-color: #cacdf73e;
+  border-bottom: 1px solid rgb(240, 240, 240);
+  box-shadow: 0px 0px 5px gainsboro;
+  margin-bottom: 20px;
+}
+
+.content--link {
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: black;
+}
+
+.content--txt {
+  padding: 20px;
+}
+
+.content--title {
+  font-size: 25px;
+  font-weight: 600;
+  color: #383943;
+  margin-bottom: 10px;
+}
+
+.content--cate {
+  color: rgb(174, 174, 174);
+  font-size: 13px;
+  margin-left: 10px;
+}
+
+.star {
+  color: orange;
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+.content--info {
+  display: flex;
+  gap:20px;
+  margin-bottom: 5px;
+  font-size: 15px;
+  color: gray;
+}
+.content--info p {
+  margin-bottom: 0;
+}
+
+.facility--box {
+  border: 1px solid rgba(174, 174, 174, 0.5);
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+}
+
+.facility {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  color: #383943;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  font-weight: 600;
+  text-shadow:  rgba(248, 181, 137, 0.7) 1px 0 8px;
+}
+
+.tag {
+  text-decoration: none;
+  color: gray;
+  margin: 5px;
+  font-size: 15px;
+}
+
+.tag:hover {
+  color: #383943;
+  font-weight: 600;
+}
+
+.page-link {
+  color: rgb(83, 83, 83);
+  background-color: #fafafa;
+  border: 1px solid #ccc; 
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #555;
+  font-weight:bold;
+  background-color: #e5d6ffe1;
+  border-color: #ccc;
+}
+
+.page-link:focus, .page-link:hover {
+  color: rgb(83, 83, 83);
+  background-color: rgba(189, 170, 219, 0.4);
+  border-color: #ccc;
+  box-shadow: 0 0 0 0.25rem rgba(189, 170, 219, 0.4);
+}
