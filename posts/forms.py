@@ -143,6 +143,7 @@ class PostForm(forms.ModelForm):
 
 class FacilityForm(forms.ModelForm):
     FACILITY_CHOICES = Facility.FACILITY_CHOICES
+    
     facilities = forms.MultipleChoiceField(
         label='편의시설',
         required=False,
@@ -154,6 +155,7 @@ class FacilityForm(forms.ModelForm):
         if post is not None:
             facility_values = post.facility_set.values_list('facility', flat=True)
             self.initial['facilities'] = list(facility_values)
+
 
     class Meta:
         model = Facility

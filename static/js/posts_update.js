@@ -15,7 +15,9 @@ function search_address_map() {
   new daum.Postcode({
     oncomplete: function(data) {
       const addr = data.address;
+      const ex_addr = data.extra_address;
       document.getElementById("s_address").value = addr;
+      document.getElementById("s_extra_address").value = ex_addr;
 
       geocoder.addressSearch(data.address, function(results, status) {
         if (status === daum.maps.services.Status.OK) {

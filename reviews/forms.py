@@ -15,17 +15,8 @@ class ReviewForm(forms.ModelForm):
     # content = forms.CharField(
     #     label = '리뷰 내용',
     #     widget = CKEditorWidget())
+
     
-    
-    rating = forms.ChoiceField(
-        label = '평점',
-        widget = forms.Select(
-            attrs = {
-                'class': 'form-select'
-            }
-        ),
-        choices = ((1,1), (2,2), (3,3), (4,4), (5,5))
-    )
     class Meta:
         model = Review
-        fields = ('title', 'content', 'rating', )
+        fields = ('title', 'content', )
