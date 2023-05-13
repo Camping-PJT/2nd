@@ -4,7 +4,7 @@ function scrollFunction() {
   if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
     document.querySelector('#menu').style.top = '0';
   } else {
-    document.querySelector('#menu').style.top = '-200px';
+    document.querySelector('#menu').style.top = '-250px';
   }
 }
 

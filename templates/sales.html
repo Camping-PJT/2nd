@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Camping Items
+{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/sales.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<div class="salestitle">베스트셀러</div>
+<div class="salescate">
+  <div class="cateall">
+    <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=Y">
+      전체보기
+    </a>
+  </div>
+  <div class="catelist">
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=001">
+        텐트 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=002">
+        타프 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=009">
+        침낭 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=003">
+        매트 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=004">
+        테이블 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=005">
+        체어 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=006">
+        랜턴 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=007">
+        스토브 베스트
+      </a>
+    </div>
+    <div class="cate--item">
+      <a href="https://www.ocamall.com/shop/shopbrand.html?xcode=072&type=N&mcode=008">
+        쿠커 베스트
+      </a>
+    </div>  
+  </div>
+</div>
+<div class="item--container">
+  {% for rank, item in items.items  %}
+  <div class="item--card">
+    <a href="{{ item.6 }}" class="link">
+      <div class="item--img--box">
+        <img src="{{ item.0 }}" alt="" class="item--img">
+      </div>
+      <div class="item--txt">
+        <strong class="item--title">{{ item.1 }}</strong>
+        <p class="item--name">{{ item.2 }}</p>
+        <div class="name--sub">
+
+        </div>
+        <div class="pay">
+          <strong class="item--discount">{{ item.3 }}</strong>
+          <div class="item--pay">
+            <p class="cuspay">{{ item.4 }}</p>
+            <p class="salepay">{{ item.5 }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+<div class="text-center"><a class="plus" href="https://www.ocamall.com/shop/shopbrand.html?type=Y&xcode=072&sort=&page=2">더보기></a></div>
+{% endblock content %}
