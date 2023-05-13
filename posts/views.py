@@ -56,7 +56,7 @@ def create(request):
     kakao_script_key = os.getenv('kakao_script_key')
     post_form = PostForm()
     image_form = PostImageForm()
-    facility_form = FacilityForm()  # Initialize without a post object
+    facility_form = FacilityForm()
     
     if request.method == 'POST':
         post_form = PostForm(request.POST)
@@ -72,11 +72,14 @@ def create(request):
             post.extra_address = extra_address
             post.city = address.split(' ')[0]
             post.save()
+
+            for i in files:
+                PostImage.objects.create(image=i, post=post)
             
             for tag in tags:
                 post.tags.add(tag.strip())
             
-            facility_form = FacilityForm(post=post, data=request.POST)  # Pass the post object during initialization
+            facility_form = FacilityForm(post=post, data=request.POST) 
             
             if facility_form.is_valid():
                 facility_data = facility_form.cleaned_data['facilities']
@@ -270,9 +273,13 @@ def tagged_posts(request, tag_pk):
         else:
             post_images.append((post,''))
 
-
+        page = request.GET.get('page', '1')
+        per_page = 10
+        paginator = Paginator(post_images, per_page)
+        page_obj = paginator.get_page(page)
+    
     context = {
         'tag': tag, 
-        'posts': posts,
+        'posts': page_obj,
         }
     return render(request, 'posts/tagged_posts.html', context)

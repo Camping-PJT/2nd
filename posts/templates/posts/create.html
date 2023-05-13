@@ -37,6 +37,7 @@ Post Create
       <input type="text" id="s_address" placeholder="주소" name="address" class="form-address">
       <input type="button" onclick="search_address_map()" value="주소 검색" class="address--btn">
     </div>
+    <p>{{ post_form.extra_address }}</p>
     <div id="map" style="width:400px; height:300px; display:none; margin-top:20px"></div>
     <div class="btn--box">
       <input type="submit" value="등록" class="accounts--btn">
