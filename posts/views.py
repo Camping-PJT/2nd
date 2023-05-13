@@ -56,13 +56,14 @@ def create(request):
     kakao_script_key = os.getenv('kakao_script_key')
     post_form = PostForm()
     image_form = PostImageForm()
-    facility_form = FacilityForm()
+    facility_form = FacilityForm()  # Initialize without a post object
+    
     if request.method == 'POST':
         post_form = PostForm(request.POST)
-        facility_form = FacilityForm(request.POST)
         files = request.FILES.getlist('image')
         tags = request.POST.get('tags').split(',')
-        if post_form.is_valid() and facility_form.is_valid():
+        
+        if post_form.is_valid():
             post = post_form.save(commit=False)
             post.user = request.user
             address = request.POST.get('address')
@@ -71,18 +72,21 @@ def create(request):
             post.extra_address = extra_address
             post.city = address.split(' ')[0]
             post.save()
-
+            
             for tag in tags:
                 post.tags.add(tag.strip())
-
-            for i in files:
-                PostImage.objects.create(image=i, post=post)
-
-            facility_data = facility_form.cleaned_data['facilities']
-            for facility_code in facility_data:
-                Facility.objects.create(post=post, facility=facility_code)
-
-            return redirect('posts:detail', post.pk)
+            
+            facility_form = FacilityForm(post=post, data=request.POST)  # Pass the post object during initialization
+            
+            if facility_form.is_valid():
+                facility_data = facility_form.cleaned_data['facilities']
+                for facility_code in facility_data:
+                    Facility.objects.create(post=post, facility=facility_code)
+                
+                return redirect('posts:detail', post.pk)
+    else:
+        facility_form = FacilityForm()  # Initialize without a post object
+    
     context = {
         'kakao_script_key': kakao_script_key,
         'post_form': post_form,
@@ -90,6 +94,8 @@ def create(request):
         'facility_form': facility_form,
     }
     return render(request, 'posts/create.html', context)
+
+
 
 
 def detail(request, post_pk):
@@ -169,10 +175,10 @@ def visits(request, post_pk):
 def update(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
     post = Post.objects.get(pk=post_pk)
-    facility_form = FacilityForm()
+    facility_form = FacilityForm(post=post)
     if request.method == 'POST':
         post_form = PostForm(request.POST, instance=post)
-        facility_form = FacilityForm(request.POST)
+        facility_form = FacilityForm(post=post, data=request.POST)
         files = request.FILES.getlist('image')
         delete_ids = request.POST.getlist('delete_images')
         delete_form = DeleteImageForm(post=post, data=request.POST)
@@ -187,21 +193,26 @@ def update(request, post_pk):
             post.tags.clear()
             tags = request.POST.get('tags').split(',')
             for tag in tags:
-                post.tags.add(tag.strip())
+                stripped_tag = tag.strip().strip('"')
+                post.tags.add(stripped_tag)
             post.postimage_set.filter(pk__in=delete_ids).delete()
             for i in files:
                 PostImage.objects.create(image=i, post=post)
             facility_data = facility_form.cleaned_data['facilities']
+            Facility.objects.filter(post=post).exclude(facility__in=facility_data).delete()
             for facility_code in facility_data:
-                Facility.objects.create(post=post, facility=facility_code)
+                Facility.objects.update_or_create(post=post, facility=facility_code)
+            
+            unchecked_facilities = set(Facility.FACILITY_CHOICES) - set(facility_data)
 
             delete_f_ids = delete_facility_form.cleaned_data.get('delete_facilities')
             if delete_f_ids:
-                Facility.objects.filter(pk__in=delete_f_ids).delete()
+                Facility.objects.filter(post=post, facility__in=unchecked_facilities).delete()
             return redirect('posts:detail', post.pk)
     else:
         post_form = PostForm(instance=post)
         delete_form = DeleteImageForm(post=post)
+        facility_form = FacilityForm(post=post)
         delete_facility_form = DeleteFacilityForm(post=post)
     if post.postimage_set.exists():
         image_form = PostImageForm(instance=post.postimage_set.first())

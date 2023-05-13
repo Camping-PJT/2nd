@@ -13,20 +13,20 @@ class PostForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'required': True,
-                'class': 'form-select',
-                'style': 'width: 600px;'
+                'class': 'select--box',
+                'style': 'width: 195px;'
             }
         )
     )
     title = forms.CharField(
         max_length=50, 
-        label='캠핑장명(필수)', 
+        label=False, 
         widget=forms.TextInput(
             attrs={
                 'required': True,
-                'placeholder': '캠핑장명을 입력해주세요.',
-                'class': 'form-control',
-                'style' : 'width: 600px;'
+                'placeholder': '캠핑장명(필수)',
+                'class': 'form-box',
+                'style': 'width: 400px; cursor:text;'
             }
         )
         
@@ -36,9 +36,9 @@ class PostForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'required': True,
-                'placeholder': '기타 내용을 입력해주세요.',
-                'class': 'form-control',
-                'style': 'width: 600px;'
+                'placeholder': '캠핑장에 대한 자세한 내용을 입력해주세요.',
+                'class': 'form-box',
+                'style': 'width: 400px; cursor:text;'
             }
         )
     )
@@ -61,8 +61,8 @@ class PostForm(forms.ModelForm):
         widget=forms.Select(
             attrs={
                 'required': True,
-                'class': 'form-select',
-                'style' : 'width: 600px;'
+                'class': 'select--box',
+                'style': 'width: 195px;'
             }
         )
     )
@@ -83,9 +83,9 @@ class PostForm(forms.ModelForm):
         label='전화번호(필수)', 
         widget=forms.TextInput(
             attrs={
-                'placeholder': '-을 포함해주세요.',
-                'class': 'form-control',
-                'style' : 'width: 600px;'
+                'placeholder': '전화번호(필수) ex) 010-1234-5678',
+                'class': 'form-box',
+                'style': 'width: 400px; cursor:text;'
                 
             }
         )
@@ -94,20 +94,20 @@ class PostForm(forms.ModelForm):
         widget=forms.TimeInput(
             format='%H:%M',
             attrs={
-                'class': 'form-control',
-                'style' : 'width: 600px;'
-                
+                'class': 'form-box',
+                'style': 'width: 195px; cursor:text;',
+                'placeholder': '입실 시간 ex) 15:00',
             }
-            ),
+        ),
         input_formats=['%H:%M']
     )
     close_hour = forms.TimeField(
         widget=forms.TimeInput(
             format='%H:%M',
             attrs={
-                'class': 'form-control',
-                'style' : 'width: 600px;'
-                
+                'class': 'form-box',
+                'style': 'width: 195px; cursor:text;',
+                'placeholder': '퇴실 시간 ex) 11:00', 
             }
         ), 
         input_formats=['%H:%M']
@@ -119,8 +119,8 @@ class PostForm(forms.ModelForm):
         fields = ('category', 'nature', 'title', 'content', 'phone',  'open_hour', 'close_hour', 'tags')
         widgets = {
             'tags': TagWidget(attrs={
-                'class': 'form-control', 
-                'style' : 'width: 600px;',
+                'class': 'form-box', 
+                'style' : 'width: 400px;',
                 'placeholder': "태그는 콤마(,)로 구분해주세요.",
                 }),
         }
@@ -143,7 +143,19 @@ class PostForm(forms.ModelForm):
 
 class FacilityForm(forms.ModelForm):
     FACILITY_CHOICES = Facility.FACILITY_CHOICES
-    facilities = forms.MultipleChoiceField(choices=FACILITY_CHOICES, widget=forms.CheckboxSelectMultiple, required=False)
+    
+    facilities = forms.MultipleChoiceField(
+        label='편의시설',
+        required=False,
+        choices=FACILITY_CHOICES, 
+        widget=forms.CheckboxSelectMultiple)
+    
+    def __init__(self, post=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if post is not None:
+            facility_values = post.facility_set.values_list('facility', flat=True)
+            self.initial['facilities'] = list(facility_values)
+
 
     class Meta:
         model = Facility
@@ -178,8 +190,8 @@ class PostImageForm(forms.ModelForm):
         widget=CustomClearableFileInput(
             attrs={
                 'multiple': True, 
-                'class': 'form-control', 
-                'style': 'width: 600px;',
+                'class': 'form-box', 
+                'style': 'width: 400px;',
             }
         ),
     )

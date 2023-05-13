@@ -136,3 +136,39 @@ input[type=file]::file-selector-button {
 .errorlist {
   padding: 0;
 }
+#id_facilities {
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  width: 400px;
+}
+
+#id_facilities li {
+  list-style: none;
+}
+
+#id_facilities li label{
+  width: 100px;
+}
+
+#id_delete_facilities {
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  width: 400px;
+}
+#id_delete_facilities li {
+  list-style: none;
+}
+
+#id_delete_facilities li label{
+  width: 100px;
+}
+
+#id_delete_images {
+  padding: 0;
+  width: 400px;
+}
+#id_delete_images li {
+  list-style: none;
+}
