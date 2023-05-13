@@ -52,6 +52,7 @@ class Post(models.Model):
     nature = models.CharField(max_length=10, choices=NATURE_CHOICES)
     
     address = models.CharField(max_length=200)
+    extra_address = models.CharField(max_length=200)
     phoneNumberRegex = RegexValidator(regex=r'^0[1-9]\d{0,2}-\d{3,4}-\d{4}$')
     phone = models.CharField(validators=[phoneNumberRegex], max_length=14)
     open_hour = models.TimeField()

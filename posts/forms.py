@@ -143,7 +143,7 @@ class PostForm(forms.ModelForm):
 
 class FacilityForm(forms.ModelForm):
     FACILITY_CHOICES = Facility.FACILITY_CHOICES
-    facilities = forms.MultipleChoiceField(choices=FACILITY_CHOICES, widget=forms.CheckboxSelectMultiple)
+    facilities = forms.MultipleChoiceField(choices=FACILITY_CHOICES, widget=forms.CheckboxSelectMultiple, required=False)
 
     class Meta:
         model = Facility

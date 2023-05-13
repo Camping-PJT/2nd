@@ -20,12 +20,12 @@ def main(request):
     context['m_selected_city'] = city
     return render(request, 'main.html', context)
 
-def main(request):
-    city = request.GET.get('city', 'Seoul')
-    context = weather(city)
-    if city:
-        context['selected_city'] = city
-    return render(request, 'main.html', context)
+# def main(request):
+#     city = request.GET.get('city', 'Seoul')
+#     context = weather(city)
+#     if city:
+#         context['selected_city'] = city
+#     return render(request, 'main.html', context)
 
 def sales(request):
     return render(request, 'sales.html', {'items':item()} )

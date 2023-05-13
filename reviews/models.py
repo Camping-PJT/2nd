@@ -16,7 +16,9 @@ class Review(models.Model):
     rating = models.IntegerField(default=5, validators=[MinValueValidator(1), MaxValueValidator(5)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    emote_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='emote_reviews', through='Emote')
+    # emote_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='emote_reviews', through='Emote')
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews')
+    dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='dislike_reviews')
 
     def rate_to_star(self):
         return '★' * self.rating
@@ -46,7 +48,7 @@ class Review(models.Model):
         super(Review, self).save(*args, **kwargs)
 
 
-class Emote(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    emotion = models.CharField(max_length=10)
+# class Emote(models.Model):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     review = models.ForeignKey(Review, on_delete=models.CASCADE)
+#     emotion = models.CharField(max_length=10)

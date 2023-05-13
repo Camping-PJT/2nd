@@ -11,6 +11,7 @@ Update
     <h1>게시글을 수정해주세요.</h1>
       <form action="{% url 'posts:update' post.pk %}" method='POST' enctype='multipart/form-data'>
         <input type="text" id="s_address" placeholder="주소" name="address" value="{{ post.address }}">
+        <input type="text" id="s_extra_address" placeholder="상세주소" name="extra_address" value="{{ post.extra_address }}">
         <input type="button" onclick="search_address_map()" value="주소 검색"><br>
         <div id="map" style="width:300px; height:300px; display:none"></div>
         {% csrf_token %}

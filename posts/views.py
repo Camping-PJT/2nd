@@ -6,7 +6,7 @@ import os
 from django.db.models import Q
 from utils.map import get_latlng_from_address
 from django.http import JsonResponse
-from reviews.models import Review, Emote
+from reviews.models import Review
 from django.db.models import Prefetch
 from taggit.models import Tag
 from django.core.paginator import Paginator
@@ -67,6 +67,8 @@ def create(request):
             post.user = request.user
             address = request.POST.get('address')
             post.address = address
+            extra_address = request.POST.get('extra_address')
+            post.extra_address = extra_address
             post.city = address.split(' ')[0]
             post.save()
 
@@ -96,19 +98,20 @@ def detail(request, post_pk):
     facilities = Facility.objects.filter(post=post)
     address = post.address
     latitude, longitude = get_latlng_from_address(address)
+    reviews = Review.objects.filter(post=post)
 
-    if request.user.is_authenticated:
-        reviews = Review.objects.filter(post=post).prefetch_related(
-            Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1), to_attr='likes'),
-            Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1, user=request.user), to_attr='like_exist'),
-            Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
-            Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2, user=request.user), to_attr='dislike_exist')
-        ).order_by('-pk')
-    else:
-        reviews = Review.objects.filter(post=post).prefetch_related(
-            Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1), to_attr='likes'),
-            Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
-        ).order_by('-pk')
+    # if request.user.is_authenticated:
+    #     reviews = Review.objects.filter(post=post).prefetch_related(
+    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1), to_attr='likes'),
+    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1, user=request.user), to_attr='like_exist'),
+    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
+    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2, user=request.user), to_attr='dislike_exist')
+    #     ).order_by('-pk')
+    # else:
+    #     reviews = Review.objects.filter(post=post).prefetch_related(
+    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1), to_attr='likes'),
+    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
+    #     ).order_by('-pk')
 
     context = {
         'kakao_script_key': kakao_script_key,
@@ -116,7 +119,7 @@ def detail(request, post_pk):
         'facilities': facilities,
         'latitude': latitude,
         'longitude': longitude,
-        'reviews': reviews
+        'reviews': reviews,
     }
     return render(request, 'posts/detail.html', context)
 
