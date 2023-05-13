@@ -6,6 +6,9 @@ from django.contrib.auth import get_user_model
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordChangeForm, CustomAuthenticationForm
 from posts.models import Post
 from django.http import JsonResponse
+from schedules.models import Schedule
+import os
+
 
 # Create your views here.
 
@@ -96,13 +99,15 @@ def change_password(request):
 def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
-    followers = person.followers.all()
-    followings = person.followings.all()
+    user_id = request.user.id
+    schedules = Schedule.objects.filter(user_id=user_id)
     context = {
         'person': person,
-        'followers':followers,
-        'followings':followings,
+        'followings': person.followings.all(),
+        'followers': person.followers.all(),
+        'schedules': schedules,
     }
+
     return render(request, 'accounts/profile.html', context)
 
 

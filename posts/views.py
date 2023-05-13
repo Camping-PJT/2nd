@@ -27,6 +27,29 @@ def index(request):
     return render(request, 'posts/index.html', context)
 
 
+def city(request):
+    kakao_script_key = os.getenv('kakao_script_key')
+    kakao_key = os.getenv('kakao_key')
+    campsites = Post.objects.filter(city = request.user.region)
+    posts = Post.objects.order_by('-pk')
+    post_images = []
+    for post in posts:
+        images = PostImage.objects.filter(post=post)
+        if images:
+            post_images.append((post, images[0]))
+        else:
+            post_images.append((post,''))
+    context = {
+        'post_images': post_images,
+        'kakao_script_key': kakao_script_key,
+        'kakao_key': kakao_key,
+        'campsites': campsites,
+    }
+    if request.is_ajax():
+        return JsonResponse(context)
+    return render(request, 'posts/index_city.html', context)
+
+
 @login_required
 def create(request):
     kakao_script_key = os.getenv('kakao_script_key')
