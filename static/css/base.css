@@ -212,6 +212,10 @@ menu {
   letter-spacing: -0.03em;
 }
 
+.search input:active {
+  background-color: white;
+}
+
 .search--btn {
   border: none;
   position: absolute;

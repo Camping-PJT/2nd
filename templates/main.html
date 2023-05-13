@@ -34,10 +34,10 @@
           </div>
           {% comment %} Tap {% endcomment %}
           <div class="category">
-            <a href="">전체</a>
-            <a href="">오지/노지캠핑</a>
-            <a href="">유료캠핑장</a>
-            <a href="">글램핑/카라반</a>
+            <a href="{% url 'posts:index' %}">전체</a>
+            <a href="{% url 'posts:category' '오지, 노지' %}">오지/노지캠핑</a>
+            <a href="{% url 'posts:category' '유료' %}">유료캠핑장</a>
+            <a href="{% url 'posts:category' '글램핑, 카라반' %}">글램핑/카라반</a>
             <a href="">테마검색</a>
             <a href="{% url 'sales' %}">캠핑용품추천</a>
           </div>
@@ -60,20 +60,20 @@
       {% comment %} 추후 카운트, 넓이계산식, 링크 넣어야함 {% endcomment %}
 
       <div class="post--count">
-        <a href="">
+        <a href="{% url 'posts:index' %}">
           <div class="allcnt">
             <div class="all--posts">
-              2,587 
+              {{ allpost|length }}
             </div>
             <div class="count--txt">
               전체
             </div>
           </div>
         </a>
-        <a href="">
+        <a href="{% url 'posts:category' '오지, 노지' %}">
           <div class="back">
             <img src="{% static 'image/outdoor.png' %}" alt="">
-            <div class="front" style="width:60%;">
+            <div class="front" style="width:{{outdoor_percentage}}%;">
               <img src="{% static 'image/outdoor_orange.png' %}" alt="">
             </div>
             <div class="count--txt">
@@ -81,10 +81,10 @@
             </div>
           </div>
         </a>
-        <a href="">
+        <a href="{% url 'posts:category' '유료' %}">
           <div class="back">
             <img src="{% static 'image/paycamp.png' %}" alt="">
-            <div class="front" style="width:80%;">
+            <div class="front" style="width:{{paycamp_percentage}}%;">
               <img src="{% static 'image/paycamp_purple.png' %}" alt="">
             </div>
             <div class="count--txt">
@@ -92,10 +92,10 @@
             </div>
           </div>
         </a>
-        <a href="">
+        <a href="{% url 'posts:category' '글램핑, 카라반' %}">
           <div class="back">
             <img src="{% static 'image/caravan.png' %}" alt="">
-            <div class="front" style="width:30%;">
+            <div class="front" style="width:{{caravan_percentage}}%;">
               <img src="{% static 'image/caravan_blue.png' %}" alt="">
             </div>
             <div class="count--txt">
@@ -202,7 +202,12 @@
           <div class="maps" id="maps" style="width: 400px; height: 400px;"></div>
         </div>
         <div>
-          abc
+          <div>
+            <p id="selectedCity"></p>
+            {% for post in allpost %}
+              {{ post.title }}
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>
@@ -240,7 +245,7 @@
           if (data && Array.isArray(data.posts)) {
             const posts = data.posts;
             const coordinates = [];
-
+            document.getElementById('selectedCity').innerText = sido + " 지역 평가가 좋은 캠핑장";
             const promises = posts.map((post) => {
               return axios
                 .get(
@@ -308,7 +313,8 @@
     const map = new kakao.maps.Map(mapContainer, mapOptions);
     const geocoder = new kakao.maps.services.Geocoder();
     const coordinates = [];
-
+    
+    
     sido('서울');
 
   </script>

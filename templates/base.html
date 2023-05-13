@@ -35,10 +35,10 @@
           </div>
         </div>
         <div class="category">
-          <a href="">전체</a>
-          <a href="">오지/노지캠핑</a>
-          <a href="">유료캠핑장</a>
-          <a href="">글램핑/카라반</a>
+          <a href="{% url 'posts:index' %}">전체</a>
+          <a href="{% url 'posts:category' '오지, 노지' %}">오지/노지캠핑</a>
+          <a href="{% url 'posts:category' '유료' %}">유료캠핑장</a>
+          <a href="{% url 'posts:category' '글램핑, 카라반' %}">글램핑/카라반</a>
           <a href="">테마검색</a>
           <a href="{% url 'sales' %}">캠핑용품추천</a>
         </div>
@@ -53,10 +53,10 @@
       </div>
       <div class="nav--tap--box">
         <div class="nav--menu">
-          <a href="">전체</a>
-          <a href="">오지/노지캠핑</a>
-          <a href="">유료캠핑장</a>
-          <a href="">글램핑/카라반</a>
+          <a href="{% url 'posts:index' %}">전체</a>
+          <a href="{% url 'posts:category' '오지, 노지' %}">오지/노지캠핑</a>
+          <a href="{% url 'posts:category' '유료' %}">유료캠핑장</a>
+          <a href="{% url 'posts:category' '글램핑, 카라반' %}">글램핑/카라반</a>
           <a href="">테마검색</a>
           <a href="{% url 'sales' %}">캠핑용품추천</a>
         </div>

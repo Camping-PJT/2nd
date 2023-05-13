@@ -22,8 +22,14 @@ def index(request):
             post_images.append((post, images[0]))
         else:
             post_images.append((post,''))
+
+    page = request.GET.get('page', '1')
+    per_page = 10
+    paginator = Paginator(post_images, per_page)
+    page_obj = paginator.get_page(page)
+
     context = {
-        'post_images': post_images,
+        'posts': page_obj,
     }
     return render(request, 'posts/index.html', context)
 
@@ -283,3 +289,23 @@ def tagged_posts(request, tag_pk):
         'posts': page_obj,
         }
     return render(request, 'posts/tagged_posts.html', context)
+
+def category(request, category):
+    posts = Post.objects.order_by('-pk').filter(category=category)
+    post_images = []
+    for post in posts:
+        images = PostImage.objects.filter(post=post)
+        if images:
+            post_images.append((post, images[0]))
+        else:
+            post_images.append((post,''))
+
+    page = request.GET.get('page', '1')
+    per_page = 10
+    paginator = Paginator(post_images, per_page)
+    page_obj = paginator.get_page(page)
+
+    context = {
+        'posts': page_obj,
+    }
+    return render(request, 'posts/index.html', context)
