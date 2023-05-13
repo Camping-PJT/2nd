@@ -4,31 +4,45 @@
 Post Create
 {% endblock title %}
 
-{% block style %}
-<style>
-
-</style>
-{% endblock style %}
-
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/posts_create.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}"> 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock head %}
 
 {% block content %}
-<h1>게시글을 작성해주세요!</h1>
+<div class="accounts--box">
+  <h1>게시글 작성</h1>
 
-<form action="{% url 'posts:create' %}" method='POST' enctype='multipart/form-data'>
-  <input type="text" id="s_address" placeholder="주소" name="address">
-  <input type="button" onclick="search_address_map()" value="주소 검색"><br>
-  <div id="map" style="width:300px; height:300px; display:none"></div>
-  {% csrf_token %}
-  {{ post_form.as_p }}
-  {{ facility_form }}
-  {{ image_form.as_p }}
-  <input type="submit" value="등록">
-  <input type="submit" value="뒤로가기" onclick=window.history.back()>
-</form>
+  <form action="{% url 'posts:create' %}" method='POST' enctype='multipart/form-data'>
+
+    {% csrf_token %}
+    <p>{{ post_form.title }}</p>
+    <p>{{ post_form.content }}</p>
+    <p>{{ post_form.phone }}</p>
+    <div class="d-flex gap-2">
+    <p>{{ post_form.open_hour}}</p>
+    <p>{{ post_form.close_hour}}</p>
+    </div>
+    <p class="label--box">{{ post_form.category.label}}</p><p class="label--box">{{ post_form.nature.label}}</p>
+    <div class="d-flex gap-2">
+      <p>{{ post_form.category }}</p>
+      <p>{{ post_form.nature }}</p>
+    </div>
+    <span>{{ post_form.tags.label }}</span>
+    <p>{{ post_form.tags }}</p>
+    {{ facility_form }}
+    {{ image_form.as_p }}
+    <div class="address--box">
+      <input type="text" id="s_address" placeholder="주소" name="address" class="form-address">
+      <input type="button" onclick="search_address_map()" value="주소 검색" class="address--btn">
+    </div>
+    <div id="map" style="width:400px; height:300px; display:none; margin-top:20px"></div>
+    <div class="btn--box">
+      <input type="submit" value="등록" class="accounts--btn">
+      <input type="submit" value="뒤로가기" onclick=window.history.back() class="accounts--btn">
+    </div>
+  </form>
+</div>
 {% endblock content %}
 
 {% block script %}
