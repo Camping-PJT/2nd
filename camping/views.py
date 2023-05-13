@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from utils.weather import weather
+from utils.sales import item
 from posts.models import Post
 import os
 from django.http import JsonResponse
@@ -17,11 +18,18 @@ def main(request):
     context['kakao_key'] = kakao_key
     context['posts'] = posts
     context['m_selected_city'] = city
-
     return render(request, 'main.html', context)
 
-from django.http import JsonResponse
+def main(request):
+    city = request.GET.get('city', 'Seoul')
+    context = weather(city)
+    if city:
+        context['selected_city'] = city
+    return render(request, 'main.html', context)
 
+def sales(request):
+    return render(request, 'sales.html', {'items':item()} )
+  
 def get_posts_by_sido(request):
     sido = request.GET.get('sido')
     posts = Post.objects.filter(city=sido).values()

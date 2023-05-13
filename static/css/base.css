@@ -57,6 +57,11 @@ section {
   font-size: 1.1rem;
 }
 
+
+.category a:hover {
+  color: rgba(245, 118, 8);
+}
+
 .nav--accounts {
   margin-left: auto;
   text-align: end;
@@ -149,7 +154,7 @@ header {
 
 menu {
   position: fixed;
-  top: -200px;
+  top: -250px;
   left: 0;
   width: 100%;
   transition: top 0.5s;
