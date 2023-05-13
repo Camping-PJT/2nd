@@ -20,6 +20,7 @@ Post Create
 
 <form action="{% url 'posts:create' %}" method='POST' enctype='multipart/form-data'>
   <input type="text" id="s_address" placeholder="주소" name="address">
+  <input type="text" id="s_extra_address" placeholder="상세주소" name="extra_address">
   <input type="button" onclick="search_address_map()" value="주소 검색"><br>
   <div id="map" style="width:300px; height:300px; display:none"></div>
   {% csrf_token %}

@@ -77,14 +77,14 @@
   </div>
   <div>
     {{ review.created_string }}
-    {{ review.title }}
+    <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
     {{ review.content|safe }}
   <hr>
   </div>
 
   {% comment %} emote {% endcomment %}
   
-    <div class="d-flex">
+    {% comment %} <div class="d-flex">
       <form class="review-like-forms d-flex" data-review-id="{{ review.pk }}">
         {% csrf_token %}
         <button type="submit" class="btn-like" id="review-like-{{ review.pk }}">
@@ -108,9 +108,7 @@
           {% endif %}
         </button>
       </form>
-    </div>
-
-
+    </div> {% endcomment %}
 
 {% endfor %}
 
@@ -124,6 +122,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static '/js/posts_detail_likes.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/posts_detail_visits.js' %}" type="text/javascript"></script>
-<script src="{% static '/js/posts_review_emote.js' %}" type="text/javascript"></script>
+{% comment %} <script src="{% static '/js/posts_review_emote.js' %}" type="text/javascript"></script> {% endcomment %}
+
 
 {% endblock script %}
