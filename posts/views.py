@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from reviews.models import Review, Emote
 from django.db.models import Prefetch
 from taggit.models import Tag
+from django.core.paginator import Paginator
 
 
 
@@ -228,9 +229,14 @@ def search(request):
             else:
                 post_images.append((post,''))
 
+        page = request.GET.get('page', '1')
+        per_page = 10
+        paginator = Paginator(post_images, per_page)
+        page_obj = paginator.get_page(page)
+    
         context = {
             'query': query,
-            'posts': posts,
+            'posts': page_obj,
         }
     else:
         context = {}
