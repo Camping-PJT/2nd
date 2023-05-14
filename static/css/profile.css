@@ -64,7 +64,7 @@ input[id="tab02"]:checked ~ .card2 {
 }
 
 .box1 {
-  padding: 100px;
+  padding: 50px;
   width: 100%;
   height: 100%;
   display: grid;
@@ -97,6 +97,7 @@ input[id="tab02"]:checked ~ .card2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 30px;
 }
 
 .profile--card--left p {
@@ -116,7 +117,6 @@ input[id="tab02"]:checked ~ .card2 {
     margin-bottom: 2px;
   }
 }
-
 
 .user--icon {
   width: 30px;
@@ -144,6 +144,7 @@ input[id="tab02"]:checked ~ .card2 {
   width: 200px;
   height: 230px;
   line-height: 200px;
+  margin-bottom: 10px;
 }
 
 .profile--imgbox img {
@@ -191,7 +192,7 @@ input[id="tab02"]:checked ~ .card2 {
   padding: 0;
   height: 25px;
   line-height: 25px;
-  margin: 10px;
+  margin: 0px 10px;
 }
 
 #follower-ul {
@@ -256,4 +257,9 @@ input[id="tab02"]:checked ~ .card2 {
     border-right: none;
   }
 
+}
+
+.ceo--link {
+  text-decoration: none;
+  color: rgba(245, 118, 8);
 }

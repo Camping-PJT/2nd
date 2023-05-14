@@ -291,3 +291,13 @@ input[type=search]::-webkit-search-cancel-button {
 #scrollButton.go-down {
   transform: none;
 }
+.select2 {
+  width: 200px !important;
+}
+.select2-selection {
+  width: 200px;
+}
+.selection {
+  display: block;
+  width: 200px;
+}
