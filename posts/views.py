@@ -10,7 +10,7 @@ from reviews.models import Review
 from django.db.models import Prefetch
 from taggit.models import Tag
 from django.core.paginator import Paginator
-from django.contrib import messages
+from django.db.models import Count
 
 def staff_only(view_func):
     def wrapper(request, *args, **kwargs):
@@ -21,7 +21,15 @@ def staff_only(view_func):
     return wrapper
 
 def index(request):
-    posts = Post.objects.order_by('-pk')
+    so = request.GET.get('sortKind', '최신순')
+
+    if so == '최신순':
+        posts = Post.objects.order_by('-pk')
+    elif so == '추천순':
+        posts = Post.objects.annotate(num_likes=Count('like_users')).order_by('-num_likes')
+    elif so == '별점순':
+        posts = Post.objects.order_by('-rating')
+
     post_images = []
     for post in posts:
         images = PostImage.objects.filter(post=post)
@@ -37,6 +45,7 @@ def index(request):
 
     context = {
         'posts': page_obj,
+        'sortKind' : so,
     }
     return render(request, 'posts/index.html', context)
 
@@ -299,14 +308,22 @@ def tagged_posts(request, tag_pk):
     return render(request, 'posts/tagged_posts.html', context)
 
 def category(request, category):
-    posts = Post.objects.order_by('-pk').filter(category=category)
+    so = request.GET.get('sortKind', '최신순')
+
+    if so == '최신순':
+        posts = Post.objects.filter(category=category).order_by('-pk')
+    elif so == '추천순':
+        posts = Post.objects.filter(category=category).annotate(num_likes=Count('like_users')).order_by('-num_likes')
+    elif so == '별점순':
+        posts = Post.objects.filter(category=category).order_by('-rating')
+
     post_images = []
     for post in posts:
         images = PostImage.objects.filter(post=post)
         if images:
             post_images.append((post, images[0]))
         else:
-            post_images.append((post,''))
+            post_images.append((post, ''))
 
     page = request.GET.get('page', '1')
     per_page = 10
@@ -315,5 +332,7 @@ def category(request, category):
 
     context = {
         'posts': page_obj,
+        'category': category,
+        'sortKind' : so,
     }
     return render(request, 'posts/index.html', context)

@@ -60,7 +60,7 @@ class CustomUserChangeForm(UserChangeForm):
     ]
     
     email = forms.EmailField(label='이메일', label_suffix='', widget=forms.EmailInput(
-        attrs={'class': 'form-box','placeholder' : '이름','style' : 'width:400px;'}))
+        attrs={'class': 'form-box','placeholder' : '이메일','style' : 'width:400px;'}))
     region = forms.ChoiceField(label='선호지역', label_suffix='', choices=REGION_CHOICES, widget=forms.Select(
         attrs={'class': 'select--box','style' : 'width:195px;'}))
     image = ProcessedImageField(

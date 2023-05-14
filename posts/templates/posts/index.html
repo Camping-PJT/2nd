@@ -2,13 +2,24 @@
 {% load static %}
 {% block title %} List {% endblock title %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 {% endblock head %}
 
 
 {% block content %}
+<div class="index--title">
+  <h1>{% if category %}{{ category }} {% else %} 모든 {% endif %} 캠핑 장소({{posts|length}})</h1>
+</div>
 <div class="search--page">
   {% if posts %}
+  <form id="filterForm" method="GET" action="{% if category %}{% url 'posts:category' category %}{% else %}{% url 'posts:index' %}{% endif %}">
+    <input type="hidden" name="sortKind" value="{{ sortKind }}">
+    <select class="selectpicker" id="sortKind" name="sortKind">
+      <option value="최신순" {% if sortKind == '최신순' %}selected="selected"{% endif %}>최신순</option>
+      <option value="추천순" {% if sortKind == '추천순' %}selected="selected"{% endif %}>추천순</option>
+      <option value="별점순" {% if sortKind == '별점순' %}selected="selected"{% endif %}>별점순</option>
+    </select>
+  </form>
     <div>
       {% for post,image in posts %}
       <a href="{% url 'posts:detail' post.pk %}" class="content--link">
@@ -136,6 +147,20 @@
   {% endif %}
 </div>
 {% endblock content %}
-{% block script %}
+{% block script %}  
 <script src="{% static '/js/search_likes.js' %}" type="text/javascript"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const filterForm = document.getElementById("filterForm");
+    const sortKind = "{{ sortKind }}";
+  
+    const selectElement = document.getElementById("sortKind");
+    console.log(sortKind);
+    selectElement.value = sortKind;
+  
+    selectElement.addEventListener("change", function() {
+      filterForm.submit();
+    });
+  });
+</script>
 {% endblock script %}

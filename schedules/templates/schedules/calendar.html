@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <form method="POST" action="{% url 'schedules:create' %}">
   {% csrf_token %}
   <label for="post">캠핑 장소:</label>
-  <select name="post_id" id="post">
+  <select name="post_id" id="post_id">
     {% for post in posts %}
     <option value="{{ post.id }}">{{ post.title }}</option>
     {% endfor %}
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 {% csrf_token %}
                 <p>
                   <label for="post">캠핑 장소:</label>
-                  <select name="post_id" id="post">
+                  <select name="post_id" id="post_id">
                     {% for post in posts %}
                     <option value="{{ post.id }}" {% if post.id == schedule.post.id %}selected{% endif %}>{{ post.title }}</option>
                     {% endfor %}
@@ -133,4 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $('#post_id').select2(); 
+  });
+</script>
 {% endblock script %}
