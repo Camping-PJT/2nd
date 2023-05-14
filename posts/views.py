@@ -10,8 +10,15 @@ from reviews.models import Review
 from django.db.models import Prefetch
 from taggit.models import Tag
 from django.core.paginator import Paginator
+from django.contrib import messages
 
-
+def staff_only(view_func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_staff:
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('main')
+    return wrapper
 
 def index(request):
     posts = Post.objects.order_by('-pk')
@@ -56,7 +63,7 @@ def city(request):
         return JsonResponse(context)
     return render(request, 'posts/index_city.html', context)
 
-
+@staff_only
 @login_required
 def create(request):
     kakao_script_key = os.getenv('kakao_script_key')
@@ -93,6 +100,7 @@ def create(request):
                     Facility.objects.create(post=post, facility=facility_code)
                 
                 return redirect('posts:detail', post.pk)
+
     else:
         facility_form = FacilityForm()  # Initialize without a post object
     
@@ -179,7 +187,7 @@ def visits(request, post_pk):
     return JsonResponse(context)
 
 
-
+@staff_only
 @login_required
 def update(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
