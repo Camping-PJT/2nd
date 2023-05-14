@@ -12,11 +12,27 @@ from taggit.models import Tag
 from django.core.paginator import Paginator
 from .models import Priority
 from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseForbidden)
+from django.db.models import Count
 
 
+def staff_only(view_func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_staff:
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('main')
+    return wrapper
 
 def index(request):
-    posts = Post.objects.order_by('-pk')
+    so = request.GET.get('sortKind', '최신순')
+
+    if so == '최신순':
+        posts = Post.objects.order_by('-pk')
+    elif so == '추천순':
+        posts = Post.objects.annotate(num_likes=Count('like_users')).order_by('-num_likes')
+    elif so == '별점순':
+        posts = Post.objects.order_by('-rating')
+
     post_images = []
     for post in posts:
         images = PostImage.objects.filter(post=post)
@@ -24,8 +40,15 @@ def index(request):
             post_images.append((post, images[0]))
         else:
             post_images.append((post,''))
+
+    page = request.GET.get('page', '1')
+    per_page = 10
+    paginator = Paginator(post_images, per_page)
+    page_obj = paginator.get_page(page)
+
     context = {
-        'post_images': post_images,
+        'posts': page_obj,
+        'sortKind' : so,
     }
     return render(request, 'posts/index.html', context)
 
@@ -52,13 +75,13 @@ def city(request):
         return JsonResponse(context)
     return render(request, 'posts/index_city.html', context)
 
-
+@staff_only
 @login_required
 def create(request):
     kakao_script_key = os.getenv('kakao_script_key')
     post_form = PostForm()
     image_form = PostImageForm()
-    facility_form = FacilityForm()  # Initialize without a post object
+    facility_form = FacilityForm()
     
     if request.method == 'POST':
         post_form = PostForm(request.POST)
@@ -74,11 +97,14 @@ def create(request):
             # post.extra_address = extra_address
             post.city = address.split(' ')[0]
             post.save()
+
+            for i in files:
+                PostImage.objects.create(image=i, post=post)
             
             for tag in tags:
                 post.tags.add(tag.strip())
             
-            facility_form = FacilityForm(post=post, data=request.POST)  # Pass the post object during initialization
+            facility_form = FacilityForm(post=post, data=request.POST) 
             
             if facility_form.is_valid():
                 facility_data = facility_form.cleaned_data['facilities']
@@ -86,6 +112,7 @@ def create(request):
                     Facility.objects.create(post=post, facility=facility_code)
                 
                 return redirect('posts:detail', post.pk)
+
     else:
         facility_form = FacilityForm()  # Initialize without a post object
     
@@ -172,7 +199,7 @@ def visits(request, post_pk):
     return JsonResponse(context)
 
 
-
+@staff_only
 @login_required
 def update(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
@@ -272,13 +299,16 @@ def tagged_posts(request, tag_pk):
         else:
             post_images.append((post,''))
 
-
+        page = request.GET.get('page', '1')
+        per_page = 10
+        paginator = Paginator(post_images, per_page)
+        page_obj = paginator.get_page(page)
+    
     context = {
         'tag': tag, 
-        'posts': posts,
+        'posts': page_obj,
         }
     return render(request, 'posts/tagged_posts.html', context)
-
 
 
 # @login_required
@@ -350,4 +380,35 @@ def update_priority(request):
 #                 print(f"Error updating priority: {e}")
 
 #         return redirect('accounts:profile', request.user)
+
+
+def category(request, category):
+    so = request.GET.get('sortKind', '최신순')
+
+    if so == '최신순':
+        posts = Post.objects.filter(category=category).order_by('-pk')
+    elif so == '추천순':
+        posts = Post.objects.filter(category=category).annotate(num_likes=Count('like_users')).order_by('-num_likes')
+    elif so == '별점순':
+        posts = Post.objects.filter(category=category).order_by('-rating')
+
+    post_images = []
+    for post in posts:
+        images = PostImage.objects.filter(post=post)
+        if images:
+            post_images.append((post, images[0]))
+        else:
+            post_images.append((post, ''))
+
+    page = request.GET.get('page', '1')
+    per_page = 10
+    paginator = Paginator(post_images, per_page)
+    page_obj = paginator.get_page(page)
+
+    context = {
+        'posts': page_obj,
+        'category': category,
+        'sortKind' : so,
+    }
+    return render(request, 'posts/index.html', context)
 

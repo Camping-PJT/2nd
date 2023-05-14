@@ -6,6 +6,7 @@ import os
 from django.http import JsonResponse
 # Create your views here.
 def main(request):
+    allpost = Post.objects.all()
     w_city = request.GET.get('w_city', 'Seoul')    
     city = request.GET.get('city', 'Seoul')    
     kakao_script_key = os.getenv('kakao_script_key')
@@ -18,6 +19,24 @@ def main(request):
     context['kakao_key'] = kakao_key
     context['posts'] = posts
     context['m_selected_city'] = city
+    context['allpost'] = allpost
+
+    outdoor_posts = Post.objects.filter(category='오지, 노지').count()
+    paycamp_posts = Post.objects.filter(category='유료').count()
+    caravan_posts = Post.objects.filter(category='글램핑, 카라반').count()
+    total_posts = outdoor_posts + paycamp_posts + caravan_posts
+
+    if total_posts == 0:
+        caravan_percentage=paycamp_percentage=outdoor_percentage = 100
+    else:
+        outdoor_percentage = (outdoor_posts / total_posts) * 100
+        paycamp_percentage = (paycamp_posts / total_posts) * 100
+        caravan_percentage = (caravan_posts / total_posts) * 100
+
+    context['outdoor_percentage'] = outdoor_percentage
+    context['paycamp_percentage'] = paycamp_percentage
+    context['caravan_percentage'] = caravan_percentage
+
     return render(request, 'main.html', context)
 
 def sales(request):

@@ -9,10 +9,6 @@
 
 {% block content %}
   <div class="profile--container">
-
-    {% if request.user.is_owner == '사장님' %}
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBkmM_pvHuCUximGpTrWXB39N8hyZ2oTMqHH3vLaq6i92V8g/viewform?usp=sf_link">가게 등록 설문</a>
-    {% endif %}
     
     {% comment %} 탭 {% endcomment %}
     <div class="profile--content">
@@ -63,6 +59,9 @@
 
           {% comment %} 첫번째 탭 오른쪽 {% endcomment %}
           <div class="profile--card--right">
+            {% if person.is_staff %}
+              <a href="{% url 'posts:create' %}" class="profile--card--btn" >Post+</a>
+            {% endif %}
             <div class="profile--imgbox">
               {% if person.image %}
                 <img src="{{ person.image.url }}" alt="image"/>
@@ -72,10 +71,15 @@
             </div>
             <h4 id="logged-in-username">
               {{ person }}
-              {% if request.user.is_owner == '사장님' %}
+              {% if person.is_owner == '사장님' %}
                 <img src="{% static 'image/ceo.png' %}" alt="" class="user--icon">
               {% endif %}
             </h4>
+            {% if request.user == person %}
+              {% if person.is_owner == '사장님' %}
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBkmM_pvHuCUximGpTrWXB39N8hyZ2oTMqHH3vLaq6i92V8g/viewform?usp=sf_link" class="ceo--link">업체 등록 요청</a>
+              {% endif %}
+            {% endif %}
             <div class="d-flex">
               {% if request.user == person %}
                 <a href="{% url 'accounts:update' %}" class="profile--card--btn">수정</a>

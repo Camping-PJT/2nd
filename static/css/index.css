@@ -133,3 +133,40 @@
   border-color: #ccc;
   box-shadow: 0 0 0 0.25rem rgba(189, 170, 219, 0.4);
 }
+
+.index--title {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.index--title h1 {
+  font-weight: 600;
+}
+
+.selectpicker {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  border-radius: 8px;
+  border: 2px solid rgba(245, 118, 8);
+  text-align: center;
+  outline: 0 none;
+  position: relative;
+  z-index: 3; 
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 20px;
+}
+
+.selectpicker option {
+  color: rgba(245, 118, 8);
+  background-color: white;
+  font-size: 16px;
+  text-align: center;
+  border: none;
+}
+
+#filterForm {
+  text-align: end;
+}

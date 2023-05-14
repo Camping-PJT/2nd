@@ -113,10 +113,23 @@ class PostForm(forms.ModelForm):
         input_formats=['%H:%M']
     )
 
+    extra_address = forms.CharField(
+    max_length=100, 
+    label=False, 
+    widget=forms.TextInput(
+        attrs={
+            'required': False,
+            'placeholder': '상세주소',
+            'class': 'form-box',
+            'style': 'width: 400px; cursor:text; margin-top:5px;'
+            }
+        )
+    )
+
 
     class Meta:
         model = Post
-        fields = ('category', 'nature', 'title', 'content', 'phone',  'open_hour', 'close_hour', 'tags')
+        fields = ('category', 'nature', 'title', 'content', 'phone',  'open_hour', 'close_hour', 'tags', 'extra_address')
         widgets = {
             'tags': TagWidget(attrs={
                 'class': 'form-box', 

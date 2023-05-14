@@ -34,10 +34,10 @@
           </div>
           {% comment %} Tap {% endcomment %}
           <div class="category">
-            <a href="">전체</a>
-            <a href="">오지/노지캠핑</a>
-            <a href="">유료캠핑장</a>
-            <a href="">글램핑/카라반</a>
+            <a href="{% url 'posts:index' %}">전체</a>
+            <a href="{% url 'posts:category' '오지, 노지' %}">오지/노지캠핑</a>
+            <a href="{% url 'posts:category' '유료' %}">유료캠핑장</a>
+            <a href="{% url 'posts:category' '글램핑, 카라반' %}">글램핑/카라반</a>
             <a href="">테마검색</a>
             <a href="{% url 'sales' %}">캠핑용품추천</a>
           </div>
@@ -60,20 +60,20 @@
       {% comment %} 추후 카운트, 넓이계산식, 링크 넣어야함 {% endcomment %}
 
       <div class="post--count">
-        <a href="">
+        <a href="{% url 'posts:index' %}">
           <div class="allcnt">
             <div class="all--posts">
-              2,587 
+              {{ allpost|length }}
             </div>
             <div class="count--txt">
               전체
             </div>
           </div>
         </a>
-        <a href="">
+        <a href="{% url 'posts:category' '오지, 노지' %}">
           <div class="back">
             <img src="{% static 'image/outdoor.png' %}" alt="">
-            <div class="front" style="width:60%;">
+            <div class="front" style="width:{{outdoor_percentage}}%;">
               <img src="{% static 'image/outdoor_orange.png' %}" alt="">
             </div>
             <div class="count--txt">
@@ -81,10 +81,10 @@
             </div>
           </div>
         </a>
-        <a href="">
+        <a href="{% url 'posts:category' '유료' %}">
           <div class="back">
             <img src="{% static 'image/paycamp.png' %}" alt="">
-            <div class="front" style="width:80%;">
+            <div class="front" style="width:{{paycamp_percentage}}%;">
               <img src="{% static 'image/paycamp_purple.png' %}" alt="">
             </div>
             <div class="count--txt">
@@ -92,10 +92,10 @@
             </div>
           </div>
         </a>
-        <a href="">
+        <a href="{% url 'posts:category' '글램핑, 카라반' %}">
           <div class="back">
             <img src="{% static 'image/caravan.png' %}" alt="">
-            <div class="front" style="width:30%;">
+            <div class="front" style="width:{{caravan_percentage}}%;">
               <img src="{% static 'image/caravan_blue.png' %}" alt="">
             </div>
             <div class="count--txt">
@@ -199,10 +199,18 @@
           </div>
         </div>
         <div>
-          <div class="maps" id="maps" style="width: 400px; height: 400px;"></div>
+          <div class="maps" id="maps" style="width: 500px; height: 400px; margin:0 20px;"></div>
         </div>
         <div>
-          abc
+          <div class="main--posts">
+            <p id="selectedCity"></p>
+            <div id="postSection"></div>
+            {% comment %} {% for post in allpost %}
+              {% if post.city == selected_sido %} 
+                {{ post.title }}
+              {% endif %}
+            {% endfor %} {% endcomment %}
+          </div>
         </div>
       </div>
     </div>
@@ -211,7 +219,7 @@
   <footer>
     <img src="{% static 'image/logo_black.png' %}" alt="">
     <div>
-      개인정보취급방침 | 홈페이지 이용약관 | 광고 및 제휴문의 | 고객센터 | 회원가입 | 로그인
+      문지수 | 임성주 | 정소담 | 조현영
       <p>Copyright © 2023 5gocamping.캠핑가조 All rights reserved.</p>
       <p>https://github.com/Camping-PJT/2nd</p>
     </div>
@@ -239,7 +247,9 @@
           const data = response.data;
           if (data && Array.isArray(data.posts)) {
             const posts = data.posts;
+            let postHTML = '';
             const coordinates = [];
+            document.getElementById('selectedCity').innerHTML = sido + " 지역 캠핑장 <a href='/posts/'>모든 캠핑장 보기 ></a>";
 
             const promises = posts.map((post) => {
               return axios
@@ -257,27 +267,38 @@
                   const result = response.data.documents[0];
                   const latitude = result.y;
                   const longitude = result.x;
-
+    
                   coordinates.push(new kakao.maps.LatLng(latitude, longitude));
-
+    
                   const markerPosition = new kakao.maps.LatLng(latitude, longitude);
                   const marker = new kakao.maps.Marker({
                     position: markerPosition,
                     map: map,
                     title: post.title,
                   });
-
-                  kakao.maps.event.addListener(marker, 'click', function () {
-                    window.location.href = '/posts/' + post.id;
-                  });
+    
+                  (function (post) {
+                    kakao.maps.event.addListener(marker, 'click', function () {
+                      window.location.href = '/posts/' + post.id + '/';
+                    });
+                  })(post);
+    
+                  postHTML += '<a href="/posts/' + post.id + '/" class="post--link">';
+                  postHTML += '<div class="post">';
+                  postHTML += '<div class="post--title"><h4>' + post.title + '</h4><h5><i class="bi bi-star-fill"></i> ' + post.rating + '</h5></div>';
+                  postHTML += '<p>' + post.address + '</p>';
+                  postHTML += '</div>';
+                  postHTML += '</a>';
+                  
                 })
                 .catch((error) => {
                   console.log(error);
                 });
             });
-
+    
             Promise.all(promises).then(() => {
               const center = getCenterCoordinate(coordinates);
+              document.getElementById('postSection').innerHTML = postHTML;
               map.setCenter(center);
             });
           }
@@ -308,7 +329,7 @@
     const map = new kakao.maps.Map(mapContainer, mapOptions);
     const geocoder = new kakao.maps.services.Geocoder();
     const coordinates = [];
-
+    
     sido('서울');
 
   </script>

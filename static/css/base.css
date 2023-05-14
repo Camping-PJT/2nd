@@ -212,6 +212,10 @@ menu {
   letter-spacing: -0.03em;
 }
 
+.search input:active {
+  background-color: white;
+}
+
 .search--btn {
   border: none;
   position: absolute;
@@ -286,4 +290,14 @@ input[type=search]::-webkit-search-cancel-button {
 
 #scrollButton.go-down {
   transform: none;
+}
+.select2 {
+  width: 200px !important;
+}
+.select2-selection {
+  width: 200px;
+}
+.selection {
+  display: block;
+  width: 200px;
 }
