@@ -13,4 +13,7 @@ urlpatterns = [
     path('<int:post_pk>/update/', views.update, name='update'),
     path('search/', views.search, name='search'),
     path('tags/<int:tag_pk>/', views.tagged_posts, name='tagged_posts'),
+    path('update_priority/', views.update_priority, name='update_priority'),
+    # path('remove_priority/', views.remove_priority, name='remove_priority'),
+
 ]

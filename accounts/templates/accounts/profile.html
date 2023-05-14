@@ -20,6 +20,10 @@
       <label for="tab01">Profile</label>
       <input type="radio" name="tabmenu" id="tab02">
       <label for="tab02">Content</label>
+      <input type="radio" name="tabmenu" id="tab03">
+      <label for="tab03"><i class="bi bi-calendar-week"></i></label>
+      <input type="radio" name="tabmenu" id="tab04">
+      <label for="tab04">♥</label>
 
       {% comment %} 첫번째 탭 {% endcomment %}
       <div class="profile--card card1">
@@ -155,6 +159,85 @@
         </div>
       </div>
 
+      {% comment %} 세번째 탭 {% endcomment %}
+      <div class="profile--card card3">
+        <h3><i class="bi bi-calendar-week"></i></h3>
+        {% for month in schedules_by_month %}
+          <h4>{{ month.month|date:"Y F" }}</h4>
+          <ul>
+            {% for schedule in schedules %}
+              {% if schedule.start|date:"Y F" == month.month|date:"Y F" %}
+                <li>캠핑일자 : {{ schedule.start|date:"M d일" }} - {{ schedule.end|date:"M d일" }}</li>
+                  <a href="{% url 'posts:detail' schedule.post.pk %}">
+                    <P>캠핑장 : {{ schedule.title }}</P>
+                    {% if  schedule.description %}
+                      <p>메모: {{ schedule.description }}</p>
+                    {% else %}
+                    {% endif %}
+                  </a>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </div>
+
+      <div class="profile--card card4">
+        <div class="box4">
+          <div class="box4--left">
+            <h3 class="priority-title">가보고 싶은 캠핑장</h3>
+            <div class="priority--content">
+              <div class="post-list">
+                {% for post in liked_posts %}
+                  <div class="post-item" draggable="true" data-post-id="{{ post.pk }}">
+                    <label for="{{ post.pk }}">{{ post.title }}</label>
+                  </div>
+                {% endfor %}
+                <div class="post-dropzone" id="post-dropzone">Drop Here</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 class="priority-title">나의 우선순위</h2>
+            <div class="box4--right">
+              <form id="priority-form" action="{% url 'posts:update_priority' %}" method="POST">
+                {% csrf_token %}
+                <div class="priority-list">
+                  {% for i in priority_range %}
+                    <div>
+                      <div class="priority-item" data-priority="{{ i }}"> {{ i }} 순위</div>
+                      <div class="priority-dropzone" data-priority="{{ i }}">
+                        {% for priority in priorities %}
+                          {% if priority.priority == i %}
+                            <label for="{{ i }}" draggable="true">{{ priority.post.title }}</label>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+              </form>
+              <form id="priority-form" action="{% url 'posts:update_priority' %}" method="POST">
+                {% csrf_token %}
+                <div class="priority-list">
+                  {% for i in priority_range2 %}
+                    <div>
+                      <div class="priority-item" data-priority="{{ i }}"> {{ i }} 순위</div>
+                      <div class="priority-dropzone" data-priority="{{ i }}">
+                        {% for priority in priorities %}
+                          {% if priority.priority == i %}
+                            <label for="{{ i }}" draggable="true">{{ priority.post.title }}</label>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -242,6 +325,32 @@
   </div>
 </div>
 
+{% comment %} 우선순위 테스트용 {% endcomment %}
+{% comment %} <div class="d-flex ">
+  <div class="post-list">
+    {% for post in liked_posts %}
+      <div class="post-item" draggable="true" data-post-id="{{ post.pk }}">
+        {{ post.title }}
+      </div>
+    {% endfor %}
+  </div>
+  
+  <div class="priority-list">
+    {% for i in priority_range %}
+      <div>
+        <div class="priority-item" data-priority="{{ i }}"> {{ i }} 순위</div>
+        <div class="priority-dropzone" data-priority="{{ i }}">
+          {% for priority in priorities %}
+            {% if priority.priority == i %}
+              {{ priority.post.title }}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div> {% endcomment %}
+
 {% endblock content %}
 
 {% block script %}
@@ -249,7 +358,115 @@
   $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();   
   });
-  </script>
+</script>
 <script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
+<script src="{% static '/js/priority.js' %}" type="text/javascript"></script>
+
+{% comment %} 
+<script>
+  function handleDrop(event) {
+    console.log("handleDrop called");
+    event.preventDefault();
+    const postId = event.dataTransfer.getData("text/plain");
+    const priority = event.target.getAttribute("data-priority");
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/posts/update_priority/", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    const csrftoken = getCookie('csrftoken');
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Priority updated successfully!");
+        const droppedPost = document.querySelector(`[data-post-id="${postId}"]`);
+        droppedPost.remove();
+        event.target.textContent = droppedPost.textContent; 
+      }
+    };
+
+    const data = JSON.stringify({ postId: parseInt(postId), priority: parseInt(priority) });
+    console.log(data)
+    xhr.send(data);
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  function handleDragStart(event) {
+    const postId = event.target.getAttribute("data-post-id");
+    event.dataTransfer.setData("text/plain", postId);
+  }
+
+  const postItems = document.querySelectorAll(".post-item");
+  postItems.forEach(function (item) {
+    item.addEventListener("dragstart", handleDragStart);
+  });
+
+  const priorityDropzones = document.querySelectorAll(".priority-dropzone");
+  priorityDropzones.forEach(function (dropzone) {
+    dropzone.addEventListener("drop", handleDrop);
+    dropzone.addEventListener("dragover", function (event) {
+      event.preventDefault();
+    });
+  });
+  
+</script> 
+{% endcomment %}
+
+{% comment %} <script>
+  
+  const postItems = document.querySelectorAll('.post-item');
+
+  postItems.forEach((postItem) => {
+    postItem.addEventListener('dragstart', (event) => {
+      event.dataTransfer.setData('text/plain', event.target.dataset.postId);
+    });
+  });
+
+  const priorityDropzones = document.querySelectorAll('.priority-dropzone');
+
+  priorityDropzones.forEach((dropzone) => {
+    dropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+    });
+
+    dropzone.addEventListener('dragenter', (event) => {
+      event.preventDefault();
+      event.currentTarget.classList.add('highlight');
+    });
+
+    dropzone.addEventListener('dragleave', (event) => {
+      event.currentTarget.classList.remove('highlight');
+    });
+
+    dropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      event.currentTarget.classList.remove('highlight');
+
+      const postId = event.dataTransfer.getData('text/plain');
+      const priority = event.currentTarget.dataset.priority;
+      const postTitle = document.querySelector(`.post-item[data-post-id="${postId}"] label`).textContent;
+
+      const inputElement = document.createElement('input');
+      inputElement.type = 'hidden';
+      inputElement.name = 'priority_updates[]';
+      inputElement.value = `${postId}:${priority}`;
+      console.log(inputElement.value)
+
+      document.querySelector('form').appendChild(inputElement);
+
+      const postItem = document.querySelector(`.post-item[data-post-id="${postId}"]`);
+      postItem.style.display = 'none';
+
+      event.currentTarget.textContent = postTitle;
+    });
+  });
+
+</script> {% endcomment %}
 
 {% endblock script %}

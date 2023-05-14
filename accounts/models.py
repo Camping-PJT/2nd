@@ -5,7 +5,6 @@ from imagekit.processors import ResizeToFill
 import os
 from django.conf import settings
 
-# Create your models here.
 
 class User(AbstractUser):
     SEOUL = '서울'
@@ -53,7 +52,6 @@ class User(AbstractUser):
         if self.image:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(User, self).delete(*args, **kargs)
-
 
     def save(self, *args, **kwargs):
         if self.id:
