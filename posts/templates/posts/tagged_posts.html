@@ -96,9 +96,9 @@
     </div>
     <div>
       <ul class="pagination justify-content-center" style="grid-column: 2 / 4; grid-row: 2 / 3; ">
-        {% if post_images.has_previous %}
+        {% if posts.has_previous %}
         <li class="page-item">
-          <a class="page-link" href="?q={{ query }}&page={{ post_images.previous_page_number }}">이전</a>
+          <a class="page-link" href="?q={{ query }}&page={{ posts.previous_page_number }}">이전</a>
         </li>
         {% else %}
           <li class="page-item disabled">
@@ -106,9 +106,9 @@
           </li>
         {% endif %}
 
-        {% for page_number in post_images.paginator.page_range %}
-          {% if page_number >= post_images.number|add:-5 and page_number <= post_images.number|add:5 %}
-            {% if page_number == post_images.number %}
+        {% for page_number in posts.paginator.page_range %}
+          {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
+            {% if page_number == posts.number %}
               <li class="page-item active" aria-current="page">
                 <a class="page-link" href="?q={{ query }}&page={{ page_number }}">{{ page_number }}</a>
               </li>
@@ -121,9 +121,9 @@
         {% endfor %}
   
   
-        {% if post_images.has_next %}
+        {% if posts.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?q={{ query }}&page={{ post_images.next_page_number }}">다음</a>
+            <a class="page-link" href="?q={{ query }}&page={{ posts.next_page_number }}">다음</a>
           </li>
         {% else %}
           <li class="page-item disabled">
@@ -133,7 +133,7 @@
       </ul>
     </div>
   {% else %}
-    <h1>검색 결과가 없습니다.</h1>
+    <h1>게시물이 없습니다.</h1>
   {% endif %}
 </div>
 {% endblock content %}

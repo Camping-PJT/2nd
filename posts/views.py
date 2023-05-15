@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Post, PostImage, Facility
 from .forms import PostForm,  PostImageForm, DeleteImageForm, FacilityForm, DeleteFacilityForm
 import os
-from django.db.models import Q
+from django.db.models import Q, Count
 from utils.map import get_latlng_from_address
 from django.http import JsonResponse
 from reviews.models import Review
@@ -11,8 +11,6 @@ from django.db.models import Prefetch
 from taggit.models import Tag
 from django.core.paginator import Paginator
 from .models import Priority
-from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseForbidden)
-from django.db.models import Count
 
 
 def staff_only(view_func):
@@ -51,6 +49,35 @@ def index(request):
         'sortKind' : so,
     }
     return render(request, 'posts/index.html', context)
+
+
+def thema(request):
+
+    facilities = request.GET.getlist('facility')
+    posts = Post.objects.annotate(facility_count=Count('facility')).filter(facility__facility__in=facilities)
+    for facility in facilities:
+        posts = posts.filter(facility__facility=facility)
+    
+    post_images = []
+    for post in posts:
+        images = PostImage.objects.filter(post=post)
+        if images:
+            post_images.append((post, images[0]))
+        else:
+            post_images.append((post, ''))
+
+    page = request.GET.get('page', '1')
+    per_page = 10
+    paginator = Paginator(post_images, per_page)
+    page_obj = paginator.get_page(page)
+
+    context = {
+        'posts': page_obj,
+        'facilities': facilities,
+    }
+    return render(request, 'posts/index_thema.html', context)
+
+
 
 
 def city(request):
@@ -124,9 +151,7 @@ def create(request):
     }
     return render(request, 'posts/create.html', context)
 
-
-
-
+@login_required
 def detail(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
     post = Post.objects.get(pk=post_pk)
@@ -148,17 +173,23 @@ def detail(request, post_pk):
     #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
     #     ).order_by('-pk')
 
+    page = request.GET.get('page', '1')
+    per_page = 5
+    paginator = Paginator(reviews, per_page)
+    page_obj = paginator.get_page(page)
+
     context = {
         'kakao_script_key': kakao_script_key,
         'post': post,
         'facilities': facilities,
         'latitude': latitude,
         'longitude': longitude,
-        'reviews': reviews,
+        'reviews': page_obj,
+        'paginator': paginator,
     }
     return render(request, 'posts/detail.html', context)
 
-
+@staff_only
 @login_required
 def delete(request, post_pk):
     post = Post.objects.get(pk=post_pk)
@@ -311,26 +342,32 @@ def tagged_posts(request, tag_pk):
     return render(request, 'posts/tagged_posts.html', context)
 
 
+# ajax x (post -> priority)
 # @login_required
 # def update_priority(request):
-#     if request.method == 'POST' and request.is_ajax():
-        
-#         post_id = int(request.POST.get('postId'))
-#         priority = int(request.POST.get('priority'))
+#     if request.method == 'POST':
+#         priority_updates = request.POST.getlist('priority_updates[]')
 
-#         print([post_id, priority])
+#         for update in priority_updates:
+#             post_id, priority = update.split(':')
+
+#             try:
+#                 post = Post.objects.get(id=int(post_id))
+#                 priority_obj = Priority.objects.filter(post=post, user=request.user).first()
+#                 if priority_obj:
+#                     priority_obj.priority = int(priority)
+#                     priority_obj.save()
+#                 else:
+#                     priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
+                
+
+#             except (ValueError, Post.DoesNotExist, Exception) as e:
+#                 print(f"Error updating priority: {e}")
+
+#         return redirect('accounts:profile', request.user)
 
 
-#         priority_obj = Priority.objects.get(post_id=post_id)
-
-#         priority_obj.priority = priority
-
-#         priority_obj.save()
-
-#         return JsonResponse({'success': True})
-#     else:
-#         return JsonResponse({'success': False})
-
+# ajax 처리까지 완료 (post -> priority)
 @login_required
 def update_priority(request):
     if request.method == 'POST':
@@ -352,34 +389,10 @@ def update_priority(request):
             except (ValueError, Post.DoesNotExist, Exception) as e:
                 print(f"Error updating priority: {e}")
 
-        return redirect('accounts:profile', request.user)
+        return JsonResponse({'success': True})
 
-# @login_required
-# def update_priority(request):
-#     if request.method == 'POST':
-#         priority_updates = request.POST.getlist('priority_updates[]')
 
-#         for update in priority_updates:
-#             post_id, priority = update.split(':')
 
-#             try:
-#                 post = Post.objects.get(id=int(post_id))
-#                 priority_obj = Priority.objects.filter(post=post, user=request.user).first()
-                
-#                 if priority == '':
-#                     if priority_obj:
-#                         priority_obj.delete()
-#                 else:
-#                     if priority_obj:
-#                         priority_obj.priority = int(priority)
-#                         priority_obj.save()
-#                     else:
-#                         priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
-
-#             except (ValueError, Post.DoesNotExist, Exception) as e:
-#                 print(f"Error updating priority: {e}")
-
-#         return redirect('accounts:profile', request.user)
 
 
 def category(request, category):

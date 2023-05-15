@@ -43,6 +43,40 @@
 {% endif %}
 <span id="review-dislikes-count">{{ review.dislike_users.all|length }}</span>
 
+
+  {% comment %} 리뷰 수정, 삭제 {% endcomment %}
+  <div>
+    {% if request.user == review.user %}
+      <a href="{% url 'reviews:update' review.pk %}">리뷰수정</a>
+      <form action="{% url 'reviews:delete' review.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+      </form>
+    {% endif %}
+  </div>
+  {% comment %} 프로필 {% endcomment %}
+  <div>
+    <a href="{% url 'accounts:profile' review.user %}">
+      {% if review.user.image %}
+        <img src="{{ review.user.image.url }}" alt="">
+      {% else %}
+      <img src="{% static 'image/profile-none.png' %}" alt="">
+      {% endif %}
+      <p>{{ review.user}}</p>
+    </a>
+  </div>
+
+  {% comment %} rating {% endcomment %}
+  <div>
+    {{ review.rate_to_star }}{{ review.rate_to_empty_star}}
+  </div>
+  <div>
+    {{ review.created_string }}
+    <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+    {{ review.content|safe }}
+  <hr>
+  </div>
+  
 {% endblock content %}
 
 {% block script %}

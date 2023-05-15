@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from utils.weather import weather
 from utils.sales import item
-from posts.models import Post
+from posts.models import Post, Facility
 import os
 from django.http import JsonResponse
 # Create your views here.
@@ -13,6 +13,8 @@ def main(request):
     kakao_key = os.getenv('kakao_key')
     context = weather(w_city)
     posts = Post.objects.filter(city=city).values()
+    choices = Facility.FACILITY_CHOICES
+    facilities = [ choice[1] for choice in choices]
     if w_city:
         context['selected_city'] = w_city
     context['kakao_script_key'] = kakao_script_key
@@ -20,6 +22,7 @@ def main(request):
     context['posts'] = posts
     context['m_selected_city'] = city
     context['allpost'] = allpost
+    context['facilities'] = facilities
 
     outdoor_posts = Post.objects.filter(category='오지, 노지').count()
     paycamp_posts = Post.objects.filter(category='유료').count()

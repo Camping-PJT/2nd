@@ -78,6 +78,7 @@
             {% if request.user == person %}
               {% if person.is_owner == '사장님' %}
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBkmM_pvHuCUximGpTrWXB39N8hyZ2oTMqHH3vLaq6i92V8g/viewform?usp=sf_link" class="ceo--link">업체 등록 요청</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSflvcX3isebrIJyiaFpuYwZVKavHSLp1OYhtIpiCBMTz4DfjQ/viewform?usp=sf_link" class='ceo--link'>업체 정보 수정 요청</a>
               {% endif %}
             {% endif %}
             <div class="d-flex">
@@ -196,8 +197,8 @@
                     <label for="{{ post.pk }}">{{ post.title }}</label>
                   </div>
                 {% endfor %}
-                <div class="post-dropzone" id="post-dropzone">Drop Here</div>
               </div>
+              
             </div>
           </div>
           <div>
@@ -219,6 +220,7 @@
                     </div>
                     {% endfor %}
                   </div>
+                <div class="post-dropzone priority-remove-zone" id="post-dropzone">Drop Here</div>
               </form>
               <form id="priority-form" action="{% url 'posts:update_priority' %}" method="POST">
                 {% csrf_token %}
@@ -329,31 +331,6 @@
   </div>
 </div>
 
-{% comment %} 우선순위 테스트용 {% endcomment %}
-{% comment %} <div class="d-flex ">
-  <div class="post-list">
-    {% for post in liked_posts %}
-      <div class="post-item" draggable="true" data-post-id="{{ post.pk }}">
-        {{ post.title }}
-      </div>
-    {% endfor %}
-  </div>
-  
-  <div class="priority-list">
-    {% for i in priority_range %}
-      <div>
-        <div class="priority-item" data-priority="{{ i }}"> {{ i }} 순위</div>
-        <div class="priority-dropzone" data-priority="{{ i }}">
-          {% for priority in priorities %}
-            {% if priority.priority == i %}
-              {{ priority.post.title }}
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-</div> {% endcomment %}
 
 {% endblock content %}
 
@@ -366,111 +343,5 @@
 <script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/priority.js' %}" type="text/javascript"></script>
 
-{% comment %} 
-<script>
-  function handleDrop(event) {
-    console.log("handleDrop called");
-    event.preventDefault();
-    const postId = event.dataTransfer.getData("text/plain");
-    const priority = event.target.getAttribute("data-priority");
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/posts/update_priority/", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    const csrftoken = getCookie('csrftoken');
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log("Priority updated successfully!");
-        const droppedPost = document.querySelector(`[data-post-id="${postId}"]`);
-        droppedPost.remove();
-        event.target.textContent = droppedPost.textContent; 
-      }
-    };
-
-    const data = JSON.stringify({ postId: parseInt(postId), priority: parseInt(priority) });
-    console.log(data)
-    xhr.send(data);
-  }
-
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }
-
-  function handleDragStart(event) {
-    const postId = event.target.getAttribute("data-post-id");
-    event.dataTransfer.setData("text/plain", postId);
-  }
-
-  const postItems = document.querySelectorAll(".post-item");
-  postItems.forEach(function (item) {
-    item.addEventListener("dragstart", handleDragStart);
-  });
-
-  const priorityDropzones = document.querySelectorAll(".priority-dropzone");
-  priorityDropzones.forEach(function (dropzone) {
-    dropzone.addEventListener("drop", handleDrop);
-    dropzone.addEventListener("dragover", function (event) {
-      event.preventDefault();
-    });
-  });
-  
-</script> 
-{% endcomment %}
-
-{% comment %} <script>
-  
-  const postItems = document.querySelectorAll('.post-item');
-
-  postItems.forEach((postItem) => {
-    postItem.addEventListener('dragstart', (event) => {
-      event.dataTransfer.setData('text/plain', event.target.dataset.postId);
-    });
-  });
-
-  const priorityDropzones = document.querySelectorAll('.priority-dropzone');
-
-  priorityDropzones.forEach((dropzone) => {
-    dropzone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-    });
-
-    dropzone.addEventListener('dragenter', (event) => {
-      event.preventDefault();
-      event.currentTarget.classList.add('highlight');
-    });
-
-    dropzone.addEventListener('dragleave', (event) => {
-      event.currentTarget.classList.remove('highlight');
-    });
-
-    dropzone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      event.currentTarget.classList.remove('highlight');
-
-      const postId = event.dataTransfer.getData('text/plain');
-      const priority = event.currentTarget.dataset.priority;
-      const postTitle = document.querySelector(`.post-item[data-post-id="${postId}"] label`).textContent;
-
-      const inputElement = document.createElement('input');
-      inputElement.type = 'hidden';
-      inputElement.name = 'priority_updates[]';
-      inputElement.value = `${postId}:${priority}`;
-      console.log(inputElement.value)
-
-      document.querySelector('form').appendChild(inputElement);
-
-      const postItem = document.querySelector(`.post-item[data-post-id="${postId}"]`);
-      postItem.style.display = 'none';
-
-      event.currentTarget.textContent = postTitle;
-    });
-  });
-
-</script> {% endcomment %}
 
 {% endblock script %}
