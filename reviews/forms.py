@@ -4,10 +4,11 @@ from ckeditor.widgets import CKEditorWidget
 
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(
-        label = '리뷰 제목',
+        label = False,
         widget = forms.TextInput(
             attrs = {
-                'class': 'form-control',
+                'placeholder':'리뷰제목',
+                'class': 'form-box',
             }
         )
     )

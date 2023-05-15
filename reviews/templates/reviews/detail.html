@@ -1,86 +1,137 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
+{% load filters %}
+
+{% block title %} {{review.title}} {% endblock title %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/reviews.css' %}"> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock head %}
+
 
 {% block content %}
 
-{% if request.user.is_authenticated %}
-  <form id="review-likes-form-{{ review.pk }}" data-review-id="{{ review.pk }}">
-    {% csrf_token %}
-    {% if request.user in review.like_users.all %}
-      <button class="btn btn-link text-danger p-0" type="submit">
-        <i class="bi bi-hand-thumbs-up-fill" id="review-up"></i>
-      </button>
-    {% else %}
-      <button class="btn btn-link text-danger p-0" type="submit">
-        <i class="bi bi-hand-thumbs-up" id="review-up"></i>
-      </button>
-    {% endif %}
-  </form>
-{% else %}
-  <button class="btn btn-link text-secondary p-0" disabled>
-    <i class="bi bi-hand-thumbs-up" id="review-up"></i>
-  </button>
-{% endif %}
-<span id="review-likes-count">{{ review.like_users.all|length }}</span>
+<div class="review--container">
 
-{% if request.user.is_authenticated %}
-  <form id="review-dislikes-form-{{ review.pk }}" data-review-id="{{ review.pk }}">
-    {% csrf_token %}
-    {% if request.user in review.dislike_users.all %}
-      <button class="btn btn-link text-danger p-0" type="submit">
-        <i class="bi bi-hand-thumbs-down-fill" id="review-down"></i>
-      </button>
-    {% else %}
-      <button class="btn btn-link text-danger p-0" type="submit">
-        <i class="bi bi-hand-thumbs-down" id="review-down"></i>
-      </button>
-    {% endif %}
-  </form>
-{% else %}
-  <button class="btn btn-link text-secondary p-0" disabled>
-    <i class="bi bi-hand-thumbs-down" id="review-down"></i>
-  </button>
-{% endif %}
-<span id="review-dislikes-count">{{ review.dislike_users.all|length }}</span>
-
-
-  {% comment %} 리뷰 수정, 삭제 {% endcomment %}
-  <div>
-    {% if request.user == review.user %}
-      <a href="{% url 'reviews:update' review.pk %}">리뷰수정</a>
-      <form action="{% url 'reviews:delete' review.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="삭제">
-      </form>
-    {% endif %}
-  </div>
-  {% comment %} 프로필 {% endcomment %}
-  <div>
-    <a href="{% url 'accounts:profile' review.user %}">
-      {% if review.user.image %}
-        <img src="{{ review.user.image.url }}" alt="">
-      {% else %}
-      <img src="{% static 'image/profile-none.png' %}" alt="">
-      {% endif %}
-      <p>{{ review.user}}</p>
-    </a>
+  <div class="review--header">
+    <div class="d-flex gap-1">
+    <i class="bi bi-bookmark-heart"></i>{{ review.post.title }} 이용 후기
+      {% comment %} rating {% endcomment %}
+      <div class="star-box">
+        <span class="star-gray">
+          <span class="star-orange" style="width:{{ review.rating|multiply_by_20 }}%;"></span>
+        </span>
+      </div>
+    </div>
+    <div>
+      <a href="" onclick="copy_trackback(this.href); return false;" style="color:black;"><i class="bi bi-link-45deg"></i></a>
+      <a href="" onclick="printThis(); return false;" style="color:black;"><i class="bi bi-printer"></i></a>
+    </div>
   </div>
 
-  {% comment %} rating {% endcomment %}
-  <div>
-    {{ review.rate_to_star }}{{ review.rate_to_empty_star}}
+  <div class="review--title">
+    {{ review.title }}
+
+    <div class="review--info">
+      <a class="review--user " href="{% url 'accounts:profile' review.user %}">
+        {% if review.user.image %}
+          <img src="{{ review.user.image.url }}" alt="{{ review.user}}">
+        {% else %}
+          <img src="{% static 'image/profile-none.png' %}" alt="profile-image-none">
+        {% endif %}
+        <span>{{ review.user}}</span>
+      </a>
+      <span>|</span>
+      {{ review.created_string }}
+      <span>|</span>
+
+      <div class="d-flex align-items-center justify-content-center">
+        {% comment %} 좋아요 {% endcomment %}
+        {% if request.user.is_authenticated %}
+        <form id="review-likes-form-{{ review.pk }}" data-review-id="{{ review.pk }}">
+          {% csrf_token %}
+          {% if request.user in review.like_users.all %}
+          <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.dislike_users.all %} disabled {% endif %}>
+                <i class="bi bi-hand-thumbs-up-fill" id="review-up"></i>
+              </button>
+            {% else %}
+              <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.dislike_users.all %} disabled {% endif %}>
+                <i class="bi bi-hand-thumbs-up" id="review-up"></i>
+              </button>
+            {% endif %}
+          </form>
+          {% else %}
+          <button class="btn btn-link text-secondary p-0" disabled>
+            <i class="bi bi-hand-thumbs-up" id="review-up"></i>
+          </button>
+          {% endif %}
+          <span id="review-likes-count" class="count--like">{{ review.like_users.all|length }}</span>
+        {% comment %} 싫어요 {% endcomment %}
+        {% if request.user.is_authenticated %}
+          <form id="review-dislikes-form-{{ review.pk }}" data-review-id="{{ review.pk }}">
+            {% csrf_token %}
+            {% if request.user in review.dislike_users.all %}
+              <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.like_users.all %} disabled {% endif %}>
+                <i class="bi bi-hand-thumbs-down-fill" id="review-down"></i>
+              </button>
+            {% else %}
+              <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.like_users.all %} disabled {% endif %}>
+                <i class="bi bi-hand-thumbs-down" id="review-down"></i>
+              </button>
+            {% endif %}
+          </form>
+        {% else %}
+          <button class="btn btn-link text-secondary p-0" disabled>
+            <i class="bi bi-hand-thumbs-down" id="review-down"></i>
+          </button>
+        {% endif %}
+        <span id="review-dislikes-count" class="count--like">{{ review.dislike_users.all|length }}</span>
+      </div>
+    </div>
   </div>
-  <div>
-    {{ review.created_string }}
-    <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
-    {{ review.content|safe }}
-  <hr>
-  </div>
+
   
+
+    {% comment %} 리뷰 수정, 삭제 {% endcomment %}
+    <div class="review--btn--box">
+      {% if request.user == review.user %}
+        <a href="{% url 'reviews:update' review.pk %}" class="reviews--btn">수정</a>
+        <form action="{% url 'reviews:delete' review.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="삭제" class="reviews--btn" onclick="return confirm('삭제하시겠습니까?')">
+        </form>
+      {% endif %}
+    </div>
+
+    {% comment %} review {% endcomment %}
+    <div class="review--body">
+      {{ review.content|safe }}
+    </div>
+    <hr>
+
+    <a href="{% url 'posts:detail' review.post.pk %}" class="list--view">게시글보기</a>
+
+</div>
+
 {% endblock content %}
 
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static '/js/reviews_detail.js' %}" type="text/javascript"></script>
+<script>
+  function copy_trackback(url) {
+    var tempInput = document.createElement('input');
+    tempInput.value = url;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    alert('URL이 복사되었습니다.');
+  }
+  
+  function printThis() {
+    window.print();
+  }
+  </script>
 
 {% endblock script %}

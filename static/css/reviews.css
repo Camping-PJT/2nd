@@ -1,0 +1,174 @@
+.star-rating input[name="rating"] {
+  display: none;
+}
+
+.rating--gray{
+  background-image: url("/static/image/mango_icon2.png");
+  background-position: -322px -152px;
+  width: 28px;
+  height: 28px;
+}
+
+.rating--orange{
+  background-image: url("/static/image/mango_icon2.png");
+  background-position: -280px -539px;
+  width: 28px;
+  height: 28px;
+}
+
+p label {
+  display: none;
+}
+
+.form-box{
+  width: 835px;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  cursor: text;
+}
+
+.form-box:focus {
+  border-color: rgb(138, 147, 202);
+  outline: none;
+  box-shadow: 0.5px 0.5px 10px 1px #3839435c;
+}
+
+.review--write {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.review--btn {
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  width: 100%;
+  background-color: #383943;
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.review--btn:hover {
+  background-color: #5c5e6d;
+}
+.review--container {
+  width: 88%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.review--header {
+  width: 100%;
+  border-bottom: 2px solid #383943;
+  height: 50px;
+  display: flex;
+  align-items: end;
+  font-size: 20px;
+  justify-content: space-between;
+}
+
+.review--title {
+  height: 100px;
+  border-bottom: 1px solid #9494943e;
+  font-size: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.review--info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: gray;
+}
+
+.review--user {
+  display: flex;
+  text-decoration: none;
+  gap: 10px;
+  color: gray;
+  align-items: center;
+}
+
+.review--info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+}
+
+.count--like {
+  font-size: 15px;
+  font-family: 'MBC1961GulimM';
+  margin: 5px;
+}
+
+.star-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.star-gray{
+  background-repeat: no-repeat;
+  background-image: url("//img1a.coupangcdn.com/image/coupang/search/search_product_assets_170324.png");
+  overflow: hidden;
+  float: left;
+  width: 70px;
+  height: 17px;
+  margin-right: 3px;
+  background-position: 0 -149px;
+}
+
+.star-orange {
+  background-repeat: no-repeat;
+  background-image: url("//img1a.coupangcdn.com/image/coupang/search/search_product_assets_170324.png");
+  overflow: hidden;
+  float: left;
+  height: 17px;
+  background-position: 0 -199px;
+}
+
+.review--btn--box {
+  display: flex;
+  justify-content: end;
+}
+
+.reviews--btn {
+  text-decoration: none;
+  color: rgba(245, 118, 8);
+  border: none;
+  background-color: #fff0;
+  margin: 10px;
+}
+
+.reviews--btn:hover {
+  color: rgb(255, 148, 54);
+}
+
+.review--body {
+  width: 100%;
+  padding: 20px;
+}
+
+.list--view{
+  text-decoration: none;
+  color: rgba(245, 118, 8);
+  font-weight: 600;
+  margin-left: auto;
+  width: 100px;
+  display: block;
+}
