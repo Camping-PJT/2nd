@@ -3,18 +3,32 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .models import Schedule, Post
 from django.urls import reverse
-
+from utils.map import get_latlng_from_address
+import os
 
 # Create your views here.
 
 
 def calendar(request):
-    posts = Post.objects.all()  
+    posts = Post.objects.all()
+    kakao_script_key = os.getenv('kakao_script_key')
     user_id = request.user.id
     schedules = Schedule.objects.filter(user_id=user_id)
+    latitude_list = []
+    longitude_list = []
+    
+    for schedule in schedules:
+        address = schedule.post.address
+        latitude, longitude = get_latlng_from_address(address)
+        latitude_list.append(latitude)
+        longitude_list.append(longitude)
+    
     context = {
-        'posts': posts,  
-        'schedules': schedules
+        'posts': posts,
+        'schedules': schedules,
+        'kakao_script_key': kakao_script_key,
+        'latitude_list': latitude_list,
+        'longitude_list': longitude_list,
     }
     return render(request, 'schedules/calendar.html', context)
 
@@ -27,7 +41,17 @@ def create_schedule(request):
         description = request.POST['description']
         
         post = get_object_or_404(Post, id=post_id)
-        schedule = Schedule(post=post, user=request.user, title=post.title, start=start, end=end, description=description)
+        
+        schedule = Schedule(
+            post=post,
+            user=request.user,
+            title=post.title,
+            start=start,
+            end=end,
+            description=description,
+            address=post.address,
+            extra_address=post.extra_address
+        )
         schedule.save()
         
         return redirect(reverse('schedules:calendar'))
@@ -40,15 +64,17 @@ def create_schedule(request):
 
 
 def get_schedule_data(request):
-    schedules = Schedule.objects.filter(user=request.user)  # 현재 사용자가 작성한 스케줄만 필터링
-    data = [
-        {
+    schedules = Schedule.objects.filter(user=request.user)
+    data = []
+    for schedule in schedules:
+        url = reverse('schedules:update', kwargs={'schedule_id': schedule.id}) 
+        event_data = {
             'title': schedule.title,
             'start': schedule.start.isoformat(),
-            'end': schedule.end.isoformat()
+            'end': schedule.end.isoformat(),
+            'url': url
         }
-        for schedule in schedules
-    ]
+        data.append(event_data)
     return JsonResponse(data, safe=False)
 
 
@@ -61,11 +87,30 @@ def update_schedule(request, schedule_id):
         schedule.end = request.POST['end']
         schedule.description = request.POST['description']
         schedule.save()
-        return redirect('schedules:calendar')
+        return redirect('schedules:calendar') 
+    
     context = {
-        'schedule': schedule
+        'schedule': schedule,
+        'schedule_id': schedule_id,
     }
+    
     return render(request, 'schedules/update.html', context)
+
+
+def detail_schedule(request, schedule_id):
+    kakao_script_key = os.getenv('kakao_script_key')
+    schedule = get_object_or_404(Schedule, id=schedule_id)
+    address = schedule.address
+    latitude, longitude = get_latlng_from_address(address)
+    
+    context = {
+        'schedule': schedule,
+        'kakao_script_key': kakao_script_key,
+        'latitude': latitude,
+        'longitude': longitude,
+    }
+    
+    return render(request, 'schedules/detail.html', context)
 
 
 def delete_schedule(request, schedule_id):
@@ -73,3 +118,5 @@ def delete_schedule(request, schedule_id):
     if request.user == schedule.user:
         schedule.delete()
     return redirect('schedules:calendar')
+
+

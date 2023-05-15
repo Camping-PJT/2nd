@@ -11,12 +11,13 @@ class Schedule(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
     description = models.TextField()
-    location = models.CharField(max_length=200)
-
+    address = models.CharField(max_length=200)
+    extra_address = models.CharField(max_length=200)
+    
 
     def get_absolute_url(self):
-        return reverse('detail', args=[str(self.post_id)])
+        return reverse('posts:detail', kwargs={'post_pk': str(self.post.pk)})
 
 
     def __str__(self):
-        return self.title
+        return self.title, self.address, self.extra_address

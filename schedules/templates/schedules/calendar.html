@@ -2,77 +2,56 @@
 {% block title %}{% endblock title %} 
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="{% static '/js/posts_detail_map.js' %}" type="text/javascript"></script>
 {% endblock head %}
 {% block content %}
-<meta charset='utf-8' />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src='{% static "js/index.global.js" %}'></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    locale: 'ko',
-    // droppable: true, 
-    // editable: true,
-    businessHours: true,
-    dayMaxEvents: true, 
-    events: function(info, successCallback, failureCallback) {
-      // AJAX 요청을 통해 서버에서 데이터를 가져옴
-      $.ajax({
-        url: '/schedules/get_schedule_data/',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-          // 가져온 데이터를 이벤트 목록에 추가
-          var events = response.map(function(schedule) {
-            return {
-              title: schedule.title,
-              start: schedule.start,
-              end: schedule.end,
-              // allDay: true, 
-            };
-          });
-          successCallback(events);
-        },
-        error: function(xhr, status, error) {
-          failureCallback(xhr, status, error);
-        }
-      });
-    },
-    eventClick: function(info) {
-      if (info.event.url) {
-        window.location.href = info.event.url;
-      }
-    }
-  });
-  calendar.render();
-});
-</script>
+
+  <!--스케쥴 생성 모달 -->
+  <div class="modal fade mt-5" id="createScheduleModal" tabindex="-1" aria-labelledby="createScheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createScheduleModalLabel">일정 생성</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="{% url 'schedules:create' %}">
+            {% csrf_token %}
+            <p>
+            <label for="post">캠핑 장소:</label>
+            <select name="post_id" id="post_id">
+              {% for post in posts %}
+              <option value="{{ post.id }}">{{ post.title }}</option>
+              {% endfor %}
+            </select>
+            </p>
+            <p>
+            <label for="start">시작일:</label>
+            <input type="datetime-local" name="start" id="start">
+            </p>
+            <p>
+            <label for="end">종료일:</label>
+            <input type="datetime-local" name="end" id="end">
+            </p>
+            <p>
+            <label for="description">메모:</label>
+            <input type="textarea" name="description" id="description">
+            </p>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value="일정 생성">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <div class="p-5">
 
   <!-- 진짜 달력 본체 -->
   <div id='calendar'></div>
-
-  <hr>
-  <form method="POST" action="{% url 'schedules:create' %}">
-  {% csrf_token %}
-  <label for="post">캠핑 장소:</label>
-  <select name="post_id" id="post_id">
-    {% for post in posts %}
-    <option value="{{ post.id }}">{{ post.title }}</option>
-    {% endfor %}
-  </select>
-  <label for="start">시작일:</label>
-  <input type="datetime-local" name="start" id="start">
-  <label for="end">종료일:</label>
-  <input type="datetime-local" name="end" id="end">
-  <label for="description">메모:</label>
-  <input type="textarea" name="description" id="description">
-  <input type="submit" value="일정 생성">
-  </form>
-  <hr>
 
   <ul style="list-style-type: none; padding: 0; margin: 0;">
     {% for schedule in schedules %}
@@ -93,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <h1 class="modal-title fs-5" id="exampleModalLabel">일정 변경</h1>
             </div>
             <div class="modal-body">
-              <form method="POST" action="{% url 'schedules:update' schedule.id %}">
+              <form method="POST" action="{% url 'schedules:update' schedule_id=schedule.id %}">
                 {% csrf_token %}
                 <p>
                   <label for="post">캠핑 장소:</label>
@@ -131,8 +110,103 @@ document.addEventListener('DOMContentLoaded', function() {
 
 {% endblock content %}
 {% block script %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<script src='{% static "js/index.global.js" %}'></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: 'ko',
+      droppable: true, 
+      editable: true,
+      businessHours: true,
+      dayMaxEvents: true, 
+      events: function(info, successCallback, failureCallback) {
+        // AJAX 요청을 통해 서버에서 데이터를 가져옴
+        $.ajax({
+          url: '/schedules/get_schedule_data/',
+          type: 'GET',
+          dataType: 'json',
+          success: function(response) {
+            // 가져온 데이터를 이벤트 목록에 추가
+            var events = response.map(function(schedule) {
+              return {
+                title: schedule.title,
+                start: schedule.start,
+                end: schedule.end,
+                url: schedule.url, // 스케줄 변경 URL 설정
+                extendedProps: {
+                  post_id: schedule.post_id,
+                  description: schedule.description
+                }
+              };
+            });
+            successCallback(events);
+          },
+          error: function(xhr, status, error) {
+            failureCallback(xhr, status, error);
+          }
+        });
+      },
+      dateClick: function(info) {
+        // 선택한 날짜에 스케줄 생성 폼을 모달로 표시
+        var modal = document.getElementById('createScheduleModal');
+        var startInput = modal.querySelector('#start');
+        var endInput = modal.querySelector('#end');
+  
+        // 선택한 날짜 정보를 폼의 시작일과 종료일에 설정
+        startInput.value = info.dateStr;
+        endInput.value = info.dateStr;
+  
+        var modalInstance = new bootstrap.Modal(modal);
+        modalInstance.show();
+      },
+      eventClick: function(info) {
+        // 스케줄 상세 페이지를 AJAX 요청을 통해 가져옴
+        $.ajax({
+          url: info.event.url.replace('update', 'detail'), // URL에서 'update'를 'detail'로 치환
+          type: 'GET',
+          dataType: 'html',
+          success: function(response) {
+            // 가져온 상세 페이지 내용을 동적으로 생성한 모달에 채움
+            var modalId = 'exampleModal' + info.event.extendedProps.schedule_id;
+            var modalHtml = `
+              <div class="modal fade mt-5" id="${modalId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">일정 상세 정보</h1>
+                    </div>
+                    <div class="modal-body">
+                      ${response}
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+    
+            // 동적으로 생성한 모달을 body에 추가
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+    
+            // 모달 표시
+            var modalInstance = new bootstrap.Modal(document.getElementById(modalId));
+            modalInstance.show();
+          },
+          error: function(xhr, status, error) {
+            console.error(error);
+          }
+        });
+    
+        // 기본 이벤트 동작 취소
+        info.jsEvent.preventDefault();
+      }
+    });
+    calendar.render();
+  });
+</script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
 <script>
     $(document).ready(function() {
       $('#post_id').select2(); 
