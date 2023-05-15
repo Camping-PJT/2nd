@@ -22,6 +22,7 @@ def staff_only(view_func):
     return wrapper
 
 def index(request):
+    
     so = request.GET.get('sortKind', '최신순')
 
     if so == '최신순':
@@ -52,12 +53,33 @@ def index(request):
 
 
 def thema(request):
-
+    categories = request.GET.getlist('category')
+    natures = request.GET.getlist('nature')
     facilities = request.GET.getlist('facility')
-    posts = Post.objects.annotate(facility_count=Count('facility')).filter(facility__facility__in=facilities)
-    for facility in facilities:
-        posts = posts.filter(facility__facility=facility)
-    
+
+    filter_args = Q()
+    if categories:
+        categories_q = Q()
+        for category in categories:
+            if category:
+                categories_q |= Q(category=category)
+        filter_args |= categories_q
+    if natures:
+        natures_q = Q()
+        for nature in natures:
+            if nature:
+                natures_q |= Q(nature=nature)
+        filter_args |= natures_q
+    if facilities:
+        facility_objects = Facility.objects.filter(facility__in=facilities)
+        facilities_q = Q()
+        for facility in facility_objects:
+            if facility:
+                facilities_q |= Q(facility=facility)
+        filter_args |= facilities_q
+        
+    posts = Post.objects.filter(filter_args)
+
     post_images = []
     for post in posts:
         images = PostImage.objects.filter(post=post)

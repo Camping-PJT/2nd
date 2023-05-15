@@ -10,6 +10,20 @@ document.getElementById("thema").addEventListener("click", function(event) {
     modal.style.display = "none";
   });
 
+  const categoryBox = document.querySelector('.category--box');
+  categoryBox.addEventListener('click', function(event) {
+    if (event.target.classList.contains('category-icon')) {
+      event.target.classList.toggle('selected');
+    }
+  });
+
+  const natureBox = document.querySelector('.nature--box');
+  natureBox.addEventListener('click', function(event) {
+    if (event.target.classList.contains('nature-icon')) {
+      event.target.classList.toggle('selected');
+    }
+  });
+
   const facilityBox = document.querySelector('.facility--box');
   facilityBox.addEventListener('click', function(event) {
     if (event.target.classList.contains('facility-icon')) {
@@ -20,20 +34,37 @@ document.getElementById("thema").addEventListener("click", function(event) {
   const submitBtn = document.getElementById('submitBtn');
 
   submitBtn.addEventListener('click', function() {
+    const selectedCategories = [];
+    const selectedNatures = [];
     const selectedFacilities = [];
 
+    const categoryIcons = document.querySelectorAll('.category-icon');
+    const natureIcons = document.querySelectorAll('.nature-icon');
     const facilityIcons = document.querySelectorAll('.facility-icon');
     
+    categoryIcons.forEach(icon => {
+      if (icon.classList.contains('selected')) {
+        const category = icon.getAttribute('data-filter');
+        selectedCategories.push(category);
+      }
+    });
+
+    natureIcons.forEach(icon => {
+      if (icon.classList.contains('selected')) {
+        const nature = icon.getAttribute('data-filter');
+        selectedNatures.push(nature);
+      }
+    });
+
     facilityIcons.forEach(icon => {
       if (icon.classList.contains('selected')) {
         const facility = icon.getAttribute('data-filter');
-        selectedFacilities.push('facility=' + facility);
+        selectedFacilities.push(facility);
       }
     });
     
-    const url = '/posts/thema/?' + selectedFacilities.join('&');
+    const url = '/posts/thema/?' + 'category=' + selectedCategories.join('&') + '&' + 'nature=' + selectedNatures.join('&') + '&' + 'facility=' + selectedFacilities.join('&');
     window.location.href = url;
-    
-  }
-);
+  });
 });
+
