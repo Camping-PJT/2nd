@@ -57,15 +57,6 @@ def thema(request):
     posts = Post.objects.annotate(facility_count=Count('facility')).filter(facility__facility__in=facilities)
     for facility in facilities:
         posts = posts.filter(facility__facility=facility)
-
-    so = request.GET.get('sortKind', '최신순')
-
-    if so == '최신순':
-        posts = posts.order_by('-pk')
-    elif so == '추천순':
-        posts = posts.annotate(num_likes=Count('like_users')).order_by('-num_likes')
-    elif so == '별점순':
-        posts = posts.order_by('-rating')
     
     post_images = []
     for post in posts:
@@ -82,7 +73,6 @@ def thema(request):
 
     context = {
         'posts': page_obj,
-        'sortKind' : so,
         'facilities': facilities,
     }
     return render(request, 'posts/index_thema.html', context)
