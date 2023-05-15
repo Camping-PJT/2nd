@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash, authenticate
 from django.contrib.auth import login as auth_login, logout as auth_logout
@@ -8,6 +8,11 @@ from posts.models import Post
 from django.http import JsonResponse
 from schedules.models import Schedule
 import os
+from django.urls import reverse_lazy
+import json
+from posts.models import Priority
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
 
 
 # Create your views here.
@@ -100,15 +105,33 @@ def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
     user_id = request.user.id
-    schedules = Schedule.objects.filter(user_id=user_id)
+    # liked_posts = Post.objects.exclude(priority__user=request.user)
+    like_post = person.like_posts.all()
+    liked_posts = like_post.exclude(priority__user=request.user)
+    priority_range = range(1, 6)
+    priority_range2 = range(6, 11)
+    priorities = Priority.objects.filter(user=request.user).order_by('priority')
+    schedules = Schedule.objects.filter(user_id=user_id).order_by('start')
+    schedules_by_month = (
+        schedules.annotate(month=TruncMonth('start'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
     context = {
         'person': person,
         'followings': person.followings.all(),
         'followers': person.followers.all(),
+        'priorities': priorities,
         'schedules': schedules,
+        'liked_posts': liked_posts,
+        'priority_range': priority_range,
+        'priority_range2': priority_range2,
+        'schedules_by_month': schedules_by_month,
     }
 
     return render(request, 'accounts/profile.html', context)
+
 
 
 @login_required

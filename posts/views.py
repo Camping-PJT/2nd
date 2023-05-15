@@ -10,7 +10,10 @@ from reviews.models import Review
 from django.db.models import Prefetch
 from taggit.models import Tag
 from django.core.paginator import Paginator
+from .models import Priority
+from django.http import (HttpResponse, HttpResponseBadRequest, HttpResponseForbidden)
 from django.db.models import Count
+
 
 def staff_only(view_func):
     def wrapper(request, *args, **kwargs):
@@ -90,8 +93,8 @@ def create(request):
             post.user = request.user
             address = request.POST.get('address')
             post.address = address
-            extra_address = request.POST.get('extra_address')
-            post.extra_address = extra_address
+            # extra_address = request.POST.get('extra_address')
+            # post.extra_address = extra_address
             post.city = address.split(' ')[0]
             post.save()
 
@@ -307,6 +310,78 @@ def tagged_posts(request, tag_pk):
         }
     return render(request, 'posts/tagged_posts.html', context)
 
+
+# @login_required
+# def update_priority(request):
+#     if request.method == 'POST' and request.is_ajax():
+        
+#         post_id = int(request.POST.get('postId'))
+#         priority = int(request.POST.get('priority'))
+
+#         print([post_id, priority])
+
+
+#         priority_obj = Priority.objects.get(post_id=post_id)
+
+#         priority_obj.priority = priority
+
+#         priority_obj.save()
+
+#         return JsonResponse({'success': True})
+#     else:
+#         return JsonResponse({'success': False})
+
+@login_required
+def update_priority(request):
+    if request.method == 'POST':
+        priority_updates = request.POST.getlist('priority_updates[]')
+
+        for update in priority_updates:
+            post_id, priority = update.split(':')
+
+            try:
+                post = Post.objects.get(id=int(post_id))
+                priority_obj = Priority.objects.filter(post=post, user=request.user).first()
+                if priority_obj:
+                    priority_obj.priority = int(priority)
+                    priority_obj.save()
+                else:
+                    priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
+                
+
+            except (ValueError, Post.DoesNotExist, Exception) as e:
+                print(f"Error updating priority: {e}")
+
+        return redirect('accounts:profile', request.user)
+
+# @login_required
+# def update_priority(request):
+#     if request.method == 'POST':
+#         priority_updates = request.POST.getlist('priority_updates[]')
+
+#         for update in priority_updates:
+#             post_id, priority = update.split(':')
+
+#             try:
+#                 post = Post.objects.get(id=int(post_id))
+#                 priority_obj = Priority.objects.filter(post=post, user=request.user).first()
+                
+#                 if priority == '':
+#                     if priority_obj:
+#                         priority_obj.delete()
+#                 else:
+#                     if priority_obj:
+#                         priority_obj.priority = int(priority)
+#                         priority_obj.save()
+#                     else:
+#                         priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
+
+#             except (ValueError, Post.DoesNotExist, Exception) as e:
+#                 print(f"Error updating priority: {e}")
+
+#         return redirect('accounts:profile', request.user)
+
+
 def category(request, category):
     so = request.GET.get('sortKind', '최신순')
 
@@ -336,3 +411,4 @@ def category(request, category):
         'sortKind' : so,
     }
     return render(request, 'posts/index.html', context)
+
