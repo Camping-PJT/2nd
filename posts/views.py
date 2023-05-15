@@ -158,7 +158,7 @@ def detail(request, post_pk):
     facilities = Facility.objects.filter(post=post)
     address = post.address
     latitude, longitude = get_latlng_from_address(address)
-    reviews = Review.objects.filter(post=post)
+    reviews = Review.objects.filter(post=post).order_by('-pk')
 
     # if request.user.is_authenticated:
     #     reviews = Review.objects.filter(post=post).prefetch_related(

@@ -80,11 +80,18 @@
       </div>
     </div> 
     {% comment %} only staff {% endcomment %}
-    <div class="staff-btn">
-      {% if request.user.is_staff %}
-        <a href="{% url 'posts:update' post.pk %}"> 수정 </a>
-        <a href="{% url 'posts:delete' post.pk %}" onclick="return confirm('삭제하시겠습니까?')"> 삭제 </a>
-      {% endif %}
+    <div class="button--box">
+      <div class="staff-btn">
+        {% if request.user.is_staff %}
+          <a href="{% url 'posts:update' post.pk %}"> 수정 </a>
+          <a href="{% url 'posts:delete' post.pk %}" onclick="return confirm('삭제하시겠습니까?')"> 삭제 </a>
+        {% endif %}
+      </div>
+      <div>
+        {% if request.user.is_owner == '사장님' %}
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSflvcX3isebrIJyiaFpuYwZVKavHSLp1OYhtIpiCBMTz4DfjQ/viewform?usp=sf_link" class='ceo--link'>업체 정보 수정 요청</a>
+        {% endif %}
+      </div>
     </div>
 </div>
 
