@@ -3,50 +3,37 @@
 
 {% block title %} 리뷰작성 {% endblock title %}
 
-{% block style %}
-<style>
-  .star-rating input[name="rating"] {
-    display: none;
-  }
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/reviews.css' %}"> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock head %}
 
-  .rating--gray{
-    background-image: url("/static/image/mango_icon2.png");
-    background-position: -322px -152px;
-    width: 28px;
-    height: 28px;
-  }
-
-  .rating--orange{
-    background-image: url("/static/image/mango_icon2.png");
-    background-position: -280px -539px;
-    width: 28px;
-    height: 28px;
-  }
-</style>
-{% endblock style %}
 
 {% block content %}
-  <div>
-    <form action="{% url 'reviews:create' post.pk %}" method ="POST" id="review-form">
-      {% csrf_token %}
-      <label for="rating">별점:</label>
-      <div class="star-rating">
-        <input id="star-1" name="rating" type="radio" value="1" />
-        <label class="star-label rating--orange" for="star-1" title="1 star"></label>
-        <input id="star-2" name="rating" type="radio" value="2" />
-        <label class="star-label rating--orange" for="star-2" title="2 stars"></label>
-        <input id="star-3" name="rating" type="radio" value="3" />
-        <label class="star-label rating--orange" for="star-3" title="3 stars"></label>
-        <input id="star-4" name="rating" type="radio" value="4" />
-        <label class="star-label rating--orange" for="star-4" title="4 stars"></label>
-        <input id="star-5" name="rating" type="radio" value="5" />
-        <label class="star-label rating--orange" for="star-5" title="5 stars"></label>
+<div class="review--write">
+  <form action="{% url 'reviews:create' post.pk %}" method ="POST" id="review-form">
+    {% csrf_token %}
+    <div class='d-flex align-items-center gap-2'>
+        <label for="rating">별점:</label>
+        <div class="star-rating">
+          <input id="star-1" name="rating" type="radio" value="1" />
+          <label class="star-label rating--orange" for="star-1" title="1 star"></label>
+          <input id="star-2" name="rating" type="radio" value="2" />
+          <label class="star-label rating--orange" for="star-2" title="2 stars"></label>
+          <input id="star-3" name="rating" type="radio" value="3" />
+          <label class="star-label rating--orange" for="star-3" title="3 stars"></label>
+          <input id="star-4" name="rating" type="radio" value="4" />
+          <label class="star-label rating--orange" for="star-4" title="4 stars"></label>
+          <input id="star-5" name="rating" type="radio" value="5" />
+          <label class="star-label rating--orange" for="star-5" title="5 stars"></label>
+        </div>
       </div>
-      {{ review_form.media }}
       {{ review_form.as_p }}
-      <input type="submit" value='리뷰저장'>
-    </form>
-  </div>
+      {{ review_form.media }}
+        <input type="submit" value='리뷰작성' class="review--btn">
+        <input type="submit" value="뒤로가기" onclick=window.history.back() class="review--btn">
+  </form>
+</div>
 
 {% endblock content %}
 

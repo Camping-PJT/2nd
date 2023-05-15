@@ -26,7 +26,7 @@ def create(request, post_pk):
             review.post = post
             review.rating = rating
             review.save()
-            return redirect('reviews:detail', post_pk)
+            return redirect('posts:detail', post_pk)
     else:
         review_form = ReviewForm()
     context = {
@@ -120,8 +120,8 @@ def review_likes(request, review_pk):
     context = {
         'r_is_liked': r_is_liked,
         'review_likes_count': review.like_users.count(),
-        'r_is_disliked': request.user in review.dislike_users.all(),  # 추가
-        'review_dislikes_count': review.dislike_users.count(),  # 추가
+        'r_is_disliked': request.user in review.dislike_users.all(),
+        'review_dislikes_count': review.dislike_users.count(),
     }
     return JsonResponse(context)
 
@@ -137,7 +137,7 @@ def review_dislikes(request, review_pk):
     context = {
         'r_is_disliked': r_is_disliked,
         'review_dislikes_count': review.dislike_users.count(),
-        'r_is_liked': request.user in review.like_users.all(),  # 추가
-        'review_likes_count': review.like_users.count(),  # 추가
+        'r_is_liked': request.user in review.like_users.all(),
+        'review_likes_count': review.like_users.count(),
     }
     return JsonResponse(context)
