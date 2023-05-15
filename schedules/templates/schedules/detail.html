@@ -1,0 +1,23 @@
+{% extends 'empty.html' %}
+{% block title %}{% endblock title %} 
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="{% static 'js/posts_detail_map.js' %}" type="text/javascript"></script>
+
+{% endblock head %}
+{% block content %}
+
+<p>캠핑 장소: {{ schedule.title }}</p>
+<p>시작일: {{ schedule.start }}</p>
+<p>종료일: {{ schedule.end }}</p>
+<p>메모: {{ schedule.description }}</p>
+
+<div class="map" id="map" style="width:400px; height:400px;" data-longitude="{{ longitude }}" data-latitude="{{ latitude }}"></div>
+
+{% endblock content %}
+{% block script %}
+<script src='{% static "js/index.global.js" %}'></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
+{% endblock script %}
