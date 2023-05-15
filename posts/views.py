@@ -124,9 +124,7 @@ def create(request):
     }
     return render(request, 'posts/create.html', context)
 
-
-
-
+@login_required
 def detail(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
     post = Post.objects.get(pk=post_pk)
@@ -148,17 +146,23 @@ def detail(request, post_pk):
     #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
     #     ).order_by('-pk')
 
+    page = request.GET.get('page', '1')
+    per_page = 5
+    paginator = Paginator(reviews, per_page)
+    page_obj = paginator.get_page(page)
+
     context = {
         'kakao_script_key': kakao_script_key,
         'post': post,
         'facilities': facilities,
         'latitude': latitude,
         'longitude': longitude,
-        'reviews': reviews,
+        'reviews': page_obj,
+        'paginator': paginator,
     }
     return render(request, 'posts/detail.html', context)
 
-
+@staff_only
 @login_required
 def delete(request, post_pk):
     post = Post.objects.get(pk=post_pk)

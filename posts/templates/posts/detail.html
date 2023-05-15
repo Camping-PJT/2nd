@@ -1,128 +1,301 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load filters %}
 
 {% block title %}
 {{post.title}}
 {% endblock title %}
 
 {% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}"> 
 {% endblock head %}
 
 {% block content %}
 
-{{ post.title }}
-{% for facility in facilities %}
-{{ facility }}
-{% endfor %}
+{% comment %} header {% endcomment %}
 
-<form id="likes-form" data-post-id="{{ post.pk }}">
-  {% csrf_token %}
-  {% if request.user in post.like_users.all %}
-    <input type="submit" value="좋아요 취소" id="like-{{ post.pk }}">
-  {% else %}
-    <input type="submit" value="좋아요" id="like-{{ post.pk }}">
-  {% endif %}
-</form>
+<div class="detail--header">
+    <div class="detail--title">
+      {{ post.title }}
+      <div class="detail--rating">
+        <i class="bi bi-star-fill"></i> 
+        {{ post.rating }}
+      </div>
+    </div>
+    {% comment %} tag {% endcomment %}
+    <div class="detail--tags">
+      <div class="tag--title">
+        #태그
+      </div>
+      {% for tag in post.tags.all %}
+        <a href="{% url 'posts:tagged_posts' tag.pk %}">#{{ tag.name }}</a>
+      {% endfor %} 
+    </div>
 
-<form id="visits-form" data-post-id="{{ post.pk }}">
-  {% csrf_token %}
-  {% if request.user in post.visit_users.all %}
-    <input type="submit" value="방문 취소" id="visit-{{ post.pk }}">
-  {% else %}
-    <input type="submit" value="방문" id="visit-{{ post.pk }}">
-  {% endif %}
-</form>
-
-<div>
-  {% if post.user == request.user%}
-    <a href="{% url 'posts:update' post.pk %}"> 수정 </a>
-    <a href="{% url 'posts:delete' post.pk %}" onclick="return confirm('삭제하시겠습니까?')"> 삭제 </a>
-  {% endif %}
+    {% comment %} function btn {% endcomment %}
+    <div class="btn--box">
+      <a href="" onclick="copy_trackback(this.href); return false;" class="icon-btn"><i class="bi bi-link-45deg"></i></a>
+      <a href="" onclick="printThis(); return false;" class="icon-btn"><i class="bi bi-printer"></i></a>
+      {% comment %} like {% endcomment %}
+      <div class="icon-btn">
+        {% if request.user.is_authenticated %}
+        <form id="likes-form" data-post-id="{{ post.pk }}">
+          {% csrf_token %}
+          {% if request.user in post.like_users.all %}
+              <button class="btn btn-link text-danger p-0" type="submit">
+                <i class="bi bi-suit-heart-fill" id="post-heart"></i>
+              </button>
+          {% else %}
+              <button class="btn btn-link text-danger p-0" type="submit">
+                <i class="bi bi-suit-heart" id="post-heart"></i>
+              </button>
+          {% endif %}
+        </form>
+        {% else %}
+          <button class="btn btn-link text-secondary p-0" disabled>
+            <i class="bi bi-suit-heart" id="post-heart"></i>
+          </button>
+        {% endif %}
+      </div>
+      {% comment %} visit {% endcomment %}
+      <div class="icon-btn">
+        {% if request.user.is_authenticated %}
+        <form id="visits-form" data-post-id="{{ post.pk }}">
+          {% csrf_token %}
+          {% if request.user in post.like_users.all %}
+              <button class="btn btn-link text-warning p-0" type="submit">
+                <i class="bi bi-geo-alt-fill" id="post-visit"></i>
+              </button>
+          {% else %}
+              <button class="btn btn-link text-warning p-0" type="submit">
+                <i class="bi bi-geo-alt" id="post-visit"></i>
+              </button>
+          {% endif %}
+        </form>
+        {% else %}
+          <button class="btn btn-link text-secondary p-0" disabled>
+            <i class="bi bi-geo-alt" id="post-visit"></i>
+          </button>
+        {% endif %}
+      </div>
+    </div> 
+    {% comment %} only staff {% endcomment %}
+    <div class="staff-btn">
+      {% if request.user.is_staff %}
+        <a href="{% url 'posts:update' post.pk %}"> 수정 </a>
+        <a href="{% url 'posts:delete' post.pk %}" onclick="return confirm('삭제하시겠습니까?')"> 삭제 </a>
+      {% endif %}
+    </div>
 </div>
-<div class="map" id="map" style="width:400px; height:400px;" data-longitude="{{ longitude }}" data-latitude="{{ latitude }}"></div>
-{% for tag in post.tags.all %}
-<a href="{% url 'posts:tagged_posts' tag.pk %}">#{{ tag.name }}</a>
-{% endfor %} 
+
+{% comment %} info {% endcomment %}
+<div class="detail--info">
+  <div class="map" id="map" data-longitude="{{ longitude }}" data-latitude="{{ latitude }}">
+    <p class="detail--address">
+      {{ post.address }}<br>
+      {{ post.extra_address }}
+    </p>
+  </div>
+  <div class="info--box">
+    <p><span class="info--title">주소</span>{{ post.address }} {{ post.extra_address }}</p><hr>
+    <p><span class="info--title">문의처</span>{{ post.phone }}</p><hr>
+    <p><span class="info--title">입실시간</span>{{ post.open_hour }}</p><hr>
+    <p><span class="info--title">퇴실시간</span>{{ post.close_hour }}</p><hr>
+    <p><span class="info--title">캠핑장 유형</span>{{ post.category }}</p><hr>
+    <p><span class="info--title">캠핑장 환경</span>{{ post.nature}}</p>
+  </div>
+</div>
+
+{% comment %} photo {% endcomment %}
+<div class="camp--title">{{ post.title }} 풍경</div>
+<div class="posts--carousel--box">
+  <button id="prevbtn" class="carousel--btn--left"><i class="bi bi-arrow-left-circle icon-size"></i></button>
+  <div class="posts--carousel">
+    <div class="carousel" id="carousel">
+      {% for image in post.postimage_set.all %}
+        <img src="{{ image.image.url }}" alt="{{ post.title }}" class="detail--image">
+      {% endfor %}
+    </div>
+  </div>
+  <button id="nextbtn" class="carousel--btn--right"><i class="bi bi-arrow-right-circle icon-size"></i></button>
+</div>
+
+{% comment %} facilities {% endcomment %}
+
+<div class="camp--title">편의시설</div>
+<div class="facility--box">
+  {% for facility in facilities %}
+  <div class="facility">
+    {% if facility.facility == '와이파이' %}
+      <i class="bi bi-wifi"></i>
+    {% elif facility.facility == '매점' %}
+      <i class="bi bi-shop"></i>
+    {% elif facility.facility == '샤워시설' %}
+      <i class="bi bi-door-closed"></i>
+    {% elif facility.facility == '전기' %}
+      <i class="bi bi-lightning"></i>
+    {% elif facility.facility == '온수제공' %}
+      <i class="bi bi-cup-hot"></i>
+    {% elif facility.facility == '대여' %}
+      <i class="bi bi-bucket"></i>
+    {% elif facility.facility == '장작' %}
+      <i class="bi bi-fire"></i>
+    {% elif facility.facility == '개수대' %}
+      <i class="bi bi-droplet"></i>
+    {% elif facility.facility == '화장실' %}
+      <i class="bi bi-universal-access-circle"></i>
+    {% endif %}
+    {{ facility }}
+  </div>
+  {% endfor %}
+</div>
+
+{% comment %} content {% endcomment %}
+<div class="camp--title">기타정보</div>
+<div class="content--box">
+  <div class="content--info">{{ post.content}}</div>
+</div>
 
 {% comment %} 리뷰 {% endcomment %}
-<a href="{% url 'reviews:create' post.pk %}">리뷰 작성</a>
-<p>리뷰수 - {{ reviews|length }}</p>
-{% for review in reviews %}
+<div class="review--title">
+  <div class="review">이용후기 ({{ reviews|length }})</div>
+  <a href="{% url 'reviews:create' post.pk %}">리뷰 작성<i class="bi bi-pencil-square"></i></a>
+</div>
+<table class="review--list">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">작성자</th>
+      <th scope="col">제목</th>
+      <th scope="col">작성일</th>
+      <th scope="col">별점</th>
+      <th scope="col">후기추천</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in reviews %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user.username }}</a></td>
+        <td><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></td>
+        <td>{{ review.created_at|date:"Y-m-d" }}</td>
+        <td>
+          <div class="star-box">
+            <span class="star-gray">
+              <span class="star-orange" style="width:{{ review.rating|multiply_by_20 }}%;"></span>
+            </span>
+          </div>
+        </td>
+        <td>
+          <div class="d-flex align-items-center justify-content-center">
+            {% if request.user.is_authenticated %}
+            <form id="review-likes-form-{{ review.pk }}" data-review-id="{{ review.pk }}">
+              {% csrf_token %}
+              {% if request.user in review.like_users.all %}
+              <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.dislike_users.all %} disabled {% endif %}>
+                    <i class="bi bi-hand-thumbs-up-fill" id="review-up"></i>
+                  </button>
+                {% else %}
+                  <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.dislike_users.all %} disabled {% endif %}>
+                    <i class="bi bi-hand-thumbs-up" id="review-up"></i>
+                  </button>
+                {% endif %}
+              </form>
+              {% else %}
+              <button class="btn btn-link text-secondary p-0" disabled>
+                <i class="bi bi-hand-thumbs-up" id="review-up"></i>
+              </button>
+              {% endif %}
+              <span id="review-likes-count" class="count--like">{{ review.like_users.all|length }}</span>
+          
+            {% if request.user.is_authenticated %}
+              <form id="review-dislikes-form-{{ review.pk }}" data-review-id="{{ review.pk }}">
+                {% csrf_token %}
+                {% if request.user in review.dislike_users.all %}
+                  <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.like_users.all %} disabled {% endif %}>
+                    <i class="bi bi-hand-thumbs-down-fill" id="review-down"></i>
+                  </button>
+                {% else %}
+                  <button class="btn btn-link text-primary p-0" type="submit" {% if user in review.like_users.all %} disabled {% endif %}>
+                    <i class="bi bi-hand-thumbs-down" id="review-down"></i>
+                  </button>
+                {% endif %}
+              </form>
+            {% else %}
+              <button class="btn btn-link text-secondary p-0" disabled>
+                <i class="bi bi-hand-thumbs-down" id="review-down"></i>
+              </button>
+            {% endif %}
+            <span id="review-dislikes-count" class="count--like">{{ review.dislike_users.all|length }}</span>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
-  {% comment %} 리뷰 수정, 삭제 {% endcomment %}
-  <div>
-    {% if request.user == review.user %}
-      <a href="{% url 'reviews:update' review.pk %}">리뷰수정</a>
-      <form action="{% url 'reviews:delete' review.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="삭제">
-      </form>
-    {% endif %}
-  </div>
-  {% comment %} 프로필 {% endcomment %}
-  <div>
-    <a href="{% url 'accounts:profile' review.user %}">
-      {% if review.user.image %}
-        <img src="{{ review.user.image.url }}" alt="">
+  <div class="mt-2">
+    <ul class="pagination justify-content-center" style="grid-column: 2 / 4; grid-row: 2 / 3; ">
+      {% if reviews.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?&page={{ reviews.previous_page_number }}">이전</a>
+      </li>
       {% else %}
-      <img src="{% static 'image/profile-none.png' %}" alt="">
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
       {% endif %}
-      <p>{{ review.user}}</p>
-    </a>
-  </div>
 
-  {% comment %} rating {% endcomment %}
-  <div>
-    {{ review.rate_to_star }}{{ review.rate_to_empty_star}}
-  </div>
-  <div>
-    {{ review.created_string }}
-    <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
-    {{ review.content|safe }}
-  <hr>
-  </div>
-
-  {% comment %} emote {% endcomment %}
-  
-    {% comment %} <div class="d-flex">
-      <form class="review-like-forms d-flex" data-review-id="{{ review.pk }}">
-        {% csrf_token %}
-        <button type="submit" class="btn-like" id="review-like-{{ review.pk }}">
-          {% if request.user.is_authenticated and review.like_exist %}
-          <i class="bi bi-hand-thumbs-up-fill text-orange"></i> 
-          <span>{{ review.likes|length }}</span>
+      {% for page_number in reviews.paginator.page_range %}
+        {% if page_number >= reviews.number|add:-5 and page_number <= reviews.number|add:5 %}
+          {% if page_number == reviews.number %}
+            <li class="page-item active" aria-current="page">
+              <a class="page-link" href="?&page={{ page_number }}">{{ forloop.counter }}</a>
+            </li>
           {% else %}
-          <i class="bi bi-hand-thumbs-up"></i>
-          <span>{{ review.likes|length }}</span>
+            <li class="page-item">
+              <a class="page-link" href="?&page={{ page_number }}">{{ forloop.counter }}</a>
+            </li>
           {% endif %}
-        </button>
-      </form>
-      <form class="review-dislike-forms d-flex" data-review-id="{{ review.pk }}">
-        <button type="submit" class="btn-dislike" id="review-dislike-{{ review.pk }}">
-          {% if request.user.is_authenticated and review.dislike_exist %}
-          <i class="bi bi-hand-thumbs-down-fill text-orange"></i> 
-          <span>{{ review.dislikes|length }}</span>
-          {% else %}
-          <i class="bi bi-hand-thumbs-down"></i>
-          <span>{{ review.dislikes|length }}</span> 
-          {% endif %}
-        </button>
-      </form>
-    </div> {% endcomment %}
+        {% endif %}
+      {% endfor %}
 
-{% endfor %}
-
-{{ post.content}}
+      {% if reviews.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?&page={{ reviews.next_page_number }}">다음</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
 
 {% endblock content %}
 
 {% block script %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
-<script src="{% static '/js/posts_detail_map.js' %}" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{% static '/js/posts_detail_likes.js' %}" type="text/javascript"></script>
+<script src="{% static '/js/posts_detail_map.js' %}" type="text/javascript"></script>
+<script src="{% static '/js/detail.js' %}" type="text/javascript"></script>
+<script src="{% static '/js/detail_reviews.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/posts_detail_visits.js' %}" type="text/javascript"></script>
 {% comment %} <script src="{% static '/js/posts_review_emote.js' %}" type="text/javascript"></script> {% endcomment %}
-
+<script>
+  function copy_trackback(url) {
+    var tempInput = document.createElement('input');
+    tempInput.value = url;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    alert('URL이 복사되었습니다.');
+  }
+  
+  function printThis() {
+    window.print();
+  }
+  </script>
 
 {% endblock script %}

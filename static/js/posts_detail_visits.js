@@ -10,13 +10,18 @@ v_form.addEventListener('submit', function (event) {
   })
     .then((response) => {
       const isVisited = response.data.is_visited;
-      const visitBtn = document.querySelector(`#visit-${postId}`);
+      const visitBtn = document.querySelector(`#post-visit`);
 
       if (isVisited === true) {
-        visitBtn.value = '방문 취소';
+        visitBtn.classList.remove('bi-geo-alt');
+        visitBtn.classList.add('bi-geo-alt-fill');
       } else {
-        visitBtn.value = '방문';
+        visitBtn.classList.remove('bi-geo-alt-fill');
+        visitBtn.classList.add('bi-geo-alt');
       }
+      const visitsCountTag = document.querySelector('#visits-count')
+      const visitsCountData = response.data.visits_count
+      visitsCountTag.textContent = visitsCountData
     })
     .catch((error) => {
       console.log(error.response);

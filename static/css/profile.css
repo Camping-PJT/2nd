@@ -318,6 +318,7 @@ input[id="tab04"]:checked ~ .card4 {
 .priority--content {
   width: 100%;
   height: 100%;
+}
 
 .ceo--link {
   text-decoration: none;
