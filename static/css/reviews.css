@@ -160,8 +160,10 @@ p label {
 }
 
 .review--body {
-  width: 100%;
-  padding: 20px;
+  width: 80%;
+  margin: auto;
+  height: auto;
+  overflow: hidden;
 }
 
 .list--view{
