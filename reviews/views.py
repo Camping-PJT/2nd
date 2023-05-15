@@ -120,9 +120,10 @@ def review_likes(request, review_pk):
     context = {
         'r_is_liked': r_is_liked,
         'review_likes_count': review.like_users.count(),
-        }
+        'r_is_disliked': request.user in review.dislike_users.all(),  # 추가
+        'review_dislikes_count': review.dislike_users.count(),  # 추가
+    }
     return JsonResponse(context)
-
 
 @login_required
 def review_dislikes(request, review_pk):
@@ -136,5 +137,7 @@ def review_dislikes(request, review_pk):
     context = {
         'r_is_disliked': r_is_disliked,
         'review_dislikes_count': review.dislike_users.count(),
-        }
+        'r_is_liked': request.user in review.like_users.all(),  # 추가
+        'review_likes_count': review.like_users.count(),  # 추가
+    }
     return JsonResponse(context)
