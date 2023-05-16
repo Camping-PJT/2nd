@@ -197,7 +197,6 @@
                   </div>
                 {% endfor %}
               </div>
-              
             </div>
           </div>
           <div>
@@ -209,7 +208,7 @@
                   {% for i in priority_range %}
                     <div>
                       <div class="priority-item" data-priority="{{ i }}"> {{ i }} 순위</div>
-                      <div class="priority-dropzone" data-priority="{{ i }}">
+                      <div class="priority-dropzone" data-priority="{{ i }}" data-post-id="{{ priority.post.pk }}">
                         {% for priority in priorities %}
                           {% if priority.priority == i %}
                             <label for="{{ i }}" draggable="true">{{ priority.post.title }}</label>
@@ -219,7 +218,6 @@
                     </div>
                     {% endfor %}
                   </div>
-                <div class="post-dropzone priority-remove-zone" id="post-dropzone">Drop Here</div>
               </form>
               <form id="priority-form" action="{% url 'posts:update_priority' %}" method="POST">
                 {% csrf_token %}
@@ -227,16 +225,17 @@
                   {% for i in priority_range2 %}
                     <div>
                       <div class="priority-item" data-priority="{{ i }}"> {{ i }} 순위</div>
-                      <div class="priority-dropzone" data-priority="{{ i }}">
+                      <div class="priority-dropzone" data-priority="{{ i }}" data-post-id="{{ priority.post.pk }}">
                         {% for priority in priorities %}
                           {% if priority.priority == i %}
-                            <label for="{{ i }}" draggable="true">{{ priority.post.title }}</label>
+                            <label for="{{ i }}" draggable="true" >{{ priority.post.title }}</label>
                           {% endif %}
                         {% endfor %}
                       </div>
                     </div>
                     {% endfor %}
                   </div>
+                  <div class="priority-remove-zone" id="priority-remove-zone">Drop Here</div>
               </form>
             </div>
           </div>

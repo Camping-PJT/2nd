@@ -11,6 +11,7 @@ from django.db.models import Prefetch
 from taggit.models import Tag
 from django.core.paginator import Paginator
 from .models import Priority
+from django.contrib.auth import get_user_model
 
 
 def staff_only(view_func):
@@ -176,24 +177,14 @@ def create(request):
 @login_required
 def detail(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
+    kakao_key = os.getenv('kakao_key')
     post = Post.objects.get(pk=post_pk)
-    facilities = Facility.objects.filter(post=post)
+    title = post.title
+    d_facilities = post.facility_set.all()
+    print(d_facilities)
     address = post.address
     latitude, longitude = get_latlng_from_address(address)
     reviews = Review.objects.filter(post=post).order_by('-pk')
-
-    # if request.user.is_authenticated:
-    #     reviews = Review.objects.filter(post=post).prefetch_related(
-    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1), to_attr='likes'),
-    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1, user=request.user), to_attr='like_exist'),
-    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
-    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2, user=request.user), to_attr='dislike_exist')
-    #     ).order_by('-pk')
-    # else:
-    #     reviews = Review.objects.filter(post=post).prefetch_related(
-    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=1), to_attr='likes'),
-    #         Prefetch('emote_set', queryset=Emote.objects.filter(emotion=2), to_attr='dislikes'),
-    #     ).order_by('-pk')
 
     page = request.GET.get('page', '1')
     per_page = 5
@@ -202,12 +193,14 @@ def detail(request, post_pk):
 
     context = {
         'kakao_script_key': kakao_script_key,
+        'kakao_key': kakao_key,
         'post': post,
-        'facilities': facilities,
+        'd_facilities': d_facilities,
         'latitude': latitude,
         'longitude': longitude,
         'reviews': page_obj,
         'paginator': paginator,
+        'title': title,
     }
     return render(request, 'posts/detail.html', context)
 
@@ -232,6 +225,7 @@ def likes(request, post_pk):
     context = {
         'is_liked': is_liked,
         'likes_count': post.like_users.count(),
+        'post_id': post_pk,
         }
     return JsonResponse(context)
 
@@ -390,11 +384,33 @@ def tagged_posts(request, tag_pk):
 
 
 # ajax 처리까지 완료 (post -> priority)
+# @login_required
+# def update_priority(request):
+#     if request.method == 'POST':
+#         priority_updates = request.POST.getlist('priority_updates[]')
+#         for update in priority_updates:
+#             post_id, priority = update.split(':')
+
+#             try:
+#                 post = Post.objects.get(id=int(post_id))
+#                 priority_obj = Priority.objects.filter(post=post, user=request.user).first()
+#                 if priority_obj:
+#                     priority_obj.priority = int(priority)
+#                     priority_obj.save()
+#                 else:
+#                     priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
+                
+
+#             except (ValueError, Post.DoesNotExist, Exception) as e:
+#                 print(f"Error updating priority: {e}")
+
+#         return JsonResponse({'success': True})
+
 @login_required
 def update_priority(request):
     if request.method == 'POST':
         priority_updates = request.POST.getlist('priority_updates[]')
-
+        user_id = request.user.id
         for update in priority_updates:
             post_id, priority = update.split(':')
 
@@ -407,6 +423,9 @@ def update_priority(request):
                 else:
                     priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
                 
+
+                post.priorities.add(priority_obj)
+                post.save()
 
             except (ValueError, Post.DoesNotExist, Exception) as e:
                 print(f"Error updating priority: {e}")

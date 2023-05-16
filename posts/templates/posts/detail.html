@@ -36,6 +36,7 @@
     <div class="btn--box">
       <a href="" onclick="copy_trackback(this.href); return false;" class="icon-btn"><i class="bi bi-link-45deg"></i></a>
       <a href="" onclick="printThis(); return false;" class="icon-btn"><i class="bi bi-printer"></i></a>
+      <button class="icon-btn map-btn" id="map-btn" style="border:none;"><i class="bi bi-arrow-90deg-right"></i></button>
       {% comment %} like {% endcomment %}
       <div class="icon-btn">
         {% if request.user.is_authenticated %}
@@ -131,7 +132,7 @@
 
 <div class="camp--title">편의시설</div>
 <div class="facility--box">
-  {% for facility in facilities %}
+  {% for facility in d_facilities %}
   <div class="facility">
     {% if facility.facility == '와이파이' %}
       <i class="bi bi-wifi"></i>
@@ -288,7 +289,6 @@
 <script src="{% static '/js/detail.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/detail_reviews.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/posts_detail_visits.js' %}" type="text/javascript"></script>
-{% comment %} <script src="{% static '/js/posts_review_emote.js' %}" type="text/javascript"></script> {% endcomment %}
 <script>
   function copy_trackback(url) {
     var tempInput = document.createElement('input');
@@ -303,6 +303,34 @@
   function printThis() {
     window.print();
   }
-  </script>
+</script>
+<script>
+  document.getElementById("map-btn").addEventListener("click", function() {
+    const apiKey = "{{ kakao_key }}";
+    const apiUrl = "https://dapi.kakao.com/v2/local/geo/transcoord.json?x=127.423084&y=37.078956&input_coord=WGS84&output_coord=TM";
+  
+    fetch(apiUrl, {
+      headers: {
+        "Authorization": "KakaoAK " + apiKey
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      const latitude = "{{ latitude }}";
+      const longitude = "{{ longitude }}";
+      const title = "{{ title }}";
+  
+      const directionsUrl = "https://map.kakao.com/link/to/" + title + "," + latitude + "," + longitude;
+    
+      window.open(directionsUrl, "_blank");
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  });
+  
+
+</script>
+
 
 {% endblock script %}
