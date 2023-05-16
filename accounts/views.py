@@ -39,7 +39,7 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('posts:index')
+        return redirect('main')
 
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, request.POST)
@@ -49,7 +49,7 @@ def login(request):
             if prev_url:          
                 del request.session['prev_url']
                 return redirect(prev_url)
-            return redirect('posts:index')
+            return redirect('main')
     else:
         form = CustomAuthenticationForm()
         request.session['prev_url'] = request.META.get('HTTP_REFERER')
@@ -62,13 +62,13 @@ def login(request):
 @login_required
 def logout(request):
     auth_logout(request)
-    return redirect('posts:index')
+    return redirect('main')
     
 
 @login_required
 def delete(request):
     request.user.delete()
-    return redirect('posts:index')
+    return redirect('main')
 
 
 @login_required
@@ -96,7 +96,7 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            return redirect('posts:index')
+            return redirect('main')
     else:
         form = CustomPasswordChangeForm(request.user)
     context = {
