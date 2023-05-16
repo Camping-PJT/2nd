@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+  {% extends 'base.html' %}
 {% load static %}
 {% load filters %}
 
@@ -62,7 +62,7 @@
         {% if request.user.is_authenticated %}
         <form id="visits-form" data-post-id="{{ post.pk }}">
           {% csrf_token %}
-          {% if request.user in post.like_users.all %}
+          {% if request.user in post.visit_users.all %}
               <button class="btn btn-link text-warning p-0" type="submit">
                 <i class="bi bi-geo-alt-fill" id="post-visit"></i>
               </button>
@@ -182,7 +182,7 @@
   <tbody>
     {% for review in reviews %}
       <tr>
-        <th scope="row">{{ forloop.counter }}</th>
+        <th scope="row">{{ forloop.counter0|add:reviews.start_index }}</th>
         <td><a href="{% url 'accounts:profile' review.user.username %}">{{ review.user.username }}</a></td>
         <td><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></td>
         <td>{{ review.created_at|date:"Y-m-d" }}</td>

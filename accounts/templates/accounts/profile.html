@@ -16,8 +16,10 @@
       <label for="tab01">Profile</label>
       <input type="radio" name="tabmenu" id="tab02">
       <label for="tab02">Content</label>
-      <input type="radio" name="tabmenu" id="tab03">
-      <label for="tab03"><i class="bi bi-calendar-week"></i></label>
+      {% if person == request.user %}
+        <input type="radio" name="tabmenu" id="tab03">
+        <label for="tab03"><i class="bi bi-calendar-week"></i></label>
+      {% endif %}
       <input type="radio" name="tabmenu" id="tab04">
       <label for="tab04">♥</label>
 
@@ -60,7 +62,9 @@
           {% comment %} 첫번째 탭 오른쪽 {% endcomment %}
           <div class="profile--card--right">
             {% if person.is_staff %}
-              <a href="{% url 'posts:create' %}" class="profile--card--btn" >Post+</a>
+              {% if person == request.user %}
+                <a href="{% url 'posts:create' %}" class="profile--card--btn" >Post+</a>
+              {% endif %}
             {% endif %}
             <div class="profile--imgbox">
               {% if person.image %}
@@ -99,66 +103,53 @@
         <div class="box2">
           <div class="visit--camp">
             <h3>방문한 캠핑장</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">캠핑장</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% comment %} {% for post in  %}
-                  <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
-                  </tr>
-                {% empty %}
-                  <h3>게시글이 없습니다.</h3>
-                {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
+            <div class="camp--content--box">
+              {% for post in person.visit_posts.all|slice:":10" %}
+                <div class="camp--content">
+                  <p>{{ forloop.counter }}.</p>
+                  <p><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></p>
+                </div>
+              {% empty %}
+                <h3>게시글이 없습니다.</h3>
+              {% endfor %} 
+            </div>
+            {% if person.visit_posts.all|length > 10 %}
+              <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#camp" aria-controls="offcanvasExample" id="visitbtn">
+                방문한 캠핑장 모두보기({{person.visit_posts.all|length}})
+              </button>
+            {% endif %}
           </div>
           <div class="like--camp">
-            <h3>방문할 캠핑장</h3>
-            <table>
-              <thead>
+            <h3>캠핑장 우선순위</h3>
+            {% for priority in priorities %}
+              {{ priority.post.title }}
+            {% endfor %}
+              {% for post in person.priority_set.all  %}
                 <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">캠핑장</th>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
                 </tr>
-              </thead>
-              <tbody>
-                {% comment %} {% for post in  %}
-                  <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
-                  </tr>
-                {% empty %}
-                  <h3>게시글이 없습니다.</h3>
-                {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
+              {% empty %}
+                <h3>게시글이 없습니다.</h3>
+              {% endfor %}
           </div>
           <div class="write--camp">
-            <h3>작성한 게시글</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">글 제목</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% comment %} {% for review in  %}
-                  <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></td>
-                  </tr>
+            <h3>작성한 리뷰</h3>
+              <div class="camp--content--box">
+                {% for review in person.review_set.all|slice:":10"  %}
+                  <div class="camp--content">
+                    <p>{{ forloop.counter }}.</p>
+                    <p><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></p>
+                  </div>
                 {% empty %}
                   <h3>게시글이 없습니다.</h3>
-                {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
+                {% endfor %}
+              </div>
+              {% if person.review_set.all|length > 10 %}
+                <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#comment" aria-controls="offcanvasExample" id="visitbtn">
+                  작성한 리뷰 모두보기({{person.review_set.all|length}})
+                </button>
+              {% endif %}
           </div>
         </div>
       </div>
@@ -326,6 +317,45 @@
       <div class="modal-footer">
         <button type="button" class="profile--followbtn" data-bs-dismiss="modal">Close</button>
       </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} offcanvas {% endcomment %}
+<div class="offcanvas offcanvas-start" tabindex="-1" id="camp" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title" id="offcanvasExampleLabel"style="color:#1A6ED8;">방문한 캠핑장</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      {% for post in person.visit_posts.all%}
+        <div class="camp--content">
+          <p>{{ forloop.counter }}.</p>
+          <p><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></p>
+        </div>
+      {% empty %}
+        <h3>게시글이 없습니다.</h3>
+      {% endfor %} 
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="comment" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title" id="offcanvasExampleLabel"style="color:#1A6ED8;">작성한 리뷰</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      {% for review in person.review_set.all%}
+        <div class="camp--content">
+          <p>{{ forloop.counter }}.</p>
+          <p><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></p>
+        </div>
+      {% empty %}
+        <h3>게시글이 없습니다.</h3>
+      {% endfor %}
     </div>
   </div>
 </div>
