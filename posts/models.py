@@ -35,7 +35,7 @@ class Post(models.Model):
     close_hour = models.TimeField()
     tags = TaggableManager()
     rating = models.DecimalField(default=0, max_digits=5, decimal_places=1)
-    priorities = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='priorities')
+    priorities = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='post_priorities')
 
     def __str__(self):
         return self.title
