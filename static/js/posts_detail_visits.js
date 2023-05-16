@@ -1,5 +1,6 @@
 const v_form = document.querySelector('#visits-form');
 const v_csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
 v_form.addEventListener('submit', function (event) {
   event.preventDefault();
   const postId = event.target.dataset.postId;
