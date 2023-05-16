@@ -616,7 +616,7 @@ footer a {
   font-weight: 600;
 }
 
-.modal-content {
+#login-content {
   width: 300px !important;
   height: 200px;
   z-index: 999;
@@ -626,13 +626,13 @@ footer a {
   align-items: center;
 }
 
-.modal-content p {
+#login-content p {
   font-size: 20px;
   text-align: center;
   font-weight: 600;
   margin-bottom: 0;
 }
-.modal-content img {
+#login-content img {
   height: 100px;
   width: 100px;
 }
