@@ -98,7 +98,7 @@
       <ul class="pagination justify-content-center" style="grid-column: 2 / 4; grid-row: 2 / 3; ">
         {% if posts.has_previous %}
         <li class="page-item">
-          <a class="page-link" href="?q={{ query }}&page={{ posts.previous_page_number }}">이전</a>
+          <a class="page-link" href="?&page={{ posts.previous_page_number }}">이전</a>
         </li>
         {% else %}
           <li class="page-item disabled">
@@ -110,11 +110,11 @@
           {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
             {% if page_number == posts.number %}
               <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?q={{ query }}&page={{ page_number }}">{{ page_number }}</a>
+                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
               </li>
             {% else %}
               <li class="page-item">
-                <a class="page-link" href="?q={{ query }}&page={{ page_number }}">{{ page_number }}</a>
+                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
               </li>
             {% endif %}
           {% endif %}
@@ -123,7 +123,7 @@
   
         {% if posts.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?q={{ query }}&page={{ posts.next_page_number }}">다음</a>
+            <a class="page-link" href="?&page={{ posts.next_page_number }}">다음</a>
           </li>
         {% else %}
           <li class="page-item disabled">
