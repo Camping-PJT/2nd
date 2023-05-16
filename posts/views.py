@@ -64,22 +64,22 @@ def thema(request):
         for category in categories:
             if category:
                 categories_q |= Q(category=category)
-        filter_args |= categories_q
+        filter_args &= categories_q
     if natures:
         natures_q = Q()
         for nature in natures:
             if nature:
                 natures_q |= Q(nature=nature)
-        filter_args |= natures_q
+        filter_args &= natures_q
     if facilities:
-        facility_objects = Facility.objects.filter(facility__in=facilities)
         facilities_q = Q()
+        facility_objects = Facility.objects.filter(facility__in=facilities)
         for facility in facility_objects:
             if facility:
                 facilities_q |= Q(facility=facility)
-        filter_args |= facilities_q
+        filter_args &= facilities_q
         
-    posts = Post.objects.filter(filter_args)
+    posts = Post.objects.filter(filter_args).distinct()
 
     post_images = []
     for post in posts:
@@ -181,7 +181,6 @@ def detail(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     title = post.title
     d_facilities = post.facility_set.all()
-    print(d_facilities)
     address = post.address
     latitude, longitude = get_latlng_from_address(address)
     reviews = Review.objects.filter(post=post).order_by('-pk')
@@ -430,6 +429,7 @@ def update_priority(request):
                 print(f"Error updating priority: {e}")
 
         return JsonResponse({'success': True})
+
 
 
 
