@@ -45,26 +45,27 @@ document.getElementById("thema").addEventListener("click", function(event) {
     categoryIcons.forEach(icon => {
       if (icon.classList.contains('selected')) {
         const category = icon.getAttribute('data-filter');
-        selectedCategories.push(category);
+        selectedCategories.push('category=' + category);
       }
     });
 
     natureIcons.forEach(icon => {
       if (icon.classList.contains('selected')) {
         const nature = icon.getAttribute('data-filter');
-        selectedNatures.push(nature);
+        selectedNatures.push('nature=' + nature);
       }
     });
 
     facilityIcons.forEach(icon => {
       if (icon.classList.contains('selected')) {
         const facility = icon.getAttribute('data-filter');
-        selectedFacilities.push(facility);
+        selectedFacilities.push('facility=' + facility);
       }
     });
     
-    const url = '/posts/thema/?' + 'category=' + selectedCategories.join('&') + '&' + 'nature=' + selectedNatures.join('&') + '&' + 'facility=' + selectedFacilities.join('&');
+    const url = '/posts/thema/?' +  selectedCategories.join('&') + '&' + selectedNatures.join('&') + '&' + selectedFacilities.join('&');
     window.location.href = url;
+
   });
 });
 

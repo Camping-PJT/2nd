@@ -46,24 +46,6 @@ from django.http import JsonResponse
 
 #     return render(request, 'main.html', context)
 
-def base(request):
-
-    choices = Facility.FACILITY_CHOICES
-    facilities = [choice[1] for choice in choices]
-
-    n_choices = Post.NATURE_CHOICES
-    natures = [choice[1] for choice in n_choices]
-
-    c_choices = Post.CATEGORY_CHOICES
-    categories = [choice[1] for choice in c_choices]
-    
-    context = {
-        'facilities': facilities,
-        'natures': natures,
-        'categories': categories,
-
-    }
-    return render(request, 'base.html', context)
 
 def main(request):
     w_city = request.GET.get('w_city', 'Seoul')
