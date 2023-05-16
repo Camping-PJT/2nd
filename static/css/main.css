@@ -146,7 +146,7 @@ footer {
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 30px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 0;
 }
 
 .search--box:focus-within {
@@ -198,7 +198,6 @@ input[type=search]::-webkit-search-cancel-button {
 @media only screen and (max-width: 768px) {
   .search--box {
     width: 80%;
-    margin-top: 50px;
     height: 50px;
   }
 
@@ -213,7 +212,6 @@ input[type=search]::-webkit-search-cancel-button {
 @media only screen and (min-width: 768px) {
   .search--box {
     width: 650px;
-    margin-top: 100px;
   }
 }
 
@@ -601,3 +599,56 @@ footer a {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
+.city--box {
+  margin-top: 80px;
+}
+
+.city {
+  text-align: end;
+  width: 600px;
+  margin: auto;
+}
+
+.city a {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#login-content {
+  width: 300px !important;
+  height: 200px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-content p {
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+#login-content img {
+  height: 100px;
+  width: 100px;
+}
+.login--box {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.login--box a {
+  font-size: 22px;
+  text-decoration: none;
+  color: rgba(245, 118, 8);
+}
+
+.login--box a:hover {
+  color: #383943;
+}

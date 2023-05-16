@@ -20,6 +20,13 @@
       'GRAD' 0,
       'opsz' 48
     }
+
+    .login-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
   </style>
 </head>
 <body>
@@ -123,15 +130,21 @@
       </div>
 
       {% comment %} search {% endcomment %}
-
-      <div class="search--box">
-        <form action="{% url 'posts:search' %}" class="search">
-          {% csrf_token %}
-            <input type="search" placeholder='   캠핑장 검색' name='q' style="padding-left:10px;">
-            <button class="search--btn" type="submit">
+      <div class="city--box">
+        <div class="search--box" id="search-container">
+          <form action="{% url 'posts:search' %}" class="search">
+            {% csrf_token %}
+            <input type="search" id="search-input" placeholder='   캠핑장 검색' name='q' style="padding-left:10px;" autocomplete="off">
+            <button class="search--btn" type="submit" {% if not request.user.is_authenticated %} disabled {% endif %}>
               <i class="bi bi-search"></i>
             </button>
-        </form>
+          </form>
+        </div>
+        {% if request.user.is_authenticated %}
+          <div class="city">
+            <a href="{% url 'posts:city' %}">선호 지역 캠핑장 리스트 보기 <i class="bi bi-geo"></i></a>
+          </div>
+        {% endif %}
       </div>
 
       {% comment %} post count {% endcomment %}
@@ -283,12 +296,20 @@
           <div class="main--posts">
             <p id="selectedCity"></p>
             <div id="postSection"></div>
-            {% comment %} {% for post in allpost %}
-              {% if post.city == selected_sido %} 
-                {{ post.title }}
-              {% endif %}
-            {% endfor %} {% endcomment %}
           </div>
+        </div>
+      </div>
+    </div>
+    {% comment %} 로그인 모달 {% endcomment %}
+    <div id="login-modal" class="modal">
+      <div class="modal-content" id="login-content">
+        <div class="d-flex align-items-center gap-2">
+          <img src="{% static 'image/logo_black.png' %}" alt="">
+          <p>로그인해주세요</p>
+        </div>
+        <div class="login--box">
+          <a href="{% url 'accounts:login' %}">로그인</a>
+          <a href="{% url 'accounts:signup' %}">회원가입</a>
         </div>
       </div>
     </div>
@@ -414,6 +435,34 @@
 
   </script>
 
+  <script>
+    const searchContainer = document.getElementById('search-container');
+    const searchInput = document.getElementById('search-input');
+    const modal = document.getElementById('login-modal');
+    const modalContent = document.querySelector('.modal-content');
+
+  
+    searchInput.addEventListener('focus', function() {
+      if (!isLoggedIn()) {
+        modal.style.display = 'block';
+      }
+    });
+  
+    modal.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+  
+    function isLoggedIn() {
+      const isAuthenticated = {% if request.user.is_authenticated %}true{% else %}false{% endif %};
+      return isAuthenticated;
+    }
+  
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+  </script>
 </body>
 </html>
 
