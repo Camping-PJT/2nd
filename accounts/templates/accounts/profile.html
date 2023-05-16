@@ -165,11 +165,11 @@
                 <li>캠핑일자 : {{ schedule.start|date:"M d일" }} - {{ schedule.end|date:"M d일" }}</li>
                   <a href="{% url 'posts:detail' schedule.post.pk %}">
                     <P>캠핑장 : {{ schedule.title }}</P>
-                    {% if  schedule.description %}
-                      <p>메모: {{ schedule.description }}</p>
-                    {% else %}
-                    {% endif %}
                   </a>
+                  {% if  schedule.description %}
+                    <p>메모: {{ schedule.description }}</p>
+                  {% else %}
+                  {% endif %}
               {% endif %}
             {% endfor %}
           </ul>
