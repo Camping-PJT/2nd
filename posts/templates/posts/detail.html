@@ -131,9 +131,9 @@
 {% comment %} facilities {% endcomment %}
 
 <div class="camp--title">편의시설</div>
-<div class="facility--box">
+<div class="facility--boxes">
   {% for facility in d_facilities %}
-  <div class="facility">
+  <div class="facilities">
     {% if facility.facility == '와이파이' %}
       <i class="bi bi-wifi"></i>
     {% elif facility.facility == '매점' %}
@@ -166,7 +166,7 @@
 
 {% comment %} 리뷰 {% endcomment %}
 <div class="review--title">
-  <div class="review">이용후기 ({{ reviews|length }})</div>
+  <div class="review">이용후기 ({{ post.reviews.all|length }})</div>
   <a href="{% url 'reviews:create' post.pk %}">리뷰 작성<i class="bi bi-pencil-square"></i></a>
 </div>
 <table class="review--list">

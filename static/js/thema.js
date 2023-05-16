@@ -10,25 +10,40 @@ document.getElementById("thema").addEventListener("click", function(event) {
     modal.style.display = "none";
   });
 
-  const categoryBox = document.querySelector('.category--box');
-  categoryBox.addEventListener('click', function(event) {
-    if (event.target.classList.contains('category-icon')) {
-      event.target.classList.toggle('selected');
-    }
+  const categoryBoxes = document.querySelectorAll('.category--box__category');
+  const natureBoxes = document.querySelectorAll('.nature');
+  const facilityBoxes = document.querySelectorAll('.facility');
+
+  categoryBoxes.forEach(box => {
+    box.addEventListener('click', function(event) {
+      const targetIcon = event.target.querySelector('.category-icon');
+      if (targetIcon) {
+        targetIcon.classList.toggle('selected');
+        box.classList.toggle('selected');
+      } else {
+        box.classList.toggle('selected');
+      }
+    });
   });
 
-  const natureBox = document.querySelector('.nature--box');
-  natureBox.addEventListener('click', function(event) {
-    if (event.target.classList.contains('nature-icon')) {
-      event.target.classList.toggle('selected');
-    }
+  natureBoxes.forEach(box => {
+    box.addEventListener('click', function(event) {
+      const targetIcon = event.currentTarget.querySelector('.nature-icon');
+      if (targetIcon) {
+        targetIcon.classList.toggle('selected');
+        box.classList.toggle('selected');
+      }
+    });
   });
 
-  const facilityBox = document.querySelector('.facility--box');
-  facilityBox.addEventListener('click', function(event) {
-    if (event.target.classList.contains('facility-icon')) {
-      event.target.classList.toggle('selected');
-    }
+  facilityBoxes.forEach(box => {
+    box.addEventListener('click', function(event) {
+      const targetIcon = event.currentTarget.querySelector('.facility-icon');
+      if (targetIcon) {
+        targetIcon.classList.toggle('selected');
+        box.classList.toggle('selected');
+      }
+    });
   });
 
   const submitBtn = document.getElementById('submitBtn');
@@ -68,4 +83,3 @@ document.getElementById("thema").addEventListener("click", function(event) {
 
   });
 });
-

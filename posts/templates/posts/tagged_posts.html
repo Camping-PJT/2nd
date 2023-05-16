@@ -59,9 +59,9 @@
                   </p>
                 </div>
               </div>
-              <div class="facility--box">
+              <div class="facility--boxes">
                 {% for facility in post.facility_set.all %}
-                <div class="facility">
+                <div class="facilities">
                   {% if facility.facility == '와이파이' %}
                     <i class="bi bi-wifi"></i>
                   {% elif facility.facility == '매점' %}
