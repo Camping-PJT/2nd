@@ -283,6 +283,7 @@ input[type=search]::-webkit-search-cancel-button {
   height: 40px;
   font-size: 18px;
   padding-top: 5px;
+  z-index: 9999;
 }
 
 #scrollButton.go-up {
@@ -530,4 +531,34 @@ input[type=search]::-webkit-search-cancel-button {
   height: 200px;
   text-align: center;
   font-size: 150px;
+}
+
+.calendar--profile {
+  text-decoration: none;
+  color: rgba(245, 118, 8);
+  margin-left: 20px;
+  font-weight: 600;
+}
+
+.schedule--plus {
+  font-weight: 600;
+  margin-bottom: 0;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.schedule--list a {
+  text-decoration: none;
+  color: black;
+}
+
+.schedule--list span {
+  margin: 0 5px;
+}
+
+.calendar--btn {
+  border: none;
+  background-color: #fff0;
+  color: rgba(245, 118, 8);
+  font-weight: 600;
 }

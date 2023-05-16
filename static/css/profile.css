@@ -55,6 +55,7 @@ input[type="radio"]:checked + label {
   background: white;
   color: #383943;
   box-shadow: 0.6px 5px  white;
+  z-index: 9999;
 }
 
 input[id="tab01"]:checked ~ .card1 {
@@ -253,6 +254,7 @@ input[id="tab04"]:checked ~ .card4 {
 .like--camp {
   border-left: 2px dotted #383943;
   border-right: 2px dotted #383943;
+  padding: 10px;
 }
 
 @media only screen and (max-width: 1180px) {
@@ -413,6 +415,80 @@ input[id="tab04"]:checked ~ .card4 {
   border-radius: 10px;
 }
 
+.schedule--title {
+  text-align: center;
+  margin: 20px 0px;
+  font-weight: 600;
+}
+
 .box3 {
-  white-space: nowrap;
+  height: 70%;
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: hidden;
+  justify-content: center;
+  position: relative;
+}
+
+.box3--carousel {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  height: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.2s;
+}
+
+.myschedule {
+  border: 1px solid #383943;
+  border-radius: 10px;
+  padding: 10px;
+  height: 100px;
+}
+
+.myschedule p {
+  margin-bottom: 0;
+}
+.myschedule a {
+  text-decoration: none;
+  color: #383943;
+}
+
+.myschedule a:hover {
+  color: rgba(245, 119, 8, 0.5);
+}
+
+.carousel--right {
+  border: none;
+  color: rgba(245, 118, 8);
+  background-color: #fff0;
+  position: absolute;
+  bottom: 250px;
+  right: 20%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+
+.carousel--left {
+  border: none;
+  color: rgba(245, 118, 8);
+  background-color: #fff0;
+  position: absolute;
+  bottom: 250px;
+  left: 20%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+.card3 {
+  position: relative;
 }

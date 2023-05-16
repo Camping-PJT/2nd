@@ -156,26 +156,28 @@
 
       {% comment %} 세번째 탭 {% endcomment %}
       <div class="profile--card card3">
-        <h3><i class="bi bi-calendar-week"></i></h3>
-        {% for month in schedules_by_month %}
-          <h4>{{ month.month|date:"Y F" }}</h4>
-          <ul>
+        <h2 class="schedule--title">앞으로의 남은 일정</h2>
+        <button id="prevbtn" class="carousel--left"><</button>
+        <div class="box3">
+          <div class="box3--carousel">
             {% for schedule in schedules %}
-              {% if schedule.start|date:"Y F" == month.month|date:"Y F" %}
-                <li>캠핑일자 : {{ schedule.start|date:"M d일" }} - {{ schedule.end|date:"M d일" }}</li>
-                  <a href="{% url 'posts:detail' schedule.post.pk %}">
-                    <P>캠핑장 : {{ schedule.title }}</P>
-                  </a>
-                  {% if  schedule.description %}
-                    <p>메모: {{ schedule.description }}</p>
-                  {% else %}
-                  {% endif %}
+            <div class="myschedule">
+              <div class="d-flex justify-content-between">
+                <p>일정: {{ schedule.start|date:"M d일" }} 부터  {{ schedule.end|date:"M d일" }} 까지</p>
+                <a href="{% url 'schedules:delete' schedule.id %}" class="text-primary" onclick="return confirm('일정을 삭제하시겠습니까?')" ><i class="bi bi-trash3"></i></a>
+              </div>
+              <P><a href="{% url 'posts:detail' schedule.post.pk %}">장소: {{ schedule.title }}</a></P>
+              {% if schedule.description %}
+              <p>메모: {{ schedule.description }}</p>
               {% endif %}
+            </div>
             {% endfor %}
-          </ul>
-        {% endfor %}
+          </div>
+        </div>
+        <button id="nextbtn" class="carousel--right">></button>
       </div>
 
+      {% comment %} 네번째 탭 {% endcomment %}
       <div class="profile--card card4">
         <div class="box4">
           <div class="box4--left">
@@ -370,6 +372,77 @@
 </script>
 <script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/priority.js' %}" type="text/javascript"></script>
-
-
+<script>
+  class Carousel {
+    constructor() {
+      this.index = 0;
+      this.$carousel = document.querySelector(".box3--carousel");
+      this.$prevButton = document.querySelector("#prevbtn");
+      this.$nextButton = document.querySelector("#nextbtn");
+  
+      this.$prevButton.addEventListener("click", () => {
+        this.prev();
+      });
+  
+      this.$nextButton.addEventListener("click", () => {
+        this.next();
+      });
+  
+      if (this.index === 0) {
+        this.$prevButton.hidden = true;
+      }
+  
+      if (this.$carousel.childElementCount <= 1) {
+        this.$nextButton.hidden = true;
+      }
+  
+      if (this.index === 0 && this.$carousel.childElementCount > 1) {
+        this.$nextButton.hidden = false;
+      }
+    }
+  
+    prev() {
+      if (this.index <= 0) return;
+      this.index -= 1;
+  
+      this.$carousel.style.transform = `translate3d(0, -${
+        110 * this.index
+      }px, 0)`;
+  
+      if (this.index <= 0) {
+        this.$prevButton.hidden = true;
+      } else {
+        this.$prevButton.hidden = false;
+      }
+      if (this.index >= this.$carousel.childElementCount) {
+        this.$nextButton.hidden = true;
+      } else {
+        this.$nextButton.hidden = false;
+      }
+    }
+  
+    next() {
+      if (this.index >= this.$carousel.childElementCount) return;
+      this.index += 1;
+  
+      this.$carousel.style.transform = `translate3d(0, -${
+        110 * this.index
+      }px, 0)`;
+  
+      if (this.index <= 0) {
+        this.$prevButton.hidden = true;
+      } else {
+        this.$prevButton.hidden = false;
+      }
+      if (this.index >= this.$carousel.childElementCount - 3) {
+        this.$nextButton.hidden = true;
+      } else {
+        this.$nextButton.hidden = false;
+      }
+    }
+  }
+  
+  const carousel = new Carousel();
+  
+  </script>
 {% endblock script %}
