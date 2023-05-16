@@ -114,18 +114,18 @@ def detail_schedule(request, schedule_id):
     return render(request, 'schedules/detail.html', context)
 
 
-# def delete_schedule(request, schedule_id):
-#     schedule = Schedule.objects.get(id=schedule_id)
-#     if request.user == schedule.user:
-#         schedule.delete()
-#     return redirect('schedules:calendar')
-
 def delete_schedule(request, schedule_id):
     schedule = Schedule.objects.get(id=schedule_id)
     if request.user == schedule.user:
         schedule.delete()
-        messages.success(request, '일정이 삭제되었습니다.')
-    else:
-        messages.error(request, '일정을 삭제할 권한이 없습니다.')
     return redirect('schedules:calendar')
+
+# def delete_schedule(request, schedule_id):
+#     schedule = Schedule.objects.get(id=schedule_id)
+#     if request.user == schedule.user:
+#         schedule.delete()
+#         messages.success(request, '일정이 삭제되었습니다.')
+#     else:
+#         messages.error(request, '일정을 삭제할 권한이 없습니다.')
+#     return redirect('schedules:calendar')
 
