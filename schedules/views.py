@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .models import Schedule, Post
@@ -10,6 +11,7 @@ from django.contrib import messages
 # Create your views here.
 
 
+@login_required
 def calendar(request):
     posts = Post.objects.all()
     kakao_script_key = os.getenv('kakao_script_key')
@@ -34,6 +36,7 @@ def calendar(request):
     return render(request, 'schedules/calendar.html', context)
 
 
+@login_required
 def create_schedule(request):
     if request.method == 'POST':
         post_id = request.POST['post_id']
@@ -64,6 +67,7 @@ def create_schedule(request):
     return render(request, 'schedules/create.html', context)
 
 
+@login_required
 def get_schedule_data(request):
     schedules = Schedule.objects.filter(user=request.user)
     data = []
@@ -98,6 +102,7 @@ def update_schedule(request, schedule_id):
     return render(request, 'schedules/update.html', context)
 
 
+@login_required
 def detail_schedule(request, schedule_id):
     kakao_script_key = os.getenv('kakao_script_key')
     schedule = get_object_or_404(Schedule, id=schedule_id)
@@ -114,18 +119,12 @@ def detail_schedule(request, schedule_id):
     return render(request, 'schedules/detail.html', context)
 
 
+@login_required
 def delete_schedule(request, schedule_id):
     schedule = Schedule.objects.get(id=schedule_id)
     if request.user == schedule.user:
         schedule.delete()
+        messages.success(request, '일정이 삭제되었습니다.')
+    else:
+        messages.error(request, '일정을 삭제할 권한이 없습니다.')
     return redirect('schedules:calendar')
-
-# def delete_schedule(request, schedule_id):
-#     schedule = Schedule.objects.get(id=schedule_id)
-#     if request.user == schedule.user:
-#         schedule.delete()
-#         messages.success(request, '일정이 삭제되었습니다.')
-#     else:
-#         messages.error(request, '일정을 삭제할 권한이 없습니다.')
-#     return redirect('schedules:calendar')
-
