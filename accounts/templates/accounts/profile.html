@@ -112,12 +112,12 @@
               {% empty %}
                 <h3>게시글이 없습니다.</h3>
               {% endfor %} 
+              {% if person.visit_posts.all|length > 10 %}
+                <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#camp" aria-controls="offcanvasExample" id="visitbtn">
+                  방문한 캠핑장 모두보기({{person.visit_posts.all|length}})
+                </button>
+              {% endif %}
             </div>
-            {% if person.visit_posts.all|length > 10 %}
-              <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#camp" aria-controls="offcanvasExample" id="visitbtn">
-                방문한 캠핑장 모두보기({{person.visit_posts.all|length}})
-              </button>
-            {% endif %}
           </div>
           <div class="like--camp">
             <h3>캠핑장 우선순위</h3>
@@ -144,12 +144,12 @@
                 {% empty %}
                   <h3>게시글이 없습니다.</h3>
                 {% endfor %}
+                {% if person.review_set.all|length > 10 %}
+                  <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#comment" aria-controls="offcanvasExample" id="visitbtn">
+                    작성한 리뷰 모두보기({{person.review_set.all|length}})
+                  </button>
+                {% endif %}
               </div>
-              {% if person.review_set.all|length > 10 %}
-                <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#comment" aria-controls="offcanvasExample" id="visitbtn">
-                  작성한 리뷰 모두보기({{person.review_set.all|length}})
-                </button>
-              {% endif %}
           </div>
         </div>
       </div>

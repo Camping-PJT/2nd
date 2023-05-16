@@ -3,9 +3,13 @@
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-.item--container {
+.salespage {
   width: 80%;
   margin: auto;
+}
+
+.item--container {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(4,1fr);
 }
@@ -109,47 +113,40 @@
 }
 
 .salescate {
-  display: grid;
-  grid-template-columns: 160px 1010px;
-  width: 80%;
-  margin: auto;
-  gap: 10px;
-  margin-bottom: 100px;
-}
-
-.cateall {
+  padding-right: 25px;
   width: 100%;
-  height: 50px;
-  text-align: center;
-  border: 1px solid #97caad;
-  background-color: #97caad;
-  line-height: 48px;
-  margin: 0 10px 10px 0;
-  padding: 0 10px;
-  vertical-align: middle;
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  margin-bottom: 100px;
+  gap: 10px;
+  white-space: nowrap;
 }
 
-.cateall a {
+.salescate a {
+  padding: 10px;
+}
+
+.allcate {
   text-decoration: none;
   font-size: 13.5px;
+  min-width: 160px;
   width: 100%;
   color: white;
-}
-
-.catelist {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: 1fr;
+  border: 1px solid #97caad;
+  background-color: #97caad;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cate--item {
-  width: 160px;
-  height: 50px;
-  text-align: center;
+  min-width: 160px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid #efefef;
-  line-height: 48px;
-  margin: 0 10px 10px 0;
-  padding: 0 10px;
   vertical-align: middle;
 }
 
@@ -159,4 +156,5 @@
   width: 100%;
   color: black;
   font-weight: 600;
+  text-align: center;
 }

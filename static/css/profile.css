@@ -8,7 +8,8 @@
 .profile--container {
   width: 100%;
   height: 500px;
-  margin-top: 10px;
+  margin-top: 20px;
+  white-space: nowrap;
 }
 
 .tab--group {
@@ -83,7 +84,6 @@ input[id="tab04"]:checked ~ .card4 {
     grid-template-columns: repeat(1, minmax(max-content, auto));
     padding: 10px;
   }
-
   .profile--card--right  {
     grid-row: 1;
   }
@@ -113,10 +113,11 @@ input[id="tab04"]:checked ~ .card4 {
   font-weight: 600;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 850px) {
   .profile--card--left {
     align-items: center;
     justify-content: start;
+    padding: 0;
   }
   
   .profile--card--left p {
@@ -238,8 +239,9 @@ input[id="tab04"]:checked ~ .card4 {
 .box2 {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  padding: 10px;
+  padding: 20px;
   height: 100%;
+  white-space: nowrap;
 }
 
 .box2 h3 {
@@ -253,9 +255,15 @@ input[id="tab04"]:checked ~ .card4 {
   border-right: 2px dotted #383943;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1180px) {
   .box2 {
     grid-template-columns: repeat(1, minmax(max-content, auto));
+    overflow:hidden;
+    white-space: nowrap;
+  }
+
+  .box2 h3 {
+    margin-top: 10px;
   }
 
   .like--camp {
@@ -263,8 +271,26 @@ input[id="tab04"]:checked ~ .card4 {
     border-bottom: 2px dotted #383943;
     border-left: none;
     border-right: none;
+    margin: 10px 0px;
   }
 
+  .write--camp {
+    padding-left: 0 !important;
+  }
+
+  .camp--content p,a {
+    font-size: 15px !important;
+  }
+
+  #visitbtn {
+    margin-top: 10px !important;
+    position: inherit !important;
+  }
+  
+  .camp--content--box {
+    grid-template-rows: repeat(11,auto)!important;
+    height: auto !important;
+  }
 }
 
 .priority-dropzone {
@@ -289,6 +315,7 @@ input[id="tab04"]:checked ~ .card4 {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(max-content, auto));
+  white-space: nowrap;
 }
 
 .priority-title {
@@ -351,8 +378,6 @@ input[id="tab04"]:checked ~ .card4 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
-  height: 100%;
 }
 
 .camp--content a:hover {
@@ -363,7 +388,7 @@ input[id="tab04"]:checked ~ .card4 {
   position: relative;
 }
 .write--camp {
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 #visitbtn {
@@ -386,4 +411,8 @@ input[id="tab04"]:checked ~ .card4 {
 .offcanvas::-webkit-scrollbar-thumb {
   background-color: rgba(245, 119, 8, 0.5);
   border-radius: 10px;
+}
+
+.box3 {
+  white-space: nowrap;
 }
