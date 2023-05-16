@@ -2,44 +2,101 @@
 {% load static %}
 {% block head %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/city.css' %}"> 
 {% endblock head %}
-
-{% block style %}
-<style>
-  .city--box {
-    display: flex;
-    margin: 5rem;
-  }
-
-  .city--box__camps {
-    display:flex;
-  }
-
-  .city--box__camp {
-    display: flex;
-    flex-direction: column;
-    margin: 1rem;
-  }
-</style>
-{% endblock style %}
 
 {% block content %}
 
   <div class="city--box">
+    <div class="city--title">
+      {{ request.user.region }} 캠핑 장소
+    </div>
     {% comment %} 선호지역 지도 {% endcomment %}
-    <div class="map" id="map" style="width:400px; height:400px;"></div>
-  
-    <div class="city--box__camps">
+    <div class="map" id="map" style="width:100%; height:500px;"></div>
+
+    <div class="campsite">
       {% for campsite in campsites %}
-      <div class="city--box__camp">
-        <p>{{ campsite.title }}</p>
-        <p>{{ campsite.content }}</p>
-        <p>{{ campsite.address }}</p>
-      </div>
+      <div class="content--box" id="content-list">
+          <a href="{% url 'posts:detail' campsite.pk %}" class="content--link">
+            <div class="content--txt">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-column">
+                  <p class="content--title">[{{ campsite.title }}]<span class="content--cate">{{ campsite.nature }} / {{ campsite.category }}</span></p>
+                  <div class="content--info">
+                    <p><i class="bi bi-geo-alt"></i> {{ campsite.address }}</p>
+                    <p><i class="bi bi-telephone"></i> {{ campsite.phone }}</p>
+                  </div>
+                  <p class="content--info">입실 : {{ campsite.open_hour }} / 퇴실 : {{ campsite.close_hour }}</p>
+                </div>
+                <div>
+                  <p class="star">
+                    <i class="bi bi-star-fill"></i> 
+                    {{ campsite.rating }}
+                    <div class='d-flex gap-1 justify-content-end'>
+                      {% if request.user.is_authenticated %}
+                        <form id="likes-form-{{ campsite.pk }}" data-post-id="{{ campsite.pk }}">
+                          {% csrf_token %}
+                          {% if request.user in campsite.like_users.all %}
+                              <button class="btn btn-link text-danger p-0" type="submit">
+                                <i class="bi bi-suit-heart-fill"></i>
+                              </button>
+                          {% else %}
+                              <button class="btn btn-link text-danger p-0" type="submit">
+                                <i class="bi bi-suit-heart"></i>
+                              </button>
+                          {% endif %}
+                        </form>
+                      {% else %}
+                        <button class="btn btn-link text-secondary p-0" disabled>
+                          <i class="bi bi-suit-heart"></i>
+                        </button>
+                      {% endif %}
+                      <span id="likes-count">{{ campsite.like_users.all|length }}</span>
+                    </div>
+                  </p>
+                </div>
+              </div>
+              <div class="facility--box">
+                {% for facility in campsite.facility_set.all %}
+                <div class="facility">
+                  {% if facility.facility == '와이파이' %}
+                    <i class="bi bi-wifi"></i>
+                  {% elif facility.facility == '매점' %}
+                    <i class="bi bi-shop"></i>
+                  {% elif facility.facility == '샤워시설' %}
+                    <i class="bi bi-door-closed"></i>
+                  {% elif facility.facility == '전기' %}
+                    <i class="bi bi-lightning"></i>
+                  {% elif facility.facility == '온수제공' %}
+                    <i class="bi bi-cup-hot"></i>
+                  {% elif facility.facility == '대여' %}
+                    <i class="bi bi-bucket"></i>
+                  {% elif facility.facility == '장작' %}
+                    <i class="bi bi-fire"></i>
+                  {% elif facility.facility == '개수대' %}
+                    <i class="bi bi-droplet"></i>
+                  {% elif facility.facility == '화장실' %}
+                    <i class="bi bi-universal-access-circle"></i>
+                  {% endif %}
+                  {{ facility }}
+                </div>
+                {% endfor %}
+              </div>
+
+              {% for tag in campsite.tags.all %}
+                <a href="{% url 'posts:tagged_posts' tag.pk %}" class="tag">#{{ tag.name }}</a>
+              {% endfor %} 
+            </div>
+          </a>
+        </div>
       {% endfor %}
     </div>
-  </div>
 
+    {% if campsites|length > 2 %}
+    <div id="load-more-btn" class="show_more_box">
+      <button id="btn-more" class="show_more_btn">더보기</button>
+    </div>
+    {% endif %}
 
 {% endblock content %}
 
@@ -79,7 +136,7 @@
         });
 
         kakao.maps.event.addListener(marker, 'click', function() {
-          window.location.href = '/posts/{{ campsite.id }}';
+          window.location.href = '/posts/{{ campsite.id }}'+ '/';
         });
 
         if (coordinates.length === {{ campsites|length }}) {
@@ -105,4 +162,7 @@
     return new kakao.maps.LatLng(averageLat, averageLng);
   }
 </script>
+
+<script src="{% static '/js/search_likes.js' %}" type="text/javascript"></script>
+<script src="{% static '/js/show.js' %}" type="text/javascript"></script>
 {% endblock script %}
