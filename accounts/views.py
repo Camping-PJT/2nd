@@ -45,9 +45,14 @@ def login(request):
         form = CustomAuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
+            prev_url = request.session.get('prev_url')
+            if prev_url:          
+                del request.session['prev_url']
+                return redirect(prev_url)
             return redirect('posts:index')
     else:
         form = CustomAuthenticationForm()
+        request.session['prev_url'] = request.META.get('HTTP_REFERER')
     context = {
         'form': form,
     }
