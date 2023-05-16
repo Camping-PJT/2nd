@@ -13,34 +13,39 @@
   <div id='calendar'></div>
 
   <hr>
-  <form method="POST" action="{% url 'schedules:create' %}">
-  {% csrf_token %}
-  <label for="post">캠핑 장소:</label>
-  <select name="post_id" id="post">
-    {% for post in posts %}
-    <option value="{{ post.id }}">{{ post.title }}</option>
-    {% endfor %}
-  </select>
-  <label for="start">시작일:</label>
-  <input type="datetime-local" name="start" id="start">
-  <label for="end">종료일:</label>
-  <input type="datetime-local" name="end" id="end">
-  <label for="description">메모:</label>
-  <input type="textarea" name="description" id="description">
-  <input type="submit" value="일정 생성">
-  </form>
+  <div class="d-flex align-items-center justify-content-center gap-2">
+    <p class="schedule--plus">일정 추가 </p>
+    <form method="POST" action="{% url 'schedules:create' %}">
+    {% csrf_token %}
+    <label for="post">캠핑 장소:</label>
+    <select name="post_id" id="post">
+      {% for post in posts %}
+      <option value="{{ post.id }}">{{ post.title }}</option>
+      {% endfor %}
+    </select>
+    <label for="start">시작일:</label>
+    <input type="datetime-local" name="start" id="start">
+    <label for="end">종료일:</label>
+    <input type="datetime-local" name="end" id="end">
+    <label for="description">메모:</label>
+    <input type="textarea" name="description" id="description">
+    <input type="submit" value="일정 생성">
+    </form>
+    <a href="{% url 'accounts:profile' request.user %}" class="calendar--profile ">프로필로 가기</a>
+  </div>
   <hr>
- 
+
   <ul style="list-style-type: none; padding: 0; margin: 0;">
     {% for schedule in schedules %}
-    <li>
-      <a href="{% url 'posts:detail' post_pk=schedule.post.pk %}"><span>캠핑장 : {{ schedule.title }}</span></a>
-      <span>날짜 : {{ schedule.start|date:"m월 d일" }}</span>~
-      <span>{{ schedule.end|date:"m월 d일" }}</span>
+    <li class="schedule--list">
+      {{ forloop.counter }}.
+      <a href="{% url 'posts:detail' post_pk=schedule.post.pk %}"><span>장소 : {{ schedule.title }}</span></a>
+      <span>날짜 : {{ schedule.start|date:"m월 d일" }}부터</span>
+      <span>{{ schedule.end|date:"m월 d일" }}까지</span>
   
       <!-- 모달 트리거 버튼 -->
-      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ schedule.id }}">일정 변경</button>
-      <a href="{% url 'schedules:delete' schedule.id %}">삭제</a>
+      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ schedule.id }}" class="calendar--btn">일정 변경</button>
+      <a href="{% url 'schedules:delete' schedule.id %}" onclick="return confirm('일정을 삭제하시겠습니까?')" class="calendar--btn" >삭제</a>
 
       <!-- 일정 변경 모달 -->
       <div class="modal fade mt-5" id="exampleModal{{ schedule.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

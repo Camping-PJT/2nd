@@ -13,6 +13,7 @@ import json
 from posts.models import Priority
 from django.db.models.functions import TruncMonth
 from django.db.models import Count
+from datetime import datetime
 
 
 # Create your views here.
@@ -116,7 +117,8 @@ def profile(request, username):
     priority_range = range(1, 6)
     priority_range2 = range(6, 11)
     priorities = Priority.objects.filter(user=request.user).order_by('priority')
-    schedules = Schedule.objects.filter(user_id=user_id).order_by('start')
+    today = datetime.now()
+    schedules = Schedule.objects.filter(user_id=user_id, start__gte=today).order_by('start__date','end__date')
     schedules_by_month = (
         schedules.annotate(month=TruncMonth('start'))
         .values('month')
