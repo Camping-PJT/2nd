@@ -45,7 +45,7 @@
                   <p class="star">
                     <i class="bi bi-star-fill"></i> 
                     {{ post.rating }}
-                    <div class='d-flex gap-1 justify-content-end'>
+                    <div class='d-flex gap-1 justify-content-end align-items-center'>
                       {% if request.user.is_authenticated %}
                         <form id="likes-form-{{ post.pk }}" data-post-id="{{ post.pk }}">
                           {% csrf_token %}
@@ -65,13 +65,15 @@
                         </button>
                       {% endif %}
                       <span id="likes-count">{{ post.like_users.all|length }}</span>
+                      <i class="bi bi-chat-square-text ms-2"></i>
+                      {{ post.reviews.all|length}}
                     </div>
                   </p>
                 </div>
               </div>
-              <div class="facility--box">
+              <div class="facility--boxes">
                 {% for facility in post.facility_set.all %}
-                <div class="facility">
+                <div class="facilities">
                   {% if facility.facility == '와이파이' %}
                     <i class="bi bi-wifi"></i>
                   {% elif facility.facility == '매점' %}

@@ -64,20 +64,20 @@ def thema(request):
         for category in categories:
             if category:
                 categories_q |= Q(category=category)
-        filter_args |= categories_q
+        filter_args &= categories_q
     if natures:
         natures_q = Q()
         for nature in natures:
             if nature:
                 natures_q |= Q(nature=nature)
-        filter_args |= natures_q
+        filter_args &= natures_q
     if facilities:
         facility_objects = Facility.objects.filter(facility__in=facilities)
         facilities_q = Q()
         for facility in facility_objects:
             if facility:
                 facilities_q |= Q(facility=facility)
-        filter_args |= facilities_q
+        filter_args &= facilities_q
         
     posts = Post.objects.filter(filter_args)
 
