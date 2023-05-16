@@ -101,11 +101,11 @@ def thema(request):
 
 
 
-
+@login_required
 def city(request):
     kakao_script_key = os.getenv('kakao_script_key')
     kakao_key = os.getenv('kakao_key')
-    campsites = Post.objects.filter(city = request.user.region)
+    campsites = Post.objects.filter(city = request.user.region).order_by('-rating')
     posts = Post.objects.order_by('-pk')
     post_images = []
     for post in posts:
