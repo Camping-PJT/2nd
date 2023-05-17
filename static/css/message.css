@@ -1,0 +1,124 @@
+@font-face {
+  font-family: 'LeeSeoyun';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.message {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.message h2 {
+  color: #ab7aff;
+}
+
+.message--box {
+  border: 1px solid rgba(189, 151, 255, 0.4);
+  border-radius: 10px;
+  width: 45%;
+  margin: auto;
+  text-align: start;
+  padding: 10px;
+}
+
+.message--txt {
+  font-family: 'LeeSeoyun';
+  font-size: 15px;
+  border: 1px solid rgba(189, 151, 255, 0.4);
+  border-radius: 10px;
+  margin: 10px auto;
+  text-align: start;
+  padding: 10px;
+  width: 95%;
+  overflow: auto;
+  height: 100px;
+}
+
+.message--txt::-webkit-scrollbar {
+  border-radius: 10px;
+  width: 5px;
+  margin-right: 5px;
+}
+
+.message--txt::-webkit-scrollbar-thumb {
+  background-color: rgba(189, 151, 255, 0.4);
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+
+.message--txt::-webkit-scrollbar-track {
+  margin: 5px;
+}
+
+.message--sender {
+  font-size: 25px;
+  margin-left: 15px;
+  color: rgb(83, 83, 83);
+}
+
+.message--title {
+  font-size: 15px;
+  margin-left: 15px;
+  color: rgb(83, 83, 83);
+}
+
+.message--btn--submit {
+  background-color: #fff0;
+  border: none;
+  font-size: 20px;
+  color: #ab7aff;
+}
+
+#id_content {
+  display: block;
+  border: 1px solid rgba(189, 151, 255, 0.4);
+  border-radius: 10px;
+  font-family: 'LeeSeoyun';
+}
+
+#id_content:focus {
+  border-color:rgba(122, 99, 161, 0.4);
+  outline: 0;
+}
+
+#id_content::-webkit-scrollbar {
+  border-radius: 10px;
+  width: 5px;
+  margin-right: 5px;
+}
+
+#id_content::-webkit-scrollbar-thumb {
+  background-color: rgba(189, 151, 255, 0.4);
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+
+#id_content::-webkit-scrollbar-track {
+  margin: 5px;
+}
+
+#id_receiver {
+  border: 1px solid rgba(189, 151, 255, 0.4);
+  font-family: 'LeeSeoyun';
+}
+
+#id_receiver option {
+  font-family: 'LeeSeoyun';
+}
+
+#id_receiver option:hover {
+  background-color: #ab7aff;
+}
+
+.message--sender a {
+  font-size: 15px;
+  color: rgb(83, 83, 83);
+  font-family: 'LeeSeoyun';
+}
+
+select[readonly] {
+  background-color: #ffffff;
+  pointer-events: none;
+}
