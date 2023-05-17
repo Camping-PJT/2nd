@@ -170,3 +170,20 @@
 #filterForm {
   text-align: end;
 }
+
+.hide {
+  display: none;
+}
+
+.show_more_box {
+  display: flex;
+  justify-content: center;
+}
+
+.show_more_btn {
+  margin-top: 10px;
+  border: none;
+  background-color: white;
+  color: rgba(245, 118, 8);
+  font-size: 20px;
+}

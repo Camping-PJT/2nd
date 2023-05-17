@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="index--title">
-  <h1>{% if category %}{{ category }} {% else %} 모든 {% endif %} 캠핑 장소({{posts|length}})</h1>
+  <h1>{% if category %}{{ category }} {% else %} 모든 {% endif %} 캠핑 장소({{postall|length}})</h1>
 </div>
 <div class="search--page">
   {% if posts %}
@@ -19,6 +19,7 @@
       <option value="인기순" {% if sortKind == '인기순' %}selected="selected"{% endif %}>인기순</option>
       <option value="별점순" {% if sortKind == '별점순' %}selected="selected"{% endif %}>별점순</option>
       <option value="댓글순" {% if sortKind == '댓글순' %}selected="selected"{% endif %}>댓글순</option>
+      <option value="방문자순" {% if sortKind == '방문자순' %}selected="selected"{% endif %}>방문자순</option>
     </select>
   </form>
     <div>
@@ -111,7 +112,7 @@
       <ul class="pagination justify-content-center" style="grid-column: 2 / 4; grid-row: 2 / 3; ">
         {% if posts.has_previous %}
         <li class="page-item">
-          <a class="page-link" href="?&page={{ posts.previous_page_number }}">이전</a>
+          <a class="page-link" href="?sortKind={{ sortKind }}&page={{ posts.previous_page_number }}">이전</a>
         </li>
         {% else %}
           <li class="page-item disabled">
@@ -123,11 +124,11 @@
           {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
             {% if page_number == posts.number %}
               <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                <a class="page-link" href="?sortKind={{ sortKind }}&page={{ page_number }}">{{ page_number }}</a>
               </li>
             {% else %}
               <li class="page-item">
-                <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                <a class="page-link" href="?sortKind={{ sortKind }}&page={{ page_number }}">{{ page_number }}</a>
               </li>
             {% endif %}
           {% endif %}
@@ -136,7 +137,7 @@
   
         {% if posts.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?&page={{ posts.next_page_number }}">다음</a>
+            <a class="page-link" href="?sortKind={{ sortKind }}&page={{ posts.next_page_number }}">다음</a>
           </li>
         {% else %}
           <li class="page-item disabled">

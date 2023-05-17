@@ -23,13 +23,21 @@
       
         <input type="radio" name="tabmenu" id="tab04">
         <label for="tab04">♥</label>
+
+        <input type="radio" name="tabmenu" id="tab05">
+        <label for="tab05"><i class="bi bi-envelope-heart"></i></label>
+
       {% endif %}
 
       {% comment %} 첫번째 탭 {% endcomment %}
       <div class="profile--card card1">
         <div class="box1">
           <div class="profile--card--left">
-            <p>이름 : {{ person.last_name }}</p>
+            <p>이름 : {{ person.last_name }}
+              {% if request.user.username != person.username %}
+                <a href="{% url 'my_messages:reply' person.pk %}"><i class="bi bi-envelope-paper-heart chat--btn--txt"></i></a>
+              {% endif %}
+            </p>
             <p>이메일 : {{ person.email }}</p>
             <p>선호지역 : {{ person.region }}</p>
             {% if person == request.user %}
@@ -100,7 +108,7 @@
       </div>
 
 
-      {% comment %} 두번째 탭 {% endcomment %}
+      {% comment %} 두번째 컨텐츠 탭 {% endcomment %}
       <div class="profile--card card2">
         <div class="box2">
           <div class="visit--camp">
@@ -162,7 +170,7 @@
         </div>
       </div>
 
-      {% comment %} 세번째 탭 {% endcomment %}
+      {% comment %} 세번째 일정 탭 {% endcomment %}
       <div class="profile--card card3">
         <h2 class="schedule--title">앞으로의 남은 일정</h2>
         <button id="prevbtn" class="carousel--left"><</button>
@@ -185,7 +193,7 @@
         <button id="nextbtn" class="carousel--right">></button>
       </div>
 
-      {% comment %} 네번째 탭 {% endcomment %}
+      {% comment %} 네번째 우선순위 탭 {% endcomment %}
       <div class="profile--card card4">
         <div class="box4 container">
           <div class="column box4--left" id="postdrop">
@@ -211,6 +219,32 @@
           </div>
         </div>
       </div>
+
+      {% comment %} 다섯번째 쪽지 탭 {% endcomment %}
+      <div class="profile--card card5">
+        <div class="box5">
+          <h2>받은 쪽지함<i class="bi bi-envelope-heart ms-2"></i></h2>
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li>
+                  <div class="message--box">
+                    <div class="message--sender">보낸이 :<span class="message--sender" style="margin-left:5px;">{{ message.sender }} <a href="{% url 'my_messages:reply' message.sender.id %}">
+                      <i class="bi bi-envelope-paper-heart chat--btn--txt"></i></a></span>
+                      <a href="{% url 'my_messages:delete' message.pk %}" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+                    </div>
+                    <div class="message--title">받은시간 :<span class="message--title">{{ message.timestamp }}</span></div>
+                    <div class="message--txt">{{ message.content }}</div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>받은 쪽지가 없습니다.</p>
+          {% endif %}
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -439,7 +473,8 @@
   function getPriorityList() {
     const priorityList = document.getElementById("priorityList");
     const detailUrl = priorityList.dataset.detailUrl;
-    axios.get("/accounts/priority_list/")
+    const username = '{{ person.username }}';
+    axios.get(`/accounts/priority_list/${username}/`)
       .then(response => {
         const data = response.data;
         if (data.length > 0) {

@@ -71,7 +71,9 @@ input[id="tab03"]:checked ~ .card3 {
 input[id="tab04"]:checked ~ .card4 {
   display: block;
 }
-
+input[id="tab05"]:checked ~ .card5 {
+  display: block;
+}
 
 .box1 {
   padding: 50px;

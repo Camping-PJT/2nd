@@ -111,7 +111,7 @@ def update_schedule(request, schedule_id):
         'users': users,
     }
     
-    return render(request, 'schedules/update.html', context)
+    return render(request, 'schedules/calendar.html', context)
 
 
 @login_required

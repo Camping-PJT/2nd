@@ -319,8 +319,8 @@
             <area shape="poly" onfocus="this.blur()" coords="42,160,49,164,59,154,74,152,85,160,109,169,95,182,93,208,76,210,55,198,45,199,33,203,35,189,41,176,45,171,41,168,41,161" href="javascript:;" alt="전북" class="kmap_063" onclick="sido('전북')">
             <area shape="poly" onfocus="this.blur()" coords="1,274,9,284,26,274,33,268,47,275,64,275,77,271,91,262,92,255,107,252,104,230,96,209,76,211,55,198,26,205,38,217,63,210,69,221,65,230,53,230,44,228,43,221,29,206,7,217,8,233,3,252,1,269" href="javascript:;" alt="전남" class="kmap_061" onclick="sido('전남')">
             <area shape="poly" onfocus="this.blur()" coords="44,214,40,218,41,224,47,227,65,230,69,218,58,208,43,213" href="javascript:;" alt="광주" class="kmap_062" onclick="sido('광주')">
-            <area shape="poly" onfocus="this.blur()" coords="17,306,26,296,46,289,61,292,52,308,42,312,23,313,17,307" href="javascript:;" alt="제주" class="kmap_064" onclick="sido('제주')">
-            <area shape="poly" onfocus="this.blur()" coords="80,101,73,118,77,125,73,135,74,144,93,136,93,124" href="javascript:;" alt="세종" class="kmap_044" onclick="sido('세종')">
+            <area shape="poly" onfocus="this.blur()" coords="17,306,26,296,46,289,61,292,52,308,42,312,23,313,17,307" href="javascript:;" alt="제주특별자치도" class="kmap_064" onclick="sido('제주특별자치도')">
+            <area shape="poly" onfocus="this.blur()" coords="80,101,73,118,77,125,73,135,74,144,93,136,93,124" href="javascript:;" alt="세종특별자치시" class="kmap_044" onclick="sido('세종특별자치시')">
             </map>
           </div>
         </div>
@@ -371,7 +371,7 @@
 
     function sido(sido) {
       if (!sido) {
-        sido = '서울';
+        sido = '경기';
       }
       axios
         .get('/get_posts_by_sido', {
@@ -466,7 +466,7 @@
     const geocoder = new kakao.maps.services.Geocoder();
     const coordinates = [];
     
-    sido('서울');
+    sido('경기');
 
   </script>
 

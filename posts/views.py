@@ -37,6 +37,8 @@ def index(request):
         posts = Post.objects.order_by('-rating')
     elif so == '댓글순':
         posts = Post.objects.annotate(num_reviews=Count('reviews')).order_by('-num_reviews')
+    elif so == '방문자순':
+        posts = Post.objects.annotate(num_visits=Count('visit_users')).order_by('-num_visits')
 
     post_images = []
     for post in posts:
@@ -54,9 +56,9 @@ def index(request):
     context = {
         'posts': page_obj,
         'sortKind' : so,
+        'postall' : posts,
     }
     return render(request, 'posts/index.html', context)
-
 
 def thema(request):
     categories = request.GET.getlist('category')
@@ -94,14 +96,10 @@ def thema(request):
         else:
             post_images.append((post, ''))
 
-    page = request.GET.get('page', '1')
-    per_page = 10
-    paginator = Paginator(post_images, per_page)
-    page_obj = paginator.get_page(page)
-
     context = {
-        'posts': page_obj,
+        'posts': post_images,
         'facilities': facilities,
+        'postall' : posts,
     }
     return render(request, 'posts/index_thema.html', context)
 
@@ -111,7 +109,8 @@ def thema(request):
 def city(request):
     kakao_script_key = os.getenv('kakao_script_key')
     kakao_key = os.getenv('kakao_key')
-    campsites = Post.objects.filter(city = request.user.region).order_by('-rating')
+    campsites = Post.objects.filter(Q(city__icontains=request.user.region)).order_by('-rating')
+    print(campsites)
     posts = Post.objects.order_by('-pk')
     post_images = []
     for post in posts:
@@ -330,6 +329,7 @@ def search(request):
         context = {
             'query': query,
             'posts': page_obj,
+            'postall':posts,
         }
     else:
         context = {}
@@ -357,6 +357,7 @@ def tagged_posts(request, tag_pk):
     context = {
         'tag': tag, 
         'posts': page_obj,
+        'postall':posts,
         }
     return render(request, 'posts/tagged_posts.html', context)
 
@@ -399,6 +400,8 @@ def category(request, category):
         posts = Post.objects.filter(category=category).order_by('-rating')
     elif so == '댓글순':
         posts = Post.objects.filter(category=category).annotate(num_reviews=Count('reviews')).order_by('-num_reviews')
+    elif so == '방문자순':
+        posts = Post.objects.filter(category=category).annotate(num_reviews=Count('reviews')).order_by('-num_reviews')   
 
     post_images = []
     for post in posts:
@@ -417,6 +420,7 @@ def category(request, category):
         'posts': page_obj,
         'category': category,
         'sortKind' : so,
+        'postall' : posts,
     }
     return render(request, 'posts/index.html', context)
 

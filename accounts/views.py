@@ -9,12 +9,14 @@ from django.http import JsonResponse
 from schedules.models import Schedule
 import os
 from django.urls import reverse_lazy
-import json
 from posts.models import Priority
 from django.db.models.functions import TruncMonth
 from django.db.models import Count
 from django.utils import timezone
 from django.core import serializers
+from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from my_messages.models import Message
 
 
 # Create your views here.
@@ -51,7 +53,7 @@ def login(request):
             if prev_url:          
                 del request.session['prev_url']
                 return redirect(prev_url)
-            return redirect('main')
+        return redirect('main')
     else:
         form = CustomAuthenticationForm()
         request.session['prev_url'] = request.META.get('HTTP_REFERER')
@@ -106,7 +108,7 @@ def change_password(request):
     }
     return render(request, 'accounts/change_password.html', context)
 
-
+    
 @login_required
 def profile(request, username):
     User = get_user_model()
@@ -118,6 +120,7 @@ def profile(request, username):
     # priority_range2 = range(6, 11)
     priorities = Priority.objects.filter(user=request.user).order_by('priority')
     schedules = Schedule.objects.filter(user_id=user_id, start__gte=timezone.now()).order_by('start__date', 'end__date')
+    messages = Message.objects.filter(receiver=request.user)
 
     context = {
         'person': person,
@@ -128,6 +131,7 @@ def profile(request, username):
         'liked_posts': liked_posts,
         # 'priority_range': priority_range,
         # 'priority_range2': priority_range2,
+        'messages': messages,
     }
 
     return render(request, 'accounts/profile.html', context)
@@ -176,9 +180,11 @@ def followers_list(request, username):
         }
     return render(request, 'accounts/followers_list.html', context)
 
-def priority_list(request):
+def priority_list(request, username):
     user_id = request.user.id
-    priorities = Priority.objects.filter(user_id=user_id).order_by('priority')
+    User = get_user_model()
+    person = User.objects.get(username=username)
+    priorities = Priority.objects.filter(user=person).order_by('priority')
     data = []
     for priority in priorities:
         post_data = serializers.serialize('python', [priority.post])[0]
@@ -186,3 +192,4 @@ def priority_list(request):
         post['pk'] = post_data['pk']
         data.append({'post': post})
     return JsonResponse(data, safe=False)
+

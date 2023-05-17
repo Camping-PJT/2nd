@@ -21,7 +21,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
-    template_name = 'my_messages/message_list.html'
+    template_name = 'accounts/profile.html'
     context_object_name = 'messages'
 
     def get_queryset(self):

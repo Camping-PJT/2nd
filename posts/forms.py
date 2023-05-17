@@ -115,10 +115,10 @@ class PostForm(forms.ModelForm):
 
     extra_address = forms.CharField(
     max_length=100, 
-    label=False, 
+    label=False,
+    required=False,
     widget=forms.TextInput(
         attrs={
-            'required': False,
             'placeholder': '상세주소',
             'class': 'form-box',
             'style': 'width: 400px; cursor:text; margin-top:5px;'

@@ -51,8 +51,6 @@
         <option value="{{ post.id }}">{{ post.title }}</option>
         {% endfor %}
       </select>
-      <label for="participants">동행자:</label>
-      <button type="button" data-bs-toggle="modal" data-bs-target="#participantModal" class="par-btn"><i class="bi bi-search"></i></button>
 
       <!-- Modal -->
       <div class="modal fade" id="participantModal" tabindex="-1" role="dialog" aria-labelledby="participantModalLabel" aria-hidden="true">
@@ -82,6 +80,8 @@
       <input type="datetime-local" name="end" id="end">
       <label for="description">메모:</label>
       <input type="textarea" name="description" id="description">
+      <label for="participants">동행자:</label>
+      <button type="button" data-bs-toggle="modal" data-bs-target="#participantModal" class="par-btn"><i class="bi bi-search"></i></button>
       <input type="submit" value="일정 생성">
     </form>
     <a href="{% url 'accounts:profile' request.user %}" class="calendar--profile ">프로필로 가기</a>

@@ -56,9 +56,9 @@
                   </p>
                 </div>
               </div>
-              <div class="facility--box">
+              <div class="facility--boxes">
                 {% for facility in campsite.facility_set.all %}
-                <div class="facility">
+                <div class="facilities">
                   {% if facility.facility == '와이파이' %}
                     <i class="bi bi-wifi"></i>
                   {% elif facility.facility == '매점' %}
@@ -108,7 +108,7 @@
     const mapContainer = document.getElementById('map');
     const mapOptions = {
       center: new kakao.maps.LatLng(0, 0),
-      level: 8,
+      level: 10,
     };
 
     const map = new kakao.maps.Map(mapContainer, mapOptions);
