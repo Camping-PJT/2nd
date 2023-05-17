@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/message.css' %}">
+{% endblock head %}
+
+{% block content %}
+  <div class="message">
+      <h2>받은 쪽지함<i class="bi bi-envelope-heart ms-2"></i></h2>
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li>
+            <div class="message--box">
+              <div class="message--sender">보낸이 :<span class="message--sender" style="margin-left:5px;">{{ message.sender }} <a href="{% url 'my_messages:reply' message.sender.id %}">
+                <i class="bi bi-envelope-paper-heart chat--btn--txt"></i></a></span>
+                <a href="{% url 'my_messages:delete' message.pk %}" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+              </div>
+              <div class="message--title">받은시간 :<span class="message--title" style="margin-left:5px; font-family: 'LeeSeoyun';">{{ message.timestamp }}</span></div>
+              <div class="message--txt">{{ message.content }}</div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>받은 쪽지가 없습니다.</p>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -33,6 +33,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('posts/', include('posts.urls')),
     path('reviews/', include('reviews.urls')),
+    path('my_messages/', include('my_messages.urls')),
     path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path(r'^upload/', login_required(views_ckeditor.upload), name='ckeditor_upload'),
