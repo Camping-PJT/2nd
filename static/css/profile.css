@@ -28,6 +28,7 @@
   box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;
   display: none;
   height: 500px;
+  min-width: 500px;
 }
 
 input[type="radio"] {
@@ -240,9 +241,9 @@ input[id="tab04"]:checked ~ .card4 {
 .box2 {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  padding: 20px;
+  padding: 10px;
   height: 100%;
-  white-space: nowrap;
+  align-items: center;
 }
 
 .box2 h3 {
@@ -255,6 +256,10 @@ input[id="tab04"]:checked ~ .card4 {
   border-left: 2px dotted #383943;
   border-right: 2px dotted #383943;
   padding: 10px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media only screen and (max-width: 1180px) {
@@ -297,62 +302,68 @@ input[id="tab04"]:checked ~ .card4 {
 
 .priority-dropzone {
   border: 1px solid rgba(245, 118, 8, 0.5);
-  border-radius: 10px;
-  background-color: rgba(255, 178, 111, 0.3);
-  padding: 10px;
   width: 95%;
-  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 600;
-  margin: auto;
-  margin-bottom: 10px;
   color: black;
 }
 
 .post-dropzone {
   border: 1px solid rgba(245, 118, 8, 0.5);
-  border-radius: 10px;
-  background-color: rgba(255, 178, 111, 0.3);
-  padding: 10px;
   width: 95%;
-  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 600;
-  margin: auto;
-  margin-bottom: 10px;
   color: black;
 }
 
+@media only screen and (max-width: 850px) {
+  .priority-dropzone {
+    font-size: 15px !important;
+  }
+  .post-dropzone {
+    font-size: 15px !important;
+  }
+}
+
 .box4 {
-  padding: 10px;
+  padding: 8px;
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(max-content, auto));
-  white-space: nowrap;
+  align-items: center;
 }
 
 .priority-title {
   text-align: center;
   font-weight: 600;
-  color: rgba(245, 118, 8);
+  color: #383943;
 }
 
 .box4--left {
-  margin: 10px 10px;
+  height: 100%;
+  margin: 5px 5px;
   border-radius: 10px;
-  border: 1px solid rgba(245, 118, 8, 0.5);
-  background-color: rgba(255, 178, 111, 0.3);
+  border: 1px solid #383943;
   padding: 10px;
+  border-collapse: collapse;
+  display: grid;
+  grid-template-rows: 40px repeat(10,40px);
+  overflow: auto;
 }
 
-.box4--right {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(max-content, auto)); 
+.box4--left::-webkit-scrollbar {
+  border-radius: 20px;
+  width: 5px;
+  margin: 10px 5px;
+}
+
+.box4--left::-webkit-scrollbar-thumb {
+  background-color: rgba(245, 119, 8, 0.5);
+  border-radius: 20px;
+  padding: 10px;
 }
 
 #priority-form {
@@ -399,14 +410,16 @@ input[id="tab04"]:checked ~ .card4 {
 }
 
 .camp--content a:hover {
-  color: rgb(84, 84, 84);
+  color: rgba(245, 118, 8);
 }
 
 .visit--camp, .write--camp {
   position: relative;
-}
-.write--camp {
-  padding-left: 20px;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #visitbtn {
@@ -510,42 +523,26 @@ input[id="tab04"]:checked ~ .card4 {
   position: relative;
 }
 
-
-.box4--left {
-  border-collapse: collapse;
-  display: flex;
-  flex-direction: column;
-}
-.box4--left:nth-child(n+2){
-    margin-top: 1rem;
-}
 .draggable {
     height: 30px;
     line-height: 30px;
     padding: 0 20px;
-    background-color: white;
-    border: 1px solid #c5cdd7;
-    border-bottom:none;
-    box-sizing: border-box;
-    cursor: move;
 }
-.draggable:last-child {
-    border-bottom: 1px solid #c5cdd7;
-}
+
 .draggable.dragging {
     opacity: .5;
-    border: 2px dashed #383943;
+    border: 2px dashed #383943 !important;
 }
 
 .el {
-    display: inline-block;
     vertical-align: middle;
 }
 
 .list-group-item {
   border-radius: 8px;
-  margin: 12px;
+  margin: 5px;
   cursor: move;
   font-size: 20px;
   background: #eaeaea4f;
+  border-top-width: 1px !important;
 }

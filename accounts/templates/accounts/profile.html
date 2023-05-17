@@ -20,9 +20,10 @@
       {% if person == request.user %}
         <input type="radio" name="tabmenu" id="tab03">
         <label for="tab03"><i class="bi bi-calendar-week"></i></label>
+      
+        <input type="radio" name="tabmenu" id="tab04">
+        <label for="tab04">♥</label>
       {% endif %}
-      <input type="radio" name="tabmenu" id="tab04">
-      <label for="tab04">♥</label>
 
       {% comment %} 첫번째 탭 {% endcomment %}
       <div class="profile--card card1">
@@ -107,11 +108,13 @@
             <div class="camp--content--box">
               {% for post in person.visit_posts.all|slice:":10" %}
                 <div class="camp--content">
-                  <p>{{ forloop.counter }}.</p>
-                  <p><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></p>
+                  <a href="{% url 'posts:detail' post.pk %}">
+                    <span>{{ forloop.counter }}.</span>
+                    <span>{{ post.title }}</span>
+                  </a>
                 </div>
               {% empty %}
-                <h3>게시글이 없습니다.</h3>
+                <h3>방문한 캠핑장이 없습니다.</h3>
               {% endfor %} 
               {% if person.visit_posts.all|length > 10 %}
                 <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#camp" aria-controls="offcanvasExample" id="visitbtn">
@@ -121,29 +124,33 @@
             </div>
           </div>
           <div class="like--camp">
-            <h3>캠핑장 우선순위</h3>
-            {% for priority in priorities %}
-              {{ priority.post.title }}
-            {% endfor %}
-              {% for post in person.priority_set.all  %}
-                <tr>
-                  <th scope="row">{{ forloop.counter }}</th>
-                  <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
-                </tr>
+            <h3>선호 캠핑장 우선순위</h3>
+            <div id="priorityList" data-detail-url="{% url 'posts:detail' 0 %}"></div>
+            {% comment %} <div class="camp--content--box">
+              {% for priority in priorities %}
+              <div class="camp--content">
+                <a href="{% url 'posts:detail' priority.post.pk %}">
+                  <span>{{ forloop.counter }}.</span>
+                  <span>{{ priority.post.title }}</span>
+                </a>
+              </div>
               {% empty %}
-                <h3>게시글이 없습니다.</h3>
+                <h3>우선순위가 없습니다.</h3>
               {% endfor %}
+            </div> {% endcomment %}
           </div>
           <div class="write--camp">
             <h3>작성한 리뷰</h3>
               <div class="camp--content--box">
                 {% for review in person.review_set.all|slice:":10"  %}
                   <div class="camp--content">
-                    <p>{{ forloop.counter }}.</p>
-                    <p><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></p>
+                    <a href="{% url 'reviews:detail' review.pk %}">
+                      <span>{{ forloop.counter }}.</span>
+                      <span>{{ review.title }}</span>
+                    </a>
                   </div>
                 {% empty %}
-                  <h3>게시글이 없습니다.</h3>
+                  <h3>작성한 리뷰가 없습니다.</h3>
                 {% endfor %}
                 {% if person.review_set.all|length > 10 %}
                   <button type="button" class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#comment" aria-controls="offcanvasExample" id="visitbtn">
@@ -294,7 +301,7 @@
 {% comment %} offcanvas {% endcomment %}
 <div class="offcanvas offcanvas-start" tabindex="-1" id="camp" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
-    <h3 class="offcanvas-title" id="offcanvasExampleLabel"style="color:#1A6ED8;">방문한 캠핑장</h3>
+    <h3 class="offcanvas-title" id="offcanvasExampleLabel"style="color:rgba(245, 118, 8);">방문한 캠핑장</h3>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -313,7 +320,7 @@
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="comment" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
-    <h3 class="offcanvas-title" id="offcanvasExampleLabel"style="color:#1A6ED8;">작성한 리뷰</h3>
+    <h3 class="offcanvas-title" id="offcanvasExampleLabel"style="color:rgba(245, 118, 8);">작성한 리뷰</h3>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -381,7 +388,6 @@
       likedContainer.querySelectorAll('.draggable').forEach(el => {
           likedPosts.push(parseInt(el.getAttribute('data-post-id')));
       });
-      console.log(likedPosts)
   
        // 우선순위 리스트 업데이트
       const priorityContainer = document.getElementById('prioritydrop');
@@ -389,20 +395,17 @@
           const postId = parseInt(el.getAttribute('data-post-id'));
           const priority = index + 1;
           priorityPosts.push({ postId, priority });
-          console.log({ postId, priority })
+          getPriorityList()
       });
-      console.log(priorityPosts)
-  
+
        // 좋아요 리스트와 우선순위 리스트를 서버로 전송하여 저장
       const userId = document.getElementById('user_id').value;
-      console.log(userId)
       saveListsToServer(userId, likedPosts, priorityPosts);
     }
 
     function saveListsToServer(userId, likedPosts, priorityPosts) {
       // 좋아요 리스트와 우선순위 리스트를 서버로 전송하여 저장
-      const url = '/posts/update_priority_lists/';
-      console.log(userId, likedPosts, priorityPosts)
+      const url = '/posts/update_priority_lists/'; 
       axios.post(url, {
         userId: userId, 
         likedPosts: likedPosts,
@@ -415,7 +418,6 @@
           console.log(response.data);
         })
         .catch(error => {
-          console.log('안넘어감');
         });
     }
 
@@ -432,86 +434,42 @@
 
 </script>
 
-<script>
-  $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();   
-  });
-</script>
-<script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
-{% comment %} <script src="{% static '/js/priority.js' %}" type="text/javascript"></script> {% endcomment %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js" integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-  class Carousel {
-    constructor() {
-      this.index = 0;
-      this.$carousel = document.querySelector(".box3--carousel");
-      this.$prevButton = document.querySelector("#prevbtn");
-      this.$nextButton = document.querySelector("#nextbtn");
-  
-      this.$prevButton.addEventListener("click", () => {
-        this.prev();
+  function getPriorityList() {
+    const priorityList = document.getElementById("priorityList");
+    const detailUrl = priorityList.dataset.detailUrl;
+    axios.get("/accounts/priority_list/")
+      .then(response => {
+        const data = response.data;
+        if (data.length > 0) {
+          let html = "";
+          for (let i = 0; i < data.length; i++) {
+            const priority = data[i];
+            const url = detailUrl.replace("0", priority.post.pk);
+            html += `<div class="camp--content">
+                      <a href="${url}" style="margin-bottom:10px;">
+                        <span>${i + 1}.</span>
+                        <span>${priority.post.title}</span>
+                      </a>
+                    </div>`;
+          }
+          priorityList.innerHTML = html;
+        } else {
+          priorityList.innerHTML = "<h3>우선순위가 없습니다.</h3>";
+        }
+      })
+      .catch(error => {
+        console.error(error);
       });
-  
-      this.$nextButton.addEventListener("click", () => {
-        this.next();
-      });
-  
-      if (this.index === 0) {
-        this.$prevButton.hidden = true;
-      }
-  
-      if (this.$carousel.childElementCount <= 1) {
-        this.$nextButton.hidden = true;
-      }
-  
-      if (this.index === 0 && this.$carousel.childElementCount > 1) {
-        this.$nextButton.hidden = false;
-      }
-    }
-  
-    prev() {
-      if (this.index <= 0) return;
-      this.index -= 1;
-  
-      this.$carousel.style.transform = `translate3d(0, -${
-        150 * this.index
-      }px, 0)`;
-  
-      if (this.index <= 0) {
-        this.$prevButton.hidden = true;
-      } else {
-        this.$prevButton.hidden = false;
-      }
-      if (this.index >= this.$carousel.childElementCount) {
-        this.$nextButton.hidden = true;
-      } else {
-        this.$nextButton.hidden = false;
-      }
-    }
-  
-    next() {
-      if (this.index >= this.$carousel.childElementCount) return;
-      this.index += 1;
-  
-      this.$carousel.style.transform = `translate3d(0, -${
-        150 * this.index
-      }px, 0)`;
-  
-      if (this.index <= 0) {
-        this.$prevButton.hidden = true;
-      } else {
-        this.$prevButton.hidden = false;
-      }
-      if (this.index >= this.$carousel.childElementCount - 4) {
-        this.$nextButton.hidden = true;
-      } else {
-        this.$nextButton.hidden = false;
-      }
-    }
   }
   
-  const carousel = new Carousel();
-  
-  </script>
+  // 페이지 로드 시 우선순위 목록 가져오기
+  getPriorityList();
+</script>
+
+<script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
+<script src="{% static '/js/profile.js' %}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js" integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 {% endblock script %}

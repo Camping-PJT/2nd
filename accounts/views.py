@@ -13,7 +13,8 @@ import json
 from posts.models import Priority
 from django.db.models.functions import TruncMonth
 from django.db.models import Count
-from datetime import datetime
+from django.utils import timezone
+from django.core import serializers
 
 
 # Create your views here.
@@ -116,13 +117,8 @@ def profile(request, username):
     # priority_range = range(1, 11)
     # priority_range2 = range(6, 11)
     priorities = Priority.objects.filter(user=request.user).order_by('priority')
-    schedules = Schedule.objects.filter(user_id=user_id).order_by('start')
-    schedules_by_month = (
-        schedules.annotate(month=TruncMonth('start'))
-        .values('month')
-        .annotate(count=Count('id'))
-        .order_by('month')
-    )
+    schedules = Schedule.objects.filter(user_id=user_id, start__gte=timezone.now()).order_by('start__date', 'end__date')
+
     context = {
         'person': person,
         'followings': person.followings.all(),
@@ -132,7 +128,6 @@ def profile(request, username):
         'liked_posts': liked_posts,
         # 'priority_range': priority_range,
         # 'priority_range2': priority_range2,
-        'schedules_by_month': schedules_by_month,
     }
 
     return render(request, 'accounts/profile.html', context)
@@ -180,3 +175,14 @@ def followers_list(request, username):
         'followers': followers,
         }
     return render(request, 'accounts/followers_list.html', context)
+
+def priority_list(request):
+    user_id = request.user.id
+    priorities = Priority.objects.filter(user_id=user_id).order_by('priority')
+    data = []
+    for priority in priorities:
+        post_data = serializers.serialize('python', [priority.post])[0]
+        post = post_data['fields']
+        post['pk'] = post_data['pk']
+        data.append({'post': post})
+    return JsonResponse(data, safe=False)

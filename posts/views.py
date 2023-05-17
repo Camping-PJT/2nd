@@ -27,12 +27,16 @@ def index(request):
     
     so = request.GET.get('sortKind', '최신순')
 
+    posts = None
+
     if so == '최신순':
         posts = Post.objects.order_by('-pk')
-    elif so == '추천순':
+    elif so == '인기순':
         posts = Post.objects.annotate(num_likes=Count('like_users')).order_by('-num_likes')
     elif so == '별점순':
         posts = Post.objects.order_by('-rating')
+    elif so == '댓글순':
+        posts = Post.objects.annotate(num_reviews=Count('reviews')).order_by('-num_reviews')
 
     post_images = []
     for post in posts:
@@ -357,7 +361,6 @@ def tagged_posts(request, tag_pk):
     return render(request, 'posts/tagged_posts.html', context)
 
 
-
 def update_priority_lists(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -375,16 +378,12 @@ def update_priority_lists(request):
             for index, post_data in enumerate(priority_posts):
                 post_id = post_data.get('postId')
                 Priority.objects.update_or_create(user_id=user_id, post_id=post_id, defaults={'priority': index + 1})
-
             data = {
                 'message': 'Lists updated successfully.',
             }
-            
             return JsonResponse(data)
         else:
             return JsonResponse({'error': 'No data received.'}, status=400)
-
-    # POST 요청이 아닌 경우에는 에러 응답
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 
@@ -394,10 +393,12 @@ def category(request, category):
 
     if so == '최신순':
         posts = Post.objects.filter(category=category).order_by('-pk')
-    elif so == '추천순':
+    elif so == '인기순':
         posts = Post.objects.filter(category=category).annotate(num_likes=Count('like_users')).order_by('-num_likes')
     elif so == '별점순':
         posts = Post.objects.filter(category=category).order_by('-rating')
+    elif so == '댓글순':
+        posts = Post.objects.filter(category=category).annotate(num_reviews=Count('reviews')).order_by('-num_reviews')
 
     post_images = []
     for post in posts:
