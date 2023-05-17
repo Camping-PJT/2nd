@@ -12,6 +12,7 @@ from taggit.models import Tag
 from django.core.paginator import Paginator
 from .models import Priority
 from django.contrib.auth import get_user_model
+import json
 
 
 def staff_only(view_func):
@@ -356,82 +357,35 @@ def tagged_posts(request, tag_pk):
     return render(request, 'posts/tagged_posts.html', context)
 
 
-# ajax x (post -> priority)
-# @login_required
-# def update_priority(request):
-#     if request.method == 'POST':
-#         priority_updates = request.POST.getlist('priority_updates[]')
 
-#         for update in priority_updates:
-#             post_id, priority = update.split(':')
-
-#             try:
-#                 post = Post.objects.get(id=int(post_id))
-#                 priority_obj = Priority.objects.filter(post=post, user=request.user).first()
-#                 if priority_obj:
-#                     priority_obj.priority = int(priority)
-#                     priority_obj.save()
-#                 else:
-#                     priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
-                
-
-#             except (ValueError, Post.DoesNotExist, Exception) as e:
-#                 print(f"Error updating priority: {e}")
-
-#         return redirect('accounts:profile', request.user)
-
-
-# ajax 처리까지 완료 (post -> priority)
-# @login_required
-# def update_priority(request):
-#     if request.method == 'POST':
-#         priority_updates = request.POST.getlist('priority_updates[]')
-#         for update in priority_updates:
-#             post_id, priority = update.split(':')
-
-#             try:
-#                 post = Post.objects.get(id=int(post_id))
-#                 priority_obj = Priority.objects.filter(post=post, user=request.user).first()
-#                 if priority_obj:
-#                     priority_obj.priority = int(priority)
-#                     priority_obj.save()
-#                 else:
-#                     priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
-                
-
-#             except (ValueError, Post.DoesNotExist, Exception) as e:
-#                 print(f"Error updating priority: {e}")
-
-#         return JsonResponse({'success': True})
-
-@login_required
-def update_priority(request):
+def update_priority_lists(request):
     if request.method == 'POST':
-        priority_updates = request.POST.getlist('priority_updates[]')
-        user_id = request.user.id
-        for update in priority_updates:
-            post_id, priority = update.split(':')
+        data = json.loads(request.body)
+        user_id = data.get('userId')
+        liked_posts = data.get('likedPosts')
+        priority_posts = data.get('priorityPosts')
 
-            try:
-                post = Post.objects.get(id=int(post_id))
-                priority_obj = Priority.objects.filter(post=post, user=request.user).first()
-                if priority_obj:
-                    priority_obj.priority = int(priority)
-                    priority_obj.save()
-                else:
-                    priority_obj = Priority.objects.create(post=post, user=request.user, priority=int(priority))
-                
+        if user_id and liked_posts and priority_posts:
+            for post_id in liked_posts:
+                post = Post.objects.get(pk=post_id)
+                post.like_users.add(user_id)
 
-                post.priorities.add(priority_obj)
-                post.save()
+            Priority.objects.filter(user_id=user_id).delete()    
 
-            except (ValueError, Post.DoesNotExist, Exception) as e:
-                print(f"Error updating priority: {e}")
+            for index, post_data in enumerate(priority_posts):
+                post_id = post_data.get('postId')
+                Priority.objects.update_or_create(user_id=user_id, post_id=post_id, defaults={'priority': index + 1})
 
-        return JsonResponse({'success': True})
+            data = {
+                'message': 'Lists updated successfully.',
+            }
+            
+            return JsonResponse(data)
+        else:
+            return JsonResponse({'error': 'No data received.'}, status=400)
 
-
-
+    # POST 요청이 아닌 경우에는 에러 응답
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 
 
