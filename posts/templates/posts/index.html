@@ -16,8 +16,9 @@
     <input type="hidden" name="sortKind" value="{{ sortKind }}">
     <select class="selectpicker" id="sortKind" name="sortKind">
       <option value="최신순" {% if sortKind == '최신순' %}selected="selected"{% endif %}>최신순</option>
-      <option value="추천순" {% if sortKind == '추천순' %}selected="selected"{% endif %}>추천순</option>
+      <option value="인기순" {% if sortKind == '인기순' %}selected="selected"{% endif %}>인기순</option>
       <option value="별점순" {% if sortKind == '별점순' %}selected="selected"{% endif %}>별점순</option>
+      <option value="댓글순" {% if sortKind == '댓글순' %}selected="selected"{% endif %}>댓글순</option>
     </select>
   </form>
     <div>
