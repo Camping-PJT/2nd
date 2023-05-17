@@ -26,6 +26,7 @@ def staff_only(view_func):
 def index(request):
     
     so = request.GET.get('sortKind', '최신순')
+    region = request.GET.get('region', None) 
 
     posts = None
 
@@ -40,6 +41,9 @@ def index(request):
     elif so == '방문자순':
         posts = Post.objects.annotate(num_visits=Count('visit_users')).order_by('-num_visits')
 
+    if region:
+        posts = posts.filter(city=region)
+
     post_images = []
     for post in posts:
         images = PostImage.objects.filter(post=post)
@@ -52,11 +56,16 @@ def index(request):
     per_page = 10
     paginator = Paginator(post_images, per_page)
     page_obj = paginator.get_page(page)
+    REGION_CHOICES = [ 
+        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('경기', '경기'), ('강원', '강원'), ('충북', '충북'), ('충남', '충남'), ('전북', '전북'), ('전남', '전남'), ('경북', '경북'), ('경남', '경남'), ('세종특별자치시', '세종특별자치시'), ('제주특별자치도', '제주특별자치도'),
+    ]
 
     context = {
         'posts': page_obj,
         'sortKind' : so,
         'postall' : posts,
+        'region': region,
+        'region_choices': REGION_CHOICES,
     }
     return render(request, 'posts/index.html', context)
 
@@ -391,6 +400,7 @@ def update_priority_lists(request):
 
 def category(request, category):
     so = request.GET.get('sortKind', '최신순')
+    region = request.GET.get('region', None) 
 
     if so == '최신순':
         posts = Post.objects.filter(category=category).order_by('-pk')
@@ -402,6 +412,9 @@ def category(request, category):
         posts = Post.objects.filter(category=category).annotate(num_reviews=Count('reviews')).order_by('-num_reviews')
     elif so == '방문자순':
         posts = Post.objects.filter(category=category).annotate(num_reviews=Count('reviews')).order_by('-num_reviews')   
+    
+    if region:
+        posts = posts.filter(city=region)
 
     post_images = []
     for post in posts:
@@ -416,11 +429,19 @@ def category(request, category):
     paginator = Paginator(post_images, per_page)
     page_obj = paginator.get_page(page)
 
+    
+
+    REGION_CHOICES = [ 
+        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('세종특별자치시', '세종특별자치시'), ('제주특별자치도', '제주특별자치도'), ('경기', '경기'), ('강원', '강원'), ('충북', '충북'), ('충남', '충남'), ('전북', '전북'), ('전남', '전남'), ('경북', '경북'), ('경남', '경남'),
+    ]
+
     context = {
         'posts': page_obj,
         'category': category,
         'sortKind' : so,
         'postall' : posts,
+        'region': region,
+        'region_choices': REGION_CHOICES,
     }
     return render(request, 'posts/index.html', context)
 

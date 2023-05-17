@@ -21,6 +21,13 @@
       <option value="댓글순" {% if sortKind == '댓글순' %}selected="selected"{% endif %}>댓글순</option>
       <option value="방문자순" {% if sortKind == '방문자순' %}selected="selected"{% endif %}>방문자순</option>
     </select>
+
+    <select name="region" id="region" class="selectpicker">
+      <option value="">전체</option>
+      {% for region_value, region_label in region_choices %}
+        <option value="{{ region_value }}" {% if region == region_value %}selected{% endif %}>{{ region_label }}</option>
+      {% endfor %}
+    </select>
   </form>
     <div>
       {% for post,image in posts %}
@@ -112,7 +119,7 @@
       <ul class="pagination justify-content-center" style="grid-column: 2 / 4; grid-row: 2 / 3; ">
         {% if posts.has_previous %}
         <li class="page-item">
-          <a class="page-link" href="?sortKind={{ sortKind }}&page={{ posts.previous_page_number }}">이전</a>
+          <a class="page-link" href="?sortKind={{ sortKind }}&region={{ region }}&page={{ posts.previous_page_number }}">이전</a>
         </li>
         {% else %}
           <li class="page-item disabled">
@@ -124,11 +131,11 @@
           {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
             {% if page_number == posts.number %}
               <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?sortKind={{ sortKind }}&page={{ page_number }}">{{ page_number }}</a>
+                <a class="page-link" href="?sortKind={{ sortKind }}&region={{ region }}&page={{ page_number }}">{{ page_number }}</a>
               </li>
             {% else %}
               <li class="page-item">
-                <a class="page-link" href="?sortKind={{ sortKind }}&page={{ page_number }}">{{ page_number }}</a>
+                <a class="page-link" href="?sortKind={{ sortKind }}&region={{ region }}&page={{ page_number }}">{{ page_number }}</a>
               </li>
             {% endif %}
           {% endif %}
@@ -137,7 +144,7 @@
   
         {% if posts.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?sortKind={{ sortKind }}&page={{ posts.next_page_number }}">다음</a>
+            <a class="page-link" href="?sortKind={{ sortKind }}&region={{ region }}&page={{ posts.next_page_number }}">다음</a>
           </li>
         {% else %}
           <li class="page-item disabled">
@@ -160,12 +167,15 @@
   document.addEventListener("DOMContentLoaded", function() {
     const filterForm = document.getElementById("filterForm");
     const sortKind = "{{ sortKind }}";
-  
+
     const selectElement = document.getElementById("sortKind");
-    console.log(sortKind);
     selectElement.value = sortKind;
-  
+
+    const regionSelect = document.getElementById("region");
     selectElement.addEventListener("change", function() {
+      filterForm.submit();
+    });
+    regionSelect.addEventListener("change", function() {
       filterForm.submit();
     });
   });
