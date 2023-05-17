@@ -241,9 +241,9 @@ input[id="tab04"]:checked ~ .card4 {
 .box2 {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  padding: 20px;
+  padding: 10px;
   height: 100%;
-  white-space: nowrap;
+  align-items: center;
 }
 
 .box2 h3 {
@@ -257,6 +257,9 @@ input[id="tab04"]:checked ~ .card4 {
   border-right: 2px dotted #383943;
   padding: 10px;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media only screen and (max-width: 1180px) {
@@ -414,9 +417,9 @@ input[id="tab04"]:checked ~ .card4 {
   position: relative;
   padding: 10px;
   height: 100%;
-}
-.write--camp {
-  padding-left: 20px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #visitbtn {
