@@ -11,6 +11,11 @@
 <div class="p-5">
 <h2>내 일정</h2>
 <p>캠핑 장소: <a href="{% url 'posts:detail' post_pk=schedule.post.pk %}">{{ schedule.title }}</a></p>
+<p>동행자 : 
+  {% for participant in participants %}
+    {{participant}}
+  {% endfor %}
+</p>
 <p>시작일: {{ schedule.start }}</p
 <p>종료일: {{ schedule.end }}</p>
 <p>메모: {{ schedule.description }}</p>

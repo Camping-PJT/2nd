@@ -3,8 +3,36 @@
 {% load static %}
 {% block head %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="{% static '/js/posts_detail_map.js' %}" type="text/javascript"></script>
+<link rel="stylesheet" href="/src/plugins/select2-4.0.13/dist/css/select2.min.css">
+<script type="text/javascript" src="/src/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
 {% endblock head %}
+{% block style %}
+<style>
+  a {
+    text-decoration: none;
+  }
+
+  .participant-list {
+    max-height: 200px; 
+    overflow-y: auto; 
+  }
+
+  #participantModal {
+    margin-top: 100px;
+  }
+
+  .par-btn {
+    border: none;
+    background-color: transparent;
+  }
+
+  .save-btn {
+    border: none;
+    background-color: transparent;
+    color: #3788d8;
+  }
+</style>
+{% endblock style %}
 {% block content %}
 
 <div class="p-5">
@@ -16,20 +44,45 @@
   <div class="d-flex align-items-center justify-content-center gap-2">
     <p class="schedule--plus">일정 추가 </p>
     <form method="POST" action="{% url 'schedules:create' %}">
-    {% csrf_token %}
-    <label for="post">캠핑 장소:</label>
-    <select name="post_id" id="post">
-      {% for post in posts %}
-      <option value="{{ post.id }}">{{ post.title }}</option>
-      {% endfor %}
-    </select>
-    <label for="start">시작일:</label>
-    <input type="datetime-local" name="start" id="start">
-    <label for="end">종료일:</label>
-    <input type="datetime-local" name="end" id="end">
-    <label for="description">메모:</label>
-    <input type="textarea" name="description" id="description">
-    <input type="submit" value="일정 생성">
+      {% csrf_token %}
+      <label for="post">캠핑 장소:</label>
+      <select name="post_id" id="post">
+        {% for post in posts %}
+        <option value="{{ post.id }}">{{ post.title }}</option>
+        {% endfor %}
+      </select>
+      <label for="participants">동행자:</label>
+      <button type="button" data-bs-toggle="modal" data-bs-target="#participantModal" class="par-btn"><i class="bi bi-search"></i></button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="participantModal" tabindex="-1" role="dialog" aria-labelledby="participantModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="participantModalLabel">동행자 선택</h5>
+            </div>
+            <div class="modal-body">
+              <div class="participant-list">
+                {% for user in users %}
+                  <input type="checkbox" id="participant_{{ user.id }}" name="participants" value="{{ user.id }}">
+                  <label for="participant_{{ user.id }}">{{ user.username }}</label><br>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="save-btn" data-bs-dismiss="modal">저장</button>
+              <button type="button" data-bs-dismiss="modal" class="par-btn">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <label for="start">시작일:</label>
+      <input type="datetime-local" name="start" id="start">
+      <label for="end">종료일:</label>
+      <input type="datetime-local" name="end" id="end">
+      <label for="description">메모:</label>
+      <input type="textarea" name="description" id="description">
+      <input type="submit" value="일정 생성">
     </form>
     <a href="{% url 'accounts:profile' request.user %}" class="calendar--profile ">프로필로 가기</a>
   </div>
@@ -66,6 +119,15 @@
                   </select>
                 </p>
                 <p>
+                  <label for="participants">Participants:</label>
+                  <select name="participants" id="participants" multiple>
+                    {% for user in users %}
+                    <option value="{{ user.id }}" {% if user in participants %}selected{% endif %}>{{ user.username }}</option>
+                    {% endfor %}
+                  </select>
+                
+                </p>
+                <p>
                   <label for="start">시작일:</label>
                   <input type="datetime-local" name="start" id="start" value="{{ schedule.start|date:'Y-m-d\TH:i' }}"> 
                 </p>
@@ -95,12 +157,20 @@
 {% block script %}
 <script src='{% static "js/index.global.js" %}'></script>
 <script src='{% static "js/calendar.js" %}'></script>
-<link rel="stylesheet" href="/src/plugins/select2-4.0.13/dist/css/select2.min.css">
-<script type="text/javascript" src="/src/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
+{% comment %} <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script> {% endcomment %}
+{% comment %} <script src="{% static '/js/posts_detail_map.js' %}" type="text/javascript"></script> {% endcomment %}
 <script>
     $(document).ready(function() {
       $('#post').select2(); 
   });
 </script>
+<script>
+  $(document).ready(function() {
+    $('#participantModal').modal();
+  });
+</script>
+
+
+
+
 {% endblock script %}

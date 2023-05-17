@@ -13,6 +13,7 @@ class Schedule(models.Model):
     description = models.TextField()
     address = models.CharField(max_length=200)
     extra_address = models.CharField(max_length=200)
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='participating', blank=True)
     
 
     def get_absolute_url(self):

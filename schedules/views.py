@@ -7,12 +7,13 @@ from django.urls import reverse
 from utils.map import get_latlng_from_address
 import os
 from django.contrib import messages
-
-# Create your views here.
+from django.contrib.auth import get_user_model
 
 
 @login_required
 def calendar(request):
+    posts = Post.objects.all()
+    users = get_user_model().objects.exclude(id=request.user.id)
     posts = Post.objects.all()
     kakao_script_key = os.getenv('kakao_script_key')
     user_id = request.user.id
@@ -32,17 +33,21 @@ def calendar(request):
         'kakao_script_key': kakao_script_key,
         'latitude_list': latitude_list,
         'longitude_list': longitude_list,
+        'users': users,
     }
     return render(request, 'schedules/calendar.html', context)
 
 
 @login_required
 def create_schedule(request):
+    users = get_user_model().objects.exclude(id=request.user.id)
+    posts = Post.objects.all()
     if request.method == 'POST':
         post_id = request.POST['post_id']
         start = request.POST['start']
         end = request.POST['end']
         description = request.POST['description']
+        participants = request.POST.getlist('participants')
         
         post = get_object_or_404(Post, id=post_id)
         
@@ -57,14 +62,16 @@ def create_schedule(request):
             extra_address=post.extra_address
         )
         schedule.save()
+
+        schedule.participants.set(participants)
         
         return redirect(reverse('schedules:calendar'))
-    
-    posts = Post.objects.all()
+
     context = {
         'posts': posts,
+        'users': users,
     }
-    return render(request, 'schedules/create.html', context)
+    return render(request, 'schedules/calendar.html', context)
 
 
 @login_required
@@ -85,18 +92,22 @@ def get_schedule_data(request):
 
 def update_schedule(request, schedule_id):
     schedule = get_object_or_404(Schedule, id=schedule_id)
-    
+    users = get_user_model().objects.exclude(id=request.user.id)
+    participants = schedule.participants.all()
     if request.method == 'POST':
         schedule.post_id = request.POST['post_id']
         schedule.start = request.POST['start']
         schedule.end = request.POST['end']
         schedule.description = request.POST['description']
+
         schedule.save()
         return redirect('schedules:calendar') 
-    
+
     context = {
         'schedule': schedule,
         'schedule_id': schedule_id,
+        'participants': participants,
+        'users': users,
     }
     
     return render(request, 'schedules/update.html', context)
@@ -108,12 +119,14 @@ def detail_schedule(request, schedule_id):
     schedule = get_object_or_404(Schedule, id=schedule_id)
     address = schedule.address
     latitude, longitude = get_latlng_from_address(address)
+    participants = schedule.participants.all()
     
     context = {
         'schedule': schedule,
         'kakao_script_key': kakao_script_key,
         'latitude': latitude,
         'longitude': longitude,
+        'participants': participants,
     }
     
     return render(request, 'schedules/detail.html', context)
