@@ -218,7 +218,7 @@
 
       {% comment %} 날씨 {% endcomment %}
       <div id="weather-info" class="d-flex align-items-center mx-auto">
-        <div class="weather--img" style="background-image: url('{{ icon }}');"></div>
+        <div class="weather--img" id="weather--img" style="background-image: url('{{ icon }}');"></div>
         <div class="weather--box">
           <div class="weather">
             <span id="temp">온도:{{ temp }}°C</span>
