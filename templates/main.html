@@ -217,34 +217,56 @@
     <div class='banner'>
 
       {% comment %} 날씨 {% endcomment %}
-      <div class="d-flex align-items-center mx-auto">
+      <div id="weather-info" class="d-flex align-items-center mx-auto">
         <div class="weather--img" style="background-image: url('{{ icon }}');"></div>
         <div class="weather--box">
           <div class="weather">
-            <span>온도:{{ temp }}°C</span>
-            <span>습도: {{ humidity }}%</span>
-            <span>미세먼지: {{ fine_dust }}</span>
-            <span>초미세먼지: {{ ultrafine_dust }}</span>
+            <span id="temp">온도:{{ temp }}°C</span>
+            <span id="humidity">습도: {{ humidity }}%</span>
+            <span id="fine_dust">미세먼지: {{ fine_dust }}</span>
+            <span id="ultrafine_dust">초미세먼지: {{ ultrafine_dust }}</span>
           </div>
         </div>
         <div class="d-flex flex-column align-items-center">
           <form action="{% url 'main' %}" method="GET">
             <div class="selectBox">
-              {% comment %} <select name="city" class="select" id="city" onchange="this.form.submit()">
-                {% for city in cities %}
-                  <option value="{{ city.value }}" {% if selected_city == city.value %}selected{% endif %}>{{ city.name }}</option>
-                {% endfor %}
-              </select> {% endcomment %}
-              <select name="w_city" class="select" id="w_city" onchange="this.form.submit()">
+              <select name="w_city" class="select" id="w_city" onchange="updateWeather(this.value)">
                 {% for w_city in w_cities %}
                   <option value="{{ w_city.value }}" {% if selected_city == w_city.value %}selected{% endif %}>{{ w_city.name }}</option>
                 {% endfor %}
               </select>
             </div>
           </form>
-          <span class="weather--title">{{ weather }}</span>
+          <span id="weather--title" class="weather--title">{{ weather }}</span>
         </div>
       </div>
+
+      <script>
+        function updateWeather(city) {
+          // AJAX 요청을 보냅니다.
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "/get-weather?city=" + city, true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              // 서버로부터 받은 응답을 처리합니다.
+              var response = JSON.parse(xhr.responseText);
+              updateWeatherUI(response);
+            }
+          };
+          xhr.send();
+        }
+      
+        function updateWeatherUI(data) {
+          // 받은 데이터를 사용하여 날씨 정보를 업데이트합니다.
+          document.getElementById("weather--title").textContent = data.weather;
+          document.getElementById("temp").textContent = "온도: " + data.temp + "°C";
+          document.getElementById("humidity").textContent = "습도: " + data.humidity + "%";
+          document.getElementById("fine_dust").textContent = "미세먼지: " + data.fine_dust;
+          document.getElementById("ultrafine_dust").textContent = "초미세먼지: " + data.ultrafine_dust;
+          document.getElementById("weather--img").style.backgroundImage = "url('" + data.icon + "')";
+        }
+      </script>
+      
 
       {% comment %} 배너 {% endcomment %}
       <div class="camver">

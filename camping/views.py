@@ -97,6 +97,12 @@ def main(request):
     return render(request, 'main.html', context)
 
 
+def get_weather(request):
+    w_city = request.GET.get('city', 'Seoul')
+    context = weather(w_city)
+    return JsonResponse(context)
+
+
 def sales(request):
     return render(request, 'sales.html', {'items':item()} )
   
