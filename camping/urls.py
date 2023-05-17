@@ -21,10 +21,12 @@ from . import views
 from django.contrib.auth.decorators import login_required
 from ckeditor_uploader import views as views_ckeditor
 from django.views.decorators.cache import never_cache
+from .views import main, get_weather
 
 
 urlpatterns = [
     path('', views.main, name='main'),
+    path('get-weather/', get_weather, name='get-weather'),
     path('sales/', views.sales, name='sales'),
     path('get_posts_by_sido/', views.get_posts_by_sido, name='get_posts_by_sido'),
     path('admin/', admin.site.urls),
