@@ -394,6 +394,7 @@
           const postId = parseInt(el.getAttribute('data-post-id'));
           const priority = index + 1;
           priorityPosts.push({ postId, priority });
+          getPriorityList()
       });
 
        // 좋아요 리스트와 우선순위 리스트를 서버로 전송하여 저장
@@ -403,8 +404,7 @@
 
     function saveListsToServer(userId, likedPosts, priorityPosts) {
       // 좋아요 리스트와 우선순위 리스트를 서버로 전송하여 저장
-      const url = '/posts/update_priority_lists/';
-      console.log(userId, likedPosts, priorityPosts)
+      const url = '/posts/update_priority_lists/'; 
       axios.post(url, {
         userId: userId, 
         likedPosts: likedPosts,
