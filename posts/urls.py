@@ -16,5 +16,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('tags/<int:tag_pk>/', views.tagged_posts, name='tagged_posts'),
     path('update_priority/', views.update_priority, name='update_priority'),
-
 ]
+
+
