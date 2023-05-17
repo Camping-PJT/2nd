@@ -7,13 +7,6 @@ import os
 from taggit.managers import TaggableManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-class Priority(models.Model):
-    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
-
-    class Meta:
-        ordering = ['priority']
 
 class Post(models.Model):
     WILD = '오지, 노지'
@@ -42,7 +35,7 @@ class Post(models.Model):
     close_hour = models.TimeField()
     tags = TaggableManager()
     rating = models.DecimalField(default=0, max_digits=5, decimal_places=1)
-    priorities = models.ManyToManyField(Priority, related_name='post_priorities')
+
 
     def __str__(self):
         return self.title
@@ -52,6 +45,12 @@ class Post(models.Model):
         for image in images:
             image.delete()
         super(Post, self).delete(*args, **kargs)
+
+
+class Priority(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
 
 
 class Facility(models.Model):

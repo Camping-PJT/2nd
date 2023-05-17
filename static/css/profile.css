@@ -311,6 +311,22 @@ input[id="tab04"]:checked ~ .card4 {
   color: black;
 }
 
+.post-dropzone {
+  border: 1px solid rgba(245, 118, 8, 0.5);
+  border-radius: 10px;
+  background-color: rgba(255, 178, 111, 0.3);
+  padding: 10px;
+  width: 95%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin: auto;
+  margin-bottom: 10px;
+  color: black;
+}
+
 .box4 {
   padding: 10px;
   width: 100%;
@@ -489,6 +505,47 @@ input[id="tab04"]:checked ~ .card4 {
   align-items: center;
   font-size: 30px;
 }
+
 .card3 {
   position: relative;
+}
+
+
+.box4--left {
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+}
+.box4--left:nth-child(n+2){
+    margin-top: 1rem;
+}
+.draggable {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 20px;
+    background-color: white;
+    border: 1px solid #c5cdd7;
+    border-bottom:none;
+    box-sizing: border-box;
+    cursor: move;
+}
+.draggable:last-child {
+    border-bottom: 1px solid #c5cdd7;
+}
+.draggable.dragging {
+    opacity: .5;
+    border: 2px dashed #383943;
+}
+
+.el {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.list-group-item {
+  border-radius: 8px;
+  margin: 12px;
+  cursor: move;
+  font-size: 20px;
+  background: #eaeaea4f;
 }

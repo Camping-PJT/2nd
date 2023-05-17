@@ -111,14 +111,12 @@ def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
     user_id = request.user.id
-    # liked_posts = Post.objects.exclude(priority__user=request.user)
     like_post = person.like_posts.all()
     liked_posts = like_post.exclude(priority__user=request.user)
-    priority_range = range(1, 6)
-    priority_range2 = range(6, 11)
+    # priority_range = range(1, 11)
+    # priority_range2 = range(6, 11)
     priorities = Priority.objects.filter(user=request.user).order_by('priority')
-    today = datetime.now()
-    schedules = Schedule.objects.filter(user_id=user_id, start__gte=today).order_by('start__date','end__date')
+    schedules = Schedule.objects.filter(user_id=user_id).order_by('start')
     schedules_by_month = (
         schedules.annotate(month=TruncMonth('start'))
         .values('month')
@@ -132,8 +130,8 @@ def profile(request, username):
         'priorities': priorities,
         'schedules': schedules,
         'liked_posts': liked_posts,
-        'priority_range': priority_range,
-        'priority_range2': priority_range2,
+        # 'priority_range': priority_range,
+        # 'priority_range2': priority_range2,
         'schedules_by_month': schedules_by_month,
     }
 
