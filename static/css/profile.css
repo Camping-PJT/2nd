@@ -55,7 +55,7 @@ input[type="radio"]:checked + label {
   background: white;
   color: #383943;
   box-shadow: 0.6px 5px  white;
-  z-index: 9999;
+  z-index: 2;
 }
 
 input[id="tab01"]:checked ~ .card1 {
