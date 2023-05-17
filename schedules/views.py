@@ -88,6 +88,7 @@ def update_schedule(request, schedule_id):
     
     if request.method == 'POST':
         schedule.post_id = request.POST['post_id']
+        schedule.title = schedule.post.title
         schedule.start = request.POST['start']
         schedule.end = request.POST['end']
         schedule.description = request.POST['description']
