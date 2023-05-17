@@ -1,61 +1,61 @@
 document.getElementById("thema2").addEventListener("click", function(event) {
   event.preventDefault();
 
-  const modal = document.getElementById("myModal2");
-  modal.style.display = "block";
+  const modal2 = document.getElementById("myModal2");
+  modal2.style.display = "block";
 
-  const closeButton = document.getElementsByClassName("close")[0];
+  const closeButton2 = document.getElementsByClassName("close2")[0];
 
-  closeButton.addEventListener("click", function() {
-    modal.style.display = "none";
+  closeButton2.addEventListener("click", function() {
+    modal2.style.display = "none";
   });
 
-  const categoryBoxes = document.querySelectorAll('#category');
-  const natureBoxes = document.querySelectorAll('#nature');
-  const facilityBoxes = document.querySelectorAll('#facility');
+  const categoryBoxes2 = document.querySelectorAll('#category2');
+  const natureBoxes2 = document.querySelectorAll('#nature2');
+  const facilityBoxes2 = document.querySelectorAll('#facility2');
 
-  categoryBoxes.forEach(box => {
-    box.addEventListener('click', function(event) {
-      const targetIcon = event.target.querySelector('#category-icon');
-      if (targetIcon) {
-        targetIcon.classList.toggle('selected');
-        box.classList.toggle('selected');
+  categoryBoxes2.forEach(box2 => {
+    box2.addEventListener('click', function(event) {
+      const targetIcon2 = event.target.querySelector('#category-icon2');
+      if (targetIcon2) {
+        targetIcon2.classList.toggle('selected');
+        box2.classList.toggle('selected');
       } else {
-        box.classList.toggle('selected');
+        box2.classList.toggle('selected');
       }
     });
   });
 
-  natureBoxes.forEach(box => {
-    box.addEventListener('click', function(event) {
-      const targetIcon = event.currentTarget.querySelector('#nature-icon');
-      if (targetIcon) {
-        targetIcon.classList.toggle('selected');
-        box.classList.toggle('selected');
+  natureBoxes2.forEach(box2 => {
+    box2.addEventListener('click', function(event) {
+      const targetIcon2 = event.currentTarget.querySelector('#nature-icon2');
+      if (targetIcon2) {
+        targetIcon2.classList.toggle('selected');
+        box2.classList.toggle('selected');
       }
     });
   });
 
-  facilityBoxes.forEach(box => {
-    box.addEventListener('click', function(event) {
-      const targetIcon = event.currentTarget.querySelector('#facility-icon');
-      if (targetIcon) {
-        targetIcon.classList.toggle('selected');
-        box.classList.toggle('selected');
+  facilityBoxes2.forEach(box2 => {
+    box2.addEventListener('click', function(event) {
+      const targetIcon2 = event.currentTarget.querySelector('#facility-icon2');
+      if (targetIcon2) {
+        targetIcon2.classList.toggle('selected');
+        box2.classList.toggle('selected');
       }
     });
   });
 
-  const submitBtn = document.getElementById('submitBtn2');
+  const submitBtn2 = document.getElementById('submitBtn2');
 
-  submitBtn.addEventListener('click', function() {
+  submitBtn2.addEventListener('click', function() {
     const selectedCategories = [];
     const selectedNatures = [];
     const selectedFacilities = [];
 
-    const categoryIcons = document.querySelectorAll('#category-icon');
-    const natureIcons = document.querySelectorAll('#nature-icon');
-    const facilityIcons = document.querySelectorAll('#facility-icon');x
+    const categoryIcons = document.querySelectorAll('#category-icon2');
+    const natureIcons = document.querySelectorAll('#nature-icon2');
+    const facilityIcons = document.querySelectorAll('#facility-icon2');
     
     categoryIcons.forEach(icon => {
       if (icon.classList.contains('selected')) {

@@ -155,7 +155,7 @@
 
           <div id="myModal2" class="modal">
             <div class="modal-content" id="theme-content">
-              <span class="close"></span>
+              <span class="close2"></span>
               <div class="theme--title">테마검색<span> |</span><span class="theme-sub"> 원하는 스타일을 선택 후 검색버튼을 클릭하세요.</span></div>
               
               <div class="theme--cate">
@@ -163,13 +163,13 @@
                 <div class="category--box">
                   {% load_categories as categories %}
                   {% for category in categories %}
-                    <div class="category--box__category" id="category">
+                    <div class="category--box__category" id="category2">
                       {% if category == '오지, 노지' %}
-                        <img src="{% static 'image/outdoor_orange.png' %}" class="category-icon" id="category-icon" alt="" style="width:24px; height:24px;" data-filter="오지, 노지">
+                        <img src="{% static 'image/outdoor_orange.png' %}" class="category-icon" id="category-icon2" alt="" style="width:24px; height:24px;" data-filter="오지, 노지">
                       {% elif category == '유료' %}
-                        <img src="{% static 'image/paycamp_purple.png' %}" class="category-icon" id="category-icon" alt="" style="width:24px; height:24px;" data-filter="유료">
+                        <img src="{% static 'image/paycamp_purple.png' %}" class="category-icon" id="category-icon2" alt="" style="width:24px; height:24px;" data-filter="유료">
                       {% elif category == '글램핑, 카라반' %}
-                        <img src="{% static 'image/caravan_blue.png' %}" class="category-icon" id="category-icon" alt="" style="width:24px; height:24px;" data-filter="글램핑, 카라반">
+                        <img src="{% static 'image/caravan_blue.png' %}" class="category-icon" id="category-icon2" alt="" style="width:24px; height:24px;" data-filter="글램핑, 카라반">
                       {% endif %}
                       {{ category }}
                     </div>
@@ -182,17 +182,17 @@
                 <div class="nature--box">
                   {% load_natures as natures %}
                   {% for nature in natures %}
-                    <div class="nature" id="nature">
+                    <div class="nature" id="nature2">
                       {% if nature == '계곡' %}
-                        <span class="material-symbols-outlined nature-icon" id="nature-icon" data-filter="계곡">kayaking</span>
+                        <span class="material-symbols-outlined nature-icon" id="nature-icon2" data-filter="계곡">kayaking</span>
                       {% elif nature == '바다' %}
-                        <span class="material-symbols-outlined nature-icon" id="nature-icon" data-filter="바다">surfing</span>
+                        <span class="material-symbols-outlined nature-icon" id="nature-icon2" data-filter="바다">surfing</span>
                       {% elif nature == '산' %}
-                        <span class="material-symbols-outlined nature-icon" id="nature-icon" data-filter="산">hiking</span>
+                        <span class="material-symbols-outlined nature-icon" id="nature-icon2" data-filter="산">hiking</span>
                       {% elif nature == '강변' %}
-                        <span class="material-symbols-outlined nature-icon" id="nature-icon" data-filter="강변">water</span>
+                        <span class="material-symbols-outlined nature-icon" id="nature-icon2" data-filter="강변">water</span>
                       {% elif nature == '호수' %}
-                        <span class="material-symbols-outlined nature-icon" id="nature-icon" data-filter="호수">sailing</span>
+                        <span class="material-symbols-outlined nature-icon" id="nature-icon2" data-filter="호수">sailing</span>
                       {% endif %}
                       {{ nature }}
                     </div>
@@ -205,25 +205,25 @@
                 <div class="facility--box">
                   {% load_facilities as facilities %}
                   {% for facility in facilities %}
-                  <div class="facility" id="facility">
+                  <div class="facility" id="facility2">
                     {% if facility == '와이파이' %}
-                      <i class="bi bi-wifi facility-icon" id="facility-icon" data-filter="와이파이"></i>
+                      <i class="bi bi-wifi facility-icon" id="facility-icon2" data-filter="와이파이"></i>
                     {% elif facility == '매점' %}
-                      <i class="bi bi-shop facility-icon" id="facility-icon" data-filter="매점"></i>
+                      <i class="bi bi-shop facility-icon" id="facility-icon2" data-filter="매점"></i>
                     {% elif facility == '샤워시설' %}
-                      <i class="bi bi-door-closed facility-icon" id="facility-icon" data-filter="샤워시설"></i>
+                      <i class="bi bi-door-closed facility-icon" id="facility-icon2" data-filter="샤워시설"></i>
                     {% elif facility == '전기' %}
-                      <i class="bi bi-lightning facility-icon" id="facility-icon" data-filter="전기"></i>
+                      <i class="bi bi-lightning facility-icon" id="facility-icon2" data-filter="전기"></i>
                     {% elif facility == '온수제공' %}
-                      <i class="bi bi-cup-hot facility-icon" id="facility-icon" data-filter="온수제공"></i>
+                      <i class="bi bi-cup-hot facility-icon" id="facility-icon2" data-filter="온수제공"></i>
                     {% elif facility == '대여' %}
-                      <i class="bi bi-bucket facility-icon" id="facility-icon" data-filter="대여"></i>
+                      <i class="bi bi-bucket facility-icon" id="facility-icon2" data-filter="대여"></i>
                     {% elif facility == '장작' %}
-                      <i class="bi bi-fire facility-icon" id="facility-icon" data-filter="장작"></i>
+                      <i class="bi bi-fire facility-icon" id="facility-icon2" data-filter="장작"></i>
                     {% elif facility == '개수대' %}
-                      <i class="bi bi-droplet facility-icon" id="facility-icon" data-filter="개수대"></i>
+                      <i class="bi bi-droplet facility-icon" id="facility-icon2" data-filter="개수대"></i>
                     {% elif facility == '화장실' %}
-                      <i class="bi bi-universal-access-circle facility-icon" id="facility-icon" data-filter="화장실"></i>
+                      <i class="bi bi-universal-access-circle facility-icon" id="facility-icon2" data-filter="화장실"></i>
                     {% endif %}
                     {{ facility }}
                   </div>

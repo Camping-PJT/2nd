@@ -459,14 +459,13 @@ input[type=search]::-webkit-search-cancel-button {
   background-color: lightgray;
 }
 
-.close {
+.close, .close2 {
   margin-left: auto;
   -webkit-appearance: none;
   width: 20px; height: 20px; 
   background: url("/static/image/cross-out.svg") center center no-repeat;
   cursor: pointer;
 }
-
 
 .theme--title {
   font-size: 25px;
@@ -511,7 +510,7 @@ input[type=search]::-webkit-search-cancel-button {
   border-radius: 10px;
 }
 
-#submitBtn:hover {
+#submitBtn:hover, #submitBtn2:hover {
   background-color: #fff0;
   color: rgba(245, 118, 8);
 }
