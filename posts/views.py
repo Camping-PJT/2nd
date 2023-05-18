@@ -26,7 +26,7 @@ def staff_only(view_func):
 def index(request):
     
     so = request.GET.get('sortKind', '최신순')
-    region = request.GET.get('region', None) 
+    region = request.GET.get('region', '') 
 
     posts = None
 
@@ -400,7 +400,7 @@ def update_priority_lists(request):
 
 def category(request, category):
     so = request.GET.get('sortKind', '최신순')
-    region = request.GET.get('region', None) 
+    region = request.GET.get('region', '') 
 
     if so == '최신순':
         posts = Post.objects.filter(category=category).order_by('-pk')

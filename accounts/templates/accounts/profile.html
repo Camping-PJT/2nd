@@ -32,7 +32,7 @@
       <div class="profile--card card1">
         <div class="box1">
           <div class="profile--card--left">
-            <p>이름 : {{ person.last_name }}
+            <p class="d-flex align-items-center gap-2">이름 : {{ person.last_name }}
               {% if request.user.username != person.username %}
                 <a href="{% url 'my_messages:reply' person.pk %}"><i class="bi bi-envelope-paper-heart chat--btn--txt"></i></a>
               {% endif %}
