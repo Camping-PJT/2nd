@@ -90,10 +90,34 @@ def get_schedule_data(request):
     return JsonResponse(data, safe=False)
 
 
+# def update_schedule(request, schedule_id):
+#     schedule = get_object_or_404(Schedule, id=schedule_id)
+#     users = get_user_model().objects.exclude(id=request.user.id)
+#     participants = schedule.participants.all()
+#     if request.method == 'POST':
+#         schedule.post_id = request.POST['post_id']
+#         schedule.title = schedule.post.title
+#         schedule.start = request.POST['start']
+#         schedule.end = request.POST['end']
+#         schedule.description = request.POST['description']
+
+#         schedule.save()
+#         return redirect('schedules:calendar') 
+
+#     context = {
+#         'schedule': schedule,
+#         'schedule_id': schedule_id,
+#         'participants': participants,
+#         'users': users,
+#     }
+    
+#     return render(request, 'schedules/calendar.html', context)
+
 def update_schedule(request, schedule_id):
     schedule = get_object_or_404(Schedule, id=schedule_id)
     users = get_user_model().objects.exclude(id=request.user.id)
     participants = schedule.participants.all()
+
     if request.method == 'POST':
         schedule.post_id = request.POST['post_id']
         schedule.title = schedule.post.title
@@ -101,8 +125,11 @@ def update_schedule(request, schedule_id):
         schedule.end = request.POST['end']
         schedule.description = request.POST['description']
 
+        selected_participants = request.POST.getlist('participants')
+        schedule.participants.set(selected_participants)
+
         schedule.save()
-        return redirect('schedules:calendar') 
+        return redirect('schedules:calendar')
 
     context = {
         'schedule': schedule,
@@ -110,8 +137,9 @@ def update_schedule(request, schedule_id):
         'participants': participants,
         'users': users,
     }
-    
-    return render(request, 'schedules/update.html', context)
+
+    return render(request, 'schedules/calendar.html', context)
+
 
 
 @login_required

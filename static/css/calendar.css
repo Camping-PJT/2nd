@@ -1,0 +1,91 @@
+.wid {
+  width: 80%;
+  margin: 2rem auto;
+}
+
+
+a {
+  text-decoration: none;
+}
+
+.participant-list {
+  max-height: 200px; 
+  overflow-y: auto; 
+}
+
+#participantModal {
+  margin-top: 100px;
+}
+
+.par-btn {
+  border: none;
+  background-color: transparent;
+}
+
+.save-btn {
+  border: none;
+  background-color: transparent;
+  color: #3788d8;
+}
+
+.calendar--btn {
+  align-items: center;
+}
+
+.schedule--li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.schedule--li p {
+  margin: 0;
+  margin-right: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#schedule--title {
+  display: inline;
+  color: black;
+}
+
+#schedule--title:hover {
+  color: rgba(245, 118, 8);
+}
+
+.add_plan {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.plan-item {
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.plan-item input {
+  height: 28px;
+}
+
+.plan {
+  display: flex;
+
+}
+
+.plan form {
+  display: flex;
+}
+
+.schedule--plus {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plan--save {
+  white-space: nowrap;
+  border: none;
+  background-color: transparent;
+  font-weight: 600;
+}
