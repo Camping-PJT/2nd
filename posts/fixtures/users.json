@@ -1,0 +1,435 @@
+[
+{
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$iQbmq2jYs8QHExl4opsCjz$BeTCIMrywEDNib3A3wdU5dMz0JL6Gqn+lqV9W8kpEzs=",
+        "last_login": "2023-05-18T01:49:33.705Z",
+        "is_superuser": true,
+        "username": "admin1",
+        "first_name": "",
+        "last_name": "난 관리자다",
+        "email": "aaa@naver.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-05-17T11:31:06.567Z",
+        "image": "profile/admin1/댕5.jpg",
+        "region": "서울",
+        "is_owner": "고객님",
+        "address": "서울 성동구 사근동길 2",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$HlCzMDxKuiff1Xdt69EKY1$ScfXuBbPr6CXzmTRfCnfbZCuGUu7zgtg0cKc/Q5z9ng=",
+        "last_login": "2023-05-17T11:32:13.912Z",
+        "is_superuser": true,
+        "username": "admin2",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-05-17T11:31:16.005Z",
+        "image": "",
+        "region": "서울",
+        "is_owner": "고객님",
+        "address": "",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$kNvNr1jsiRX12HHagA7TSB$byhXmzOCk5Dcit9LxqcrSV8yltHe447k7ZtMXjxdbgQ=",
+        "last_login": "2023-05-18T00:05:29.411Z",
+        "is_superuser": true,
+        "username": "admin3",
+        "first_name": "",
+        "last_name": "정소담",
+        "email": "sodam828@naver.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-05-17T11:31:28.664Z",
+        "image": "profile/admin3/KakaoTalk_20230403_144738259.jpg",
+        "region": "경기도",
+        "is_owner": "사장님",
+        "address": "경기 의정부시 장곡로 240",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            2
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$GSA7BMuWoZ1wDVPY4JtcB0$4w6YTOs9Ta7l3H5rsMqABEG60FjTChBGwDGmm7UezV4=",
+        "last_login": "2023-05-18T06:37:03.112Z",
+        "is_superuser": true,
+        "username": "admin4",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-05-17T11:31:39.100Z",
+        "image": "",
+        "region": "서울",
+        "is_owner": "고객님",
+        "address": "",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$hohigwpQSUxU4vNoVp6EE2$Lw/cwfpY9xKBCjogS4ZZuUaHwzOoyISHeKlGJTK5rp0=",
+        "last_login": "2023-05-18T06:46:39.153Z",
+        "is_superuser": false,
+        "username": "mjs3827",
+        "first_name": "",
+        "last_name": "문지수",
+        "email": "mjs3827@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T12:29:06.218Z",
+        "image": "profile/mjs3827/me.jpg",
+        "region": "경기",
+        "is_owner": "사장님",
+        "address": "경남 진주시 돗골로161번길 9",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            11,
+            12,
+            14
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$weDMGv54XNx05uigIp0dt4$Zhr75t9URHy8E+P9G6fB96KFPPxCuZ1D5ISt/X1rKZE=",
+        "last_login": "2023-05-18T06:48:40.121Z",
+        "is_superuser": false,
+        "username": "sodam",
+        "first_name": "",
+        "last_name": "정소담",
+        "email": "sodam828@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T12:32:00.285Z",
+        "image": "profile/sodam/KakaoTalk_20230401_121938561_02.jpg",
+        "region": "경기",
+        "is_owner": "사장님",
+        "address": "경기도 의정부시 장곡로 240",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            11
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$QZWPwqH6rZBiwXHhELp98g$wpmhh2e8TqbATzP7kR6Mimu7UDVgekkXVxRmNF4V0z0=",
+        "last_login": "2023-05-18T06:49:57.319Z",
+        "is_superuser": false,
+        "username": "imseongjoo",
+        "first_name": "",
+        "last_name": "임성주",
+        "email": "afro1662@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T12:32:13.394Z",
+        "image": "profile/imseongjoo/1.png",
+        "region": "경기",
+        "is_owner": "고객님",
+        "address": "경기 가평군 가평읍 가랫골길 1",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$aRSnMq8CHmV8KdznXjO2UY$llRxWeoaoHs6XCwxoheZFGyLquhlbS9CGVPmtv7c6R0=",
+        "last_login": "2023-05-18T06:53:11.288Z",
+        "is_superuser": false,
+        "username": "hh",
+        "first_name": "",
+        "last_name": "에취에취",
+        "email": "aaa@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T12:37:54.796Z",
+        "image": "profile/hh/다운로드_8.jpg",
+        "region": "서울",
+        "is_owner": "고객님",
+        "address": "서울 종로구 삼청로 59",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            5
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$ymCwf0TbpFzvxzNY10VrAg$8pIU3gye28TwbZWEORwm8iRbMtpze+zyQF6eY6FhjBk=",
+        "last_login": "2023-05-18T06:36:33.960Z",
+        "is_superuser": false,
+        "username": "캠핑중독",
+        "first_name": "",
+        "last_name": "캠핑중독",
+        "email": "mjs3827@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T12:47:47.890Z",
+        "image": "",
+        "region": "서울",
+        "is_owner": "사장님",
+        "address": "경남 진주시 돗골로161번길 9",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 10,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$3mIz5IoK9ywqktKYZLKNZK$6lv03rQyZqDNkF33ORAVoVhazsNS8XN/GEnSzzcV54U=",
+        "last_login": "2023-05-17T12:53:17.296Z",
+        "is_superuser": false,
+        "username": "nono",
+        "first_name": "",
+        "last_name": "문지수",
+        "email": "mjs3827@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T12:53:11.583Z",
+        "image": "",
+        "region": "경기",
+        "is_owner": "고객님",
+        "address": "경남 진주시 돗골로161번길 9",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 11,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$h1hjNfyNfujvJWOQNzf6JN$jFVnX0enEkjbSMrI9YqH6rL+ytqCPaxMnUKWA96ex+c=",
+        "last_login": "2023-05-18T00:16:36.203Z",
+        "is_superuser": false,
+        "username": "damdam",
+        "first_name": "",
+        "last_name": "정소담",
+        "email": "sodam828@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T12:55:59.361Z",
+        "image": "profile/damdam/초리1.jpg",
+        "region": "경기",
+        "is_owner": "고객님",
+        "address": "서울 성북구 아리랑로 3",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            5,
+            6
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 12,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$CP9Te1UQsS9Bad6P34vkKM$SLHrT0IyjS+W8QlvHGYxXatNQUa2c976uS7WJSjAVv4=",
+        "last_login": "2023-05-17T14:17:26.796Z",
+        "is_superuser": false,
+        "username": "hih",
+        "first_name": "",
+        "last_name": "하이휘",
+        "email": "aaa@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T13:10:52.560Z",
+        "image": "profile/hih/댕5.jpg",
+        "region": "제주도",
+        "is_owner": "고객님",
+        "address": "제주특별자치도 제주시 애월읍 가문동길 2",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            5
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 13,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$nSUupNgSTQR98KwQJ4SlrI$DHZcge6gsy7tOuYvWLvcNeIOkDWrKX1WFO0TauD/Rdo=",
+        "last_login": "2023-05-18T06:37:03.292Z",
+        "is_superuser": false,
+        "username": "드라마중독",
+        "first_name": "",
+        "last_name": "드라마중독",
+        "email": "mjs3827@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T13:24:59.011Z",
+        "image": "",
+        "region": "부산",
+        "is_owner": "사장님",
+        "address": "경남 진주시 돗골로161번길 9",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            5
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 14,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$znsR3pFM6eWh3tkalHPF0j$yVR8czDB3kj4AXc3+JshO+e/3t1fWJb9Rys2htq5TZ4=",
+        "last_login": "2023-05-17T13:25:52.556Z",
+        "is_superuser": false,
+        "username": "jooseongim",
+        "first_name": "",
+        "last_name": "임성주",
+        "email": "afro1662@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T13:25:39.475Z",
+        "image": "profile/jooseongim/20190415_게임학원_09.jpg",
+        "region": "경기",
+        "is_owner": "고객님",
+        "address": "서울 강동구 천호대로213길 14",
+        "groups": [],
+        "user_permissions": [],
+        "followings": [
+            5
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 15,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$QoNc2ssvgBd8EcsmQcZkrV$JHKNkqvQjNaXdhcBCS8t529urjUGZIWRv2M4jdtcU6w=",
+        "last_login": "2023-05-17T13:35:48.043Z",
+        "is_superuser": false,
+        "username": "hho",
+        "first_name": "",
+        "last_name": "호호호호호",
+        "email": "aaa@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T13:35:40.917Z",
+        "image": "profile/hho/댕2.jpg",
+        "region": "광주",
+        "is_owner": "사장님",
+        "address": "광주 광산구 가마길 15",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 16,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$3vs8pKkFD2wPRst1wDtfac$jOhiTq5jcaKNwnNMKBe3cXsS5RiKYclH75B51oj/TV4=",
+        "last_login": "2023-05-17T13:38:49.986Z",
+        "is_superuser": false,
+        "username": "seongjooim",
+        "first_name": "",
+        "last_name": "임성주",
+        "email": "afro1662@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-17T13:38:38.737Z",
+        "image": "profile/seongjooim/b5d3d6a7b67fbf5afdaffb79fffbf8b1113e2bd2b7407c8202a97d2241a96625.png",
+        "region": "경기",
+        "is_owner": "사장님",
+        "address": "서울 강남구 가로수길 5",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 17,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$1jXwp6hjgM38UNkX96BcXM$8zB1TPZIZR7qU+cQ2Ui7cytSkuHX3FI/OHiMfvlTJq0=",
+        "last_login": "2023-05-18T06:46:27.706Z",
+        "is_superuser": false,
+        "username": "pty9714",
+        "first_name": "",
+        "last_name": "박태양",
+        "email": "pty9714@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-18T06:46:19.106Z",
+        "image": "profile/pty9714/lee17.jpg",
+        "region": "서울",
+        "is_owner": "사장님",
+        "address": "서울 성동구 마장로 271",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 18,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$RpCDGZFudQQ5oRr1VqwIIl$MwtFD9uKE8zZ5wPUfsvoGZlcxOWjw28BmPWY3RmcQ6w=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "afro1662@naver.com",
+        "first_name": "",
+        "last_name": "임성주",
+        "email": "afro1662@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-18T06:48:32.543Z",
+        "image": "profile/afro1662@naver.com/logo_black.png",
+        "region": "서울",
+        "is_owner": "사장님",
+        "address": "서울 서대문구 경기대로 9",
+        "groups": [],
+        "user_permissions": [],
+        "followings": []
+    }
+}
+]

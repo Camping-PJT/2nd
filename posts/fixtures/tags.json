@@ -1,0 +1,802 @@
+[
+{
+    "model": "taggit.tag",
+    "pk": 1,
+    "fields": {
+        "name": "반려동물",
+        "slug": "반려동물"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 2,
+    "fields": {
+        "name": "글램핑",
+        "slug": "글램핑"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 3,
+    "fields": {
+        "name": "카라반",
+        "slug": "카라반"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 4,
+    "fields": {
+        "name": "침대방",
+        "slug": "침대방"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 5,
+    "fields": {
+        "name": "가족실",
+        "slug": "가족실"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 6,
+    "fields": {
+        "name": "2인실",
+        "slug": "2인실"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 7,
+    "fields": {
+        "name": "개별바비큐",
+        "slug": "개별바비큐"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 8,
+    "fields": {
+        "name": "바비큐장",
+        "slug": "바비큐장"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 9,
+    "fields": {
+        "name": "공용시설",
+        "slug": "공용시설"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 10,
+    "fields": {
+        "name": "족구장",
+        "slug": "족구장"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 11,
+    "fields": {
+        "name": "파티",
+        "slug": "파티"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 12,
+    "fields": {
+        "name": "와이파이",
+        "slug": "와이파이"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 13,
+    "fields": {
+        "name": "세미나실",
+        "slug": "세미나실"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 14,
+    "fields": {
+        "name": "키즈테마",
+        "slug": "키즈테마"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 15,
+    "fields": {
+        "name": "잔디",
+        "slug": "잔디"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 16,
+    "fields": {
+        "name": "계곡",
+        "slug": "계곡"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 17,
+    "fields": {
+        "name": "독채",
+        "slug": "독채"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 18,
+    "fields": {
+        "name": "데크",
+        "slug": "데크"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 19,
+    "fields": {
+        "name": "체험활동",
+        "slug": "체험활동"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 20,
+    "fields": {
+        "name": "픽업",
+        "slug": "픽업"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 21,
+    "fields": {
+        "name": "수영장",
+        "slug": "수영장"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 22,
+    "fields": {
+        "name": "파쇄석",
+        "slug": "파쇄석"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 23,
+    "fields": {
+        "name": "오토캠핑",
+        "slug": "오토캠핑"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 24,
+    "fields": {
+        "name": "넓은 캠핑장",
+        "slug": "넓은-캠핑장"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 25,
+    "fields": {
+        "name": "폭포",
+        "slug": "폭포"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 26,
+    "fields": {
+        "name": "산",
+        "slug": "산"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 27,
+    "fields": {
+        "name": "강변",
+        "slug": "강변"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 28,
+    "fields": {
+        "name": "가족",
+        "slug": "가족"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 29,
+    "fields": {
+        "name": "캠핑",
+        "slug": "캠핑"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 30,
+    "fields": {
+        "name": "개별바베큐",
+        "slug": "개별바베큐"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 31,
+    "fields": {
+        "name": "계속",
+        "slug": "계속"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 32,
+    "fields": {
+        "name": "최신시설",
+        "slug": "최신시설"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 33,
+    "fields": {
+        "name": "자연친화적",
+        "slug": "자연친화적"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 34,
+    "fields": {
+        "name": "낙동강",
+        "slug": "낙동강"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 35,
+    "fields": {
+        "name": "취사금지",
+        "slug": "취사금지"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 36,
+    "fields": {
+        "name": "양평",
+        "slug": "양평"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 37,
+    "fields": {
+        "name": "칼국수",
+        "slug": "칼국수"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 38,
+    "fields": {
+        "name": "해장국",
+        "slug": "해장국"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 39,
+    "fields": {
+        "name": "홍천강",
+        "slug": "홍천강"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 40,
+    "fields": {
+        "name": "하늘숲",
+        "slug": "하늘숲"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 41,
+    "fields": {
+        "name": "해솔길",
+        "slug": "해솔길"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 42,
+    "fields": {
+        "name": "예쁜꽃",
+        "slug": "예쁜꽃"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 43,
+    "fields": {
+        "name": "대부도",
+        "slug": "대부도"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 44,
+    "fields": {
+        "name": "소나무",
+        "slug": "소나무"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 45,
+    "fields": {
+        "name": "해수욕장",
+        "slug": "해수욕장"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 46,
+    "fields": {
+        "name": "바다",
+        "slug": "바다"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 47,
+    "fields": {
+        "name": "제주도",
+        "slug": "제주도"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 48,
+    "fields": {
+        "name": "올레길",
+        "slug": "올레길"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 49,
+    "fields": {
+        "name": "바베큐",
+        "slug": "바베큐"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 50,
+    "fields": {
+        "name": "오션뷰",
+        "slug": "오션뷰"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 51,
+    "fields": {
+        "name": "담양",
+        "slug": "담양"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 52,
+    "fields": {
+        "name": "대나무",
+        "slug": "대나무"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 53,
+    "fields": {
+        "name": "근교",
+        "slug": "근교"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 54,
+    "fields": {
+        "name": "죽녹원",
+        "slug": "죽녹원"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 55,
+    "fields": {
+        "name": "신축",
+        "slug": "신축"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 56,
+    "fields": {
+        "name": "자연학습",
+        "slug": "자연학습"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 57,
+    "fields": {
+        "name": "문화유적",
+        "slug": "문화유적"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 58,
+    "fields": {
+        "name": "캠프",
+        "slug": "캠프"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 59,
+    "fields": {
+        "name": "방갈로",
+        "slug": "방갈로"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 60,
+    "fields": {
+        "name": "온돌방",
+        "slug": "온돌방"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 61,
+    "fields": {
+        "name": "경주",
+        "slug": "경주"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 62,
+    "fields": {
+        "name": "산내면",
+        "slug": "산내면"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 63,
+    "fields": {
+        "name": "놀이터",
+        "slug": "놀이터"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 64,
+    "fields": {
+        "name": "농촌풍경",
+        "slug": "농촌풍경"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 65,
+    "fields": {
+        "name": "캠핑존",
+        "slug": "캠핑존"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 66,
+    "fields": {
+        "name": "민박",
+        "slug": "민박"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 67,
+    "fields": {
+        "name": "대구",
+        "slug": "대구"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 68,
+    "fields": {
+        "name": "도심",
+        "slug": "도심"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 69,
+    "fields": {
+        "name": "별빛",
+        "slug": "별빛"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 70,
+    "fields": {
+        "name": "에어컨",
+        "slug": "에어컨"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 71,
+    "fields": {
+        "name": "카페",
+        "slug": "카페"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 72,
+    "fields": {
+        "name": "매점",
+        "slug": "매점"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 73,
+    "fields": {
+        "name": "알프스",
+        "slug": "알프스"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 74,
+    "fields": {
+        "name": "흑석동",
+        "slug": "흑석동"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 75,
+    "fields": {
+        "name": "대전",
+        "slug": "대전"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 76,
+    "fields": {
+        "name": "노루벌",
+        "slug": "노루벌"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 77,
+    "fields": {
+        "name": "체험터",
+        "slug": "체험터"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 78,
+    "fields": {
+        "name": "반딫불이",
+        "slug": "반딫불이"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 79,
+    "fields": {
+        "name": "대중교통",
+        "slug": "대중교통"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 80,
+    "fields": {
+        "name": "주변 화장실",
+        "slug": "주변-화장실"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 81,
+    "fields": {
+        "name": "주변 수도",
+        "slug": "주변-수도"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 82,
+    "fields": {
+        "name": "주변 전기",
+        "slug": "주변-전기"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 83,
+    "fields": {
+        "name": "캠핑카 접근 가능",
+        "slug": "캠핑카-접근-가능"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 84,
+    "fields": {
+        "name": "호수",
+        "slug": "호수"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 85,
+    "fields": {
+        "name": "민물낚시",
+        "slug": "민물낚시"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 86,
+    "fields": {
+        "name": "수달",
+        "slug": "수달"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 87,
+    "fields": {
+        "name": "붕어낚시",
+        "slug": "붕어낚시"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 88,
+    "fields": {
+        "name": "유원지",
+        "slug": "유원지"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 89,
+    "fields": {
+        "name": "#여유있는#사이트 간격이 넓은#깨끗한#온수 잘 나오는#차대기 편한#아이들 놀기 좋은#계곡옆#생태교육#그늘이 많은#문화유적#축제#둘레길#별 보기 좋은#힐링#커플#가족",
+        "slug": "여유있는사이트-간격이-넓은깨끗한온수-잘-나오는차대기-편한아이들-놀기-좋은계곡옆생태교육그늘이-많은문화유적축제둘레길별-보기-좋은힐링커플가족"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 90,
+    "fields": {
+        "name": "샤워실",
+        "slug": "샤워실"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 91,
+    "fields": {
+        "name": "화장실",
+        "slug": "화장실"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 92,
+    "fields": {
+        "name": "휴양림",
+        "slug": "휴양림"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 93,
+    "fields": {
+        "name": "수목원",
+        "slug": "수목원"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 94,
+    "fields": {
+        "name": "공주",
+        "slug": "공주"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 95,
+    "fields": {
+        "name": "포레스트",
+        "slug": "포레스트"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 96,
+    "fields": {
+        "name": "숲속",
+        "slug": "숲속"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 97,
+    "fields": {
+        "name": "이쁜 캠핑장",
+        "slug": "이쁜-캠핑장"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 98,
+    "fields": {
+        "name": "오지캠핑",
+        "slug": "오지캠핑"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 99,
+    "fields": {
+        "name": "산림욕장",
+        "slug": "산림욕장"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 100,
+    "fields": {
+        "name": "양성",
+        "slug": "양성"
+    }
+}
+]

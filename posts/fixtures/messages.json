@@ -1,0 +1,312 @@
+[
+{
+    "model": "my_messages.message",
+    "pk": 1,
+    "fields": {
+        "sender": 3,
+        "receiver": 2,
+        "content": "ㅎ_ㅎ 쪽지",
+        "timestamp": "2023-05-17T11:51:34.999Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 2,
+    "fields": {
+        "sender": 3,
+        "receiver": 1,
+        "content": "나의 쪽지를 받아랏",
+        "timestamp": "2023-05-17T11:51:51.186Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 3,
+    "fields": {
+        "sender": 3,
+        "receiver": 4,
+        "content": "안녕하세요 ^^",
+        "timestamp": "2023-05-17T11:51:59.886Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 4,
+    "fields": {
+        "sender": 11,
+        "receiver": 5,
+        "content": "억압과 통제의 아이콘 \r\n문지수 만세만세 만만세",
+        "timestamp": "2023-05-17T13:25:43.518Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 5,
+    "fields": {
+        "sender": 12,
+        "receiver": 5,
+        "content": "서울 근교로 캠핑 어떠세요????",
+        "timestamp": "2023-05-17T13:27:17.046Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 6,
+    "fields": {
+        "sender": 13,
+        "receiver": 5,
+        "content": "혹시 여쭤보고 싶은게 있는데 가봤던 곳 중에 어디가 가장 좋으셨나용?ㅎㅎ 추천해주실 수 있나요??",
+        "timestamp": "2023-05-17T13:34:06.302Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 7,
+    "fields": {
+        "sender": 5,
+        "receiver": 12,
+        "content": "강아지가 너무 예쁘네요~",
+        "timestamp": "2023-05-17T13:36:27.464Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 8,
+    "fields": {
+        "sender": 5,
+        "receiver": 13,
+        "content": "혹시 어떤 지역 말씀이신가요??",
+        "timestamp": "2023-05-17T13:37:02.860Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 9,
+    "fields": {
+        "sender": 12,
+        "receiver": 5,
+        "content": "같이 캠핑다녀요!!",
+        "timestamp": "2023-05-17T14:21:15.598Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 10,
+    "fields": {
+        "sender": 5,
+        "receiver": 12,
+        "content": "서울 근교 캠핑 너무 좋죠~",
+        "timestamp": "2023-05-17T14:21:19.425Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 11,
+    "fields": {
+        "sender": 11,
+        "receiver": 5,
+        "content": "문지수 사랑해",
+        "timestamp": "2023-05-17T14:21:34.510Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 12,
+    "fields": {
+        "sender": 5,
+        "receiver": 11,
+        "content": "억압과 통제의 아이콘이라니",
+        "timestamp": "2023-05-17T14:21:37.777Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 13,
+    "fields": {
+        "sender": 11,
+        "receiver": 5,
+        "content": "발표 천재 문지수 당신 없인 못살아",
+        "timestamp": "2023-05-17T14:21:52.281Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 14,
+    "fields": {
+        "sender": 8,
+        "receiver": 5,
+        "content": "리뷰 재미있어요 ㅎㅎ",
+        "timestamp": "2023-05-17T14:25:13.044Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 15,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "gggggg",
+        "timestamp": "2023-05-18T01:20:05.900Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 16,
+    "fields": {
+        "sender": 6,
+        "receiver": 5,
+        "content": "지수님 답장 부탁드려요 ~~",
+        "timestamp": "2023-05-18T01:39:06.098Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 17,
+    "fields": {
+        "sender": 5,
+        "receiver": 6,
+        "content": "답장했어요~",
+        "timestamp": "2023-05-18T01:39:28.129Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 23,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "쪽지 보내기",
+        "timestamp": "2023-05-18T04:46:58.300Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 24,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ㅎㅎ",
+        "timestamp": "2023-05-18T04:50:16.303Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 25,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ㅗㅎㅎ",
+        "timestamp": "2023-05-18T04:52:10.283Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 26,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ㅗㅎㅎㅎㅎㅎ",
+        "timestamp": "2023-05-18T04:52:42.175Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 27,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ㅗㅎㅎㅎㅎㅎ",
+        "timestamp": "2023-05-18T04:52:56.183Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 28,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ㅗㅎㅎㅎㅎㅎ",
+        "timestamp": "2023-05-18T04:52:59.917Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 29,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ",
+        "timestamp": "2023-05-18T04:53:09.072Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 30,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "홓ㅎㅎㅎㅎ",
+        "timestamp": "2023-05-18T04:54:48.688Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 31,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ㅎㅎ",
+        "timestamp": "2023-05-18T04:56:23.961Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 33,
+    "fields": {
+        "sender": 5,
+        "receiver": 6,
+        "content": "언제 이렇게까지 수정하신거죠..? 보낸쪽지함 받은쪽지함을 이렇게나 해놓으시다니!! 소담님 더 쉬셔야해...",
+        "timestamp": "2023-05-18T05:20:35.148Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 34,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "ggg",
+        "timestamp": "2023-05-18T05:33:57.688Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 35,
+    "fields": {
+        "sender": 6,
+        "receiver": 11,
+        "content": "어디 한번 보내볼까",
+        "timestamp": "2023-05-18T06:00:28.327Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 36,
+    "fields": {
+        "sender": 17,
+        "receiver": 11,
+        "content": "정소담 바보",
+        "timestamp": "2023-05-18T06:46:55.609Z"
+    }
+},
+{
+    "model": "my_messages.message",
+    "pk": 37,
+    "fields": {
+        "sender": 17,
+        "receiver": 11,
+        "content": "정소담 바보2",
+        "timestamp": "2023-05-18T06:47:25.956Z"
+    }
+}
+]

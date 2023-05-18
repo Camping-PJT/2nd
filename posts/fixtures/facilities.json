@@ -1,0 +1,1738 @@
+[
+{
+    "model": "posts.facility",
+    "pk": 1,
+    "fields": {
+        "post": 1,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 2,
+    "fields": {
+        "post": 1,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 3,
+    "fields": {
+        "post": 1,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 4,
+    "fields": {
+        "post": 2,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 5,
+    "fields": {
+        "post": 2,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 6,
+    "fields": {
+        "post": 2,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 7,
+    "fields": {
+        "post": 2,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 8,
+    "fields": {
+        "post": 2,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 9,
+    "fields": {
+        "post": 3,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 10,
+    "fields": {
+        "post": 3,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 11,
+    "fields": {
+        "post": 3,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 12,
+    "fields": {
+        "post": 3,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 13,
+    "fields": {
+        "post": 3,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 14,
+    "fields": {
+        "post": 3,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 15,
+    "fields": {
+        "post": 4,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 16,
+    "fields": {
+        "post": 4,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 17,
+    "fields": {
+        "post": 4,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 18,
+    "fields": {
+        "post": 4,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 19,
+    "fields": {
+        "post": 4,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 20,
+    "fields": {
+        "post": 4,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 21,
+    "fields": {
+        "post": 4,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 22,
+    "fields": {
+        "post": 5,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 23,
+    "fields": {
+        "post": 5,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 24,
+    "fields": {
+        "post": 5,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 25,
+    "fields": {
+        "post": 5,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 26,
+    "fields": {
+        "post": 5,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 27,
+    "fields": {
+        "post": 5,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 28,
+    "fields": {
+        "post": 5,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 29,
+    "fields": {
+        "post": 6,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 30,
+    "fields": {
+        "post": 6,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 31,
+    "fields": {
+        "post": 6,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 32,
+    "fields": {
+        "post": 6,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 33,
+    "fields": {
+        "post": 7,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 34,
+    "fields": {
+        "post": 7,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 35,
+    "fields": {
+        "post": 7,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 36,
+    "fields": {
+        "post": 7,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 37,
+    "fields": {
+        "post": 7,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 38,
+    "fields": {
+        "post": 7,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 39,
+    "fields": {
+        "post": 7,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 40,
+    "fields": {
+        "post": 7,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 41,
+    "fields": {
+        "post": 8,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 42,
+    "fields": {
+        "post": 8,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 43,
+    "fields": {
+        "post": 8,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 44,
+    "fields": {
+        "post": 8,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 45,
+    "fields": {
+        "post": 8,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 46,
+    "fields": {
+        "post": 8,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 47,
+    "fields": {
+        "post": 8,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 48,
+    "fields": {
+        "post": 9,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 49,
+    "fields": {
+        "post": 9,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 50,
+    "fields": {
+        "post": 9,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 51,
+    "fields": {
+        "post": 9,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 52,
+    "fields": {
+        "post": 9,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 53,
+    "fields": {
+        "post": 9,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 54,
+    "fields": {
+        "post": 10,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 55,
+    "fields": {
+        "post": 10,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 56,
+    "fields": {
+        "post": 10,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 57,
+    "fields": {
+        "post": 10,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 58,
+    "fields": {
+        "post": 11,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 59,
+    "fields": {
+        "post": 11,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 60,
+    "fields": {
+        "post": 11,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 61,
+    "fields": {
+        "post": 11,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 62,
+    "fields": {
+        "post": 11,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 63,
+    "fields": {
+        "post": 11,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 64,
+    "fields": {
+        "post": 11,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 65,
+    "fields": {
+        "post": 12,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 66,
+    "fields": {
+        "post": 12,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 67,
+    "fields": {
+        "post": 12,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 68,
+    "fields": {
+        "post": 12,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 69,
+    "fields": {
+        "post": 12,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 70,
+    "fields": {
+        "post": 12,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 71,
+    "fields": {
+        "post": 13,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 72,
+    "fields": {
+        "post": 13,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 73,
+    "fields": {
+        "post": 13,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 74,
+    "fields": {
+        "post": 13,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 75,
+    "fields": {
+        "post": 13,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 76,
+    "fields": {
+        "post": 13,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 77,
+    "fields": {
+        "post": 13,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 78,
+    "fields": {
+        "post": 13,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 79,
+    "fields": {
+        "post": 13,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 80,
+    "fields": {
+        "post": 14,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 81,
+    "fields": {
+        "post": 14,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 82,
+    "fields": {
+        "post": 14,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 83,
+    "fields": {
+        "post": 14,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 84,
+    "fields": {
+        "post": 14,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 85,
+    "fields": {
+        "post": 14,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 86,
+    "fields": {
+        "post": 14,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 87,
+    "fields": {
+        "post": 15,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 88,
+    "fields": {
+        "post": 15,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 89,
+    "fields": {
+        "post": 15,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 90,
+    "fields": {
+        "post": 15,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 91,
+    "fields": {
+        "post": 15,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 92,
+    "fields": {
+        "post": 15,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 93,
+    "fields": {
+        "post": 15,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 100,
+    "fields": {
+        "post": 17,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 101,
+    "fields": {
+        "post": 17,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 102,
+    "fields": {
+        "post": 17,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 103,
+    "fields": {
+        "post": 17,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 104,
+    "fields": {
+        "post": 17,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 105,
+    "fields": {
+        "post": 17,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 106,
+    "fields": {
+        "post": 17,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 107,
+    "fields": {
+        "post": 17,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 108,
+    "fields": {
+        "post": 18,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 109,
+    "fields": {
+        "post": 18,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 110,
+    "fields": {
+        "post": 18,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 111,
+    "fields": {
+        "post": 18,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 112,
+    "fields": {
+        "post": 18,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 113,
+    "fields": {
+        "post": 18,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 114,
+    "fields": {
+        "post": 19,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 115,
+    "fields": {
+        "post": 19,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 116,
+    "fields": {
+        "post": 19,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 117,
+    "fields": {
+        "post": 19,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 118,
+    "fields": {
+        "post": 19,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 119,
+    "fields": {
+        "post": 19,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 120,
+    "fields": {
+        "post": 19,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 121,
+    "fields": {
+        "post": 20,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 122,
+    "fields": {
+        "post": 20,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 123,
+    "fields": {
+        "post": 20,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 124,
+    "fields": {
+        "post": 20,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 125,
+    "fields": {
+        "post": 20,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 126,
+    "fields": {
+        "post": 20,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 127,
+    "fields": {
+        "post": 20,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 128,
+    "fields": {
+        "post": 20,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 129,
+    "fields": {
+        "post": 21,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 130,
+    "fields": {
+        "post": 21,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 131,
+    "fields": {
+        "post": 21,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 132,
+    "fields": {
+        "post": 21,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 133,
+    "fields": {
+        "post": 21,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 134,
+    "fields": {
+        "post": 21,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 135,
+    "fields": {
+        "post": 21,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 136,
+    "fields": {
+        "post": 22,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 137,
+    "fields": {
+        "post": 22,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 138,
+    "fields": {
+        "post": 22,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 139,
+    "fields": {
+        "post": 22,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 140,
+    "fields": {
+        "post": 23,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 141,
+    "fields": {
+        "post": 23,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 142,
+    "fields": {
+        "post": 23,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 143,
+    "fields": {
+        "post": 23,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 144,
+    "fields": {
+        "post": 23,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 145,
+    "fields": {
+        "post": 24,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 146,
+    "fields": {
+        "post": 24,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 147,
+    "fields": {
+        "post": 24,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 148,
+    "fields": {
+        "post": 24,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 149,
+    "fields": {
+        "post": 24,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 150,
+    "fields": {
+        "post": 24,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 151,
+    "fields": {
+        "post": 25,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 152,
+    "fields": {
+        "post": 25,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 153,
+    "fields": {
+        "post": 25,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 154,
+    "fields": {
+        "post": 25,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 155,
+    "fields": {
+        "post": 25,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 156,
+    "fields": {
+        "post": 25,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 157,
+    "fields": {
+        "post": 25,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 158,
+    "fields": {
+        "post": 25,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 159,
+    "fields": {
+        "post": 26,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 160,
+    "fields": {
+        "post": 26,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 161,
+    "fields": {
+        "post": 26,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 162,
+    "fields": {
+        "post": 26,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 163,
+    "fields": {
+        "post": 26,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 164,
+    "fields": {
+        "post": 26,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 165,
+    "fields": {
+        "post": 27,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 166,
+    "fields": {
+        "post": 27,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 167,
+    "fields": {
+        "post": 27,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 168,
+    "fields": {
+        "post": 27,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 169,
+    "fields": {
+        "post": 27,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 170,
+    "fields": {
+        "post": 27,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 171,
+    "fields": {
+        "post": 28,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 172,
+    "fields": {
+        "post": 28,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 173,
+    "fields": {
+        "post": 28,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 174,
+    "fields": {
+        "post": 28,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 175,
+    "fields": {
+        "post": 28,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 176,
+    "fields": {
+        "post": 28,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 177,
+    "fields": {
+        "post": 29,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 178,
+    "fields": {
+        "post": 29,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 179,
+    "fields": {
+        "post": 29,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 180,
+    "fields": {
+        "post": 29,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 181,
+    "fields": {
+        "post": 30,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 182,
+    "fields": {
+        "post": 30,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 183,
+    "fields": {
+        "post": 30,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 184,
+    "fields": {
+        "post": 30,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 185,
+    "fields": {
+        "post": 30,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 186,
+    "fields": {
+        "post": 30,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 187,
+    "fields": {
+        "post": 31,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 188,
+    "fields": {
+        "post": 31,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 189,
+    "fields": {
+        "post": 31,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 190,
+    "fields": {
+        "post": 32,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 191,
+    "fields": {
+        "post": 32,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 192,
+    "fields": {
+        "post": 32,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 193,
+    "fields": {
+        "post": 32,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 194,
+    "fields": {
+        "post": 32,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 195,
+    "fields": {
+        "post": 32,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 196,
+    "fields": {
+        "post": 32,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 197,
+    "fields": {
+        "post": 32,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 200,
+    "fields": {
+        "post": 34,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 201,
+    "fields": {
+        "post": 34,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 202,
+    "fields": {
+        "post": 35,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 203,
+    "fields": {
+        "post": 35,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 204,
+    "fields": {
+        "post": 35,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 205,
+    "fields": {
+        "post": 35,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 206,
+    "fields": {
+        "post": 35,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 207,
+    "fields": {
+        "post": 35,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 208,
+    "fields": {
+        "post": 35,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 209,
+    "fields": {
+        "post": 35,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 210,
+    "fields": {
+        "post": 35,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 211,
+    "fields": {
+        "post": 36,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 212,
+    "fields": {
+        "post": 36,
+        "facility": "매점"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 213,
+    "fields": {
+        "post": 36,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 214,
+    "fields": {
+        "post": 36,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 215,
+    "fields": {
+        "post": 36,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 216,
+    "fields": {
+        "post": 36,
+        "facility": "대여"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 217,
+    "fields": {
+        "post": 36,
+        "facility": "장작"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 218,
+    "fields": {
+        "post": 36,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 225,
+    "fields": {
+        "post": 38,
+        "facility": "와이파이"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 226,
+    "fields": {
+        "post": 38,
+        "facility": "샤워시설"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 227,
+    "fields": {
+        "post": 38,
+        "facility": "전기"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 228,
+    "fields": {
+        "post": 38,
+        "facility": "온수제공"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 229,
+    "fields": {
+        "post": 38,
+        "facility": "개수대"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 230,
+    "fields": {
+        "post": 38,
+        "facility": "화장실"
+    }
+},
+{
+    "model": "posts.facility",
+    "pk": 231,
+    "fields": {
+        "post": 39,
+        "facility": "화장실"
+    }
+}
+]
