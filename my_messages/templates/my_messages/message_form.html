@@ -2,11 +2,13 @@
 {% load static %}
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/message.css' %}">
+  <link rel="stylesheet" href="/src/plugins/select2-4.0.13/dist/css/select2.min.css">
+  <script type="text/javascript" src="/src/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
 {% endblock head %}
 
 {% block content %}
 <div class="message">
-  <h2>쪽지보내기</h2>
+  <h2><input type="submit" value="<"  class="back" onclick=window.history.back()>쪽지보내기</h2>
   <div class="d-flex flex-column justify-content-center align-items-center">
     <form method="POST">
       {% csrf_token %}
@@ -16,4 +18,9 @@
     </form>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    $('#id_receiver').select2(); 
+});
+</script>
 {% endblock %}

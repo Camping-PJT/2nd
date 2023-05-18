@@ -11,7 +11,6 @@
   <h1>{% if category %}{{ category }} {% else %} 모든 {% endif %} 캠핑 장소({{postall|length}})</h1>
 </div>
 <div class="search--page">
-  {% if posts %}
   <form id="filterForm" method="GET" action="{% if category %}{% url 'posts:category' category %}{% else %}{% url 'posts:index' %}{% endif %}">
     <input type="hidden" name="sortKind" value="{{ sortKind }}">
     <select class="selectpicker" id="sortKind" name="sortKind">
@@ -29,6 +28,8 @@
       {% endfor %}
     </select>
   </form>
+  {% if posts %}
+
     <div>
       {% for post,image in posts %}
       <a href="{% url 'posts:detail' post.pk %}" class="content--link">

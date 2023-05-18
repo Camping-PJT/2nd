@@ -6,16 +6,20 @@
 }
 
 .message {
-  margin-top: 20px;
+  margin-top: 50px;
   text-align: center;
 }
 
 .message h2 {
-  color: #ab7aff;
+  color: rgba(245, 118, 8);
+  width: 50%;
+  margin: auto;
+  margin-bottom: 10px;
+  position: relative;
 }
 
 .message--box {
-  border: 1px solid rgba(189, 151, 255, 0.4);
+  border: 1px solid rgba(245, 118, 8, 0.5);
   border-radius: 10px;
   width: 45%;
   margin: auto;
@@ -25,15 +29,15 @@
 
 .message--txt {
   font-family: 'LeeSeoyun';
-  font-size: 15px;
-  border: 1px solid rgba(189, 151, 255, 0.4);
+  font-size: 18px;
+  border: 1px solid rgba(245, 118, 8);
   border-radius: 10px;
   margin: 10px auto;
   text-align: start;
   padding: 10px;
   width: 95%;
   overflow: auto;
-  height: 100px;
+  height: 200px;
 }
 
 .message--txt::-webkit-scrollbar {
@@ -43,7 +47,7 @@
 }
 
 .message--txt::-webkit-scrollbar-thumb {
-  background-color: rgba(189, 151, 255, 0.4);
+  background-color: rgba(245, 119, 8, 0.5);
   border-radius: 10px;
   background-clip: padding-box;
 }
@@ -57,29 +61,34 @@
   margin-left: 15px;
   color: rgb(83, 83, 83);
 }
+.message--sender a {
+  text-decoration: none;
+}
 
 .message--title {
   font-size: 15px;
   margin-left: 15px;
   color: rgb(83, 83, 83);
+  margin-bottom: 10px;
 }
+
 
 .message--btn--submit {
   background-color: #fff0;
   border: none;
   font-size: 20px;
-  color: #ab7aff;
+  color: rgba(245, 118, 8);
 }
 
 #id_content {
   display: block;
-  border: 1px solid rgba(189, 151, 255, 0.4);
+  border: 1px solid rgba(245, 118, 8, 0.4);
   border-radius: 10px;
   font-family: 'LeeSeoyun';
 }
 
 #id_content:focus {
-  border-color:rgba(122, 99, 161, 0.4);
+  border-color:rgba(245, 118, 8, 0.4);
   outline: 0;
 }
 
@@ -90,7 +99,7 @@
 }
 
 #id_content::-webkit-scrollbar-thumb {
-  background-color: rgba(189, 151, 255, 0.4);
+  background-color: rgba(245, 118, 8, 0.4);
   border-radius: 10px;
   background-clip: padding-box;
 }
@@ -100,8 +109,16 @@
 }
 
 #id_receiver {
-  border: 1px solid rgba(189, 151, 255, 0.4);
+  border: 1px solid rgba(245, 118, 8, 0.4) !important;
   font-family: 'LeeSeoyun';
+  margin-bottom: 10px;
+}
+
+#reply {
+  border: 1px solid rgba(245, 118, 8, 0.4) !important;
+  font-family: 'LeeSeoyun';
+  appearance:none;
+  padding-left: 10px;
 }
 
 #id_receiver option {
@@ -109,7 +126,7 @@
 }
 
 #id_receiver option:hover {
-  background-color: #ab7aff;
+  background-color: rgb(255, 149, 57);
 }
 
 .message--sender a {
@@ -121,4 +138,71 @@
 select[readonly] {
   background-color: #ffffff;
   pointer-events: none;
+}
+
+.message--detail {
+  border: 1px solid rgba(245, 118, 8);
+  border-radius: 10px;
+  width: 55%;
+  margin: auto;
+  text-align: start;
+  padding: 10px;
+  margin-top: 5%;
+}
+
+.back {
+  text-decoration: none;
+  color: rgba(245, 118, 8);
+  font-size: 20px;
+  font-weight: 600;
+  background-color: #fff0;
+  border: none;
+  position: absolute;
+  left: 25%;
+  bottom: 5px;
+}
+
+.back2 {
+  text-decoration: none;
+  color: rgba(245, 118, 8);
+  font-size: 20px;
+  font-weight: 600;
+  background-color: #fff0;
+  border: none;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .back { 
+    left: 10%;
+  }
+}
+.select2-selection--single  {
+  border: 1px solid rgba(245, 118, 8, 0.4) !important;
+  border-radius: 4px
+}
+
+.select2-results>.select2-results__options::-webkit-scrollbar {
+  border-radius: 20px;
+  width: 5px;
+  margin: 10px 5px;
+}
+.select2-results>.select2-results__options::-webkit-scrollbar-thumb {
+  background-color: rgba(245, 119, 8, 0.5);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.select2-search__field, .select2-search--dropdown {
+  border: 1px solid rgba(245, 118, 8, 0.4) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: rgba(245, 118, 8, 0.4) !important;
+  color: white;
+}
+
+.select2-container--default .select2-results__option--selected {
+  background-color: rgba(245, 118, 8, 0.8) !important;
+  color: white;
 }

@@ -16,7 +16,7 @@ class MessageForm(forms.ModelForm):
 class ReplyMessageForm(forms.ModelForm):
     receiver = forms.ModelChoiceField(
         queryset=get_user_model().objects.all(),
-        widget=forms.Select(attrs={'readonly': True})
+        widget=forms.Select(attrs={'readonly': True, 'id':'reply'})
     )
     class Meta:
         model = Message

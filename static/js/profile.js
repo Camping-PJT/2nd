@@ -31,7 +31,7 @@ class Carousel {
     this.index -= 1;
 
     this.$carousel.style.transform = `translate3d(0, -${
-      200 * this.index
+      390 * this.index
     }px, 0)`;
 
     if (this.index <= 0) {
@@ -51,7 +51,7 @@ class Carousel {
     this.index += 1;
 
     this.$carousel.style.transform = `translate3d(0, -${
-      200 * this.index
+      390 * this.index
     }px, 0)`;
 
     if (this.index <= 0) {
@@ -59,7 +59,7 @@ class Carousel {
     } else {
       this.$prevButton.hidden = false;
     }
-    if (this.index >= this.$carousel.childElementCount - 4) {
+    if (this.index >= this.$carousel.childElementCount - 12) {
       this.$nextButton.hidden = true;
     } else {
       this.$nextButton.hidden = false;

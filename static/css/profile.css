@@ -228,6 +228,10 @@ input[id="tab05"]:checked ~ .card5 {
   color: #383943;
 }
 
+.follow--modal a span {
+  white-space: nowrap;
+}
+
 .profile--followbtn {
   width: 100%;
   border-radius: 10px;
@@ -330,11 +334,11 @@ input[id="tab05"]:checked ~ .card5 {
 }
 
 .box4 {
-  padding: 8px;
+  padding: 10px;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(max-content, auto));
+  display: flex;
+  gap:10px;
   align-items: center;
 }
 
@@ -346,7 +350,6 @@ input[id="tab05"]:checked ~ .card5 {
 
 .box4--left {
   height: 100%;
-  margin: 5px 5px;
   border-radius: 10px;
   border: 1px solid #383943;
   padding: 10px;
@@ -354,6 +357,7 @@ input[id="tab05"]:checked ~ .card5 {
   display: grid;
   grid-template-rows: 40px repeat(10,40px);
   overflow: auto;
+  width: 50%;
 }
 
 .box4--left::-webkit-scrollbar {
@@ -361,11 +365,13 @@ input[id="tab05"]:checked ~ .card5 {
   width: 5px;
   margin: 10px 5px;
 }
-
 .box4--left::-webkit-scrollbar-thumb {
   background-color: rgba(245, 119, 8, 0.5);
   border-radius: 20px;
   padding: 10px;
+}
+.box4--left::-webkit-scrollbar-track {
+  margin: 5px;
 }
 
 #priority-form {
@@ -453,7 +459,7 @@ input[id="tab05"]:checked ~ .card5 {
 }
 
 .box3 {
-  height: 70%;
+  height: 78%;
   width: 50%;
   margin: auto;
   display: flex;
@@ -465,10 +471,6 @@ input[id="tab05"]:checked ~ .card5 {
 }
 
 .box3--carousel {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  gap: 10px;
   height: 100%;
   transform: translate3d(0, 0, 0);
   transition: transform 0.2s;
@@ -478,7 +480,11 @@ input[id="tab05"]:checked ~ .card5 {
   border: 1px solid #383943;
   border-radius: 10px;
   padding: 10px;
-  height: 100px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .myschedule p {
@@ -498,7 +504,7 @@ input[id="tab05"]:checked ~ .card5 {
   color: rgba(245, 118, 8);
   background-color: #fff0;
   position: absolute;
-  bottom: 250px;
+  bottom: 230px;
   right: 20%;
   z-index: 999;
   display: flex;
@@ -512,7 +518,7 @@ input[id="tab05"]:checked ~ .card5 {
   color: rgba(245, 118, 8);
   background-color: #fff0;
   position: absolute;
-  bottom: 250px;
+  bottom: 230px;
   left: 20%;
   z-index: 999;
   display: flex;
@@ -547,4 +553,113 @@ input[id="tab05"]:checked ~ .card5 {
   font-size: 20px;
   background: #eaeaea4f;
   border-top-width: 1px !important;
+}
+
+.box5 {
+  display: flex;
+  gap: 10px;
+  height: 100%;
+  padding: 10px;
+}
+
+.box5--sub {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.message--boxes {
+  padding: 10px;
+  height: 100%;
+  border: 1px solid #383943;
+  border-radius: 8px;
+  height: 100%;
+  overflow: auto;
+}
+
+.message--boxes::-webkit-scrollbar {
+  border-radius: 20px;
+  width: 5px;
+  margin: 10px 5px;
+}
+
+.message--boxes::-webkit-scrollbar-thumb {
+  background-color: rgba(245, 119, 8, 0.5);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.message--boxes::-webkit-scrollbar-track {
+  margin: 5px;
+}
+
+.box5 h2 {
+  text-align: center;
+  font-weight: 600;
+  color: rgba(245, 118, 8);
+  position: relative;
+}
+
+.message--boxes ul {
+  padding: 0;
+}
+
+.message--boxes li {
+  list-style: none;
+}
+
+.message--box {
+  border: 1px solid rgba(245, 118, 8);
+  border-radius: 10px;
+  width: 100%;
+  text-align: start;
+  padding: 10px;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.message--sender {
+  font-size: 18px;
+  color: rgb(83, 83, 83);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.message--sender a {
+  font-size: 18px;
+  color: rgb(83, 83, 83);
+  text-decoration: none;
+}
+.message--sender a:hover {
+  color:rgba(245, 118, 8); 
+}
+
+select[readonly] {
+  background-color: #ffffff;
+  pointer-events: none;
+}
+
+.message--detail {
+  text-decoration: none;
+  color: rgba(245, 118, 8);
+  font-size: 20px;
+  font-weight: 600;
+  position: absolute;
+  bottom: 30%;
+  right: 10px;
+}
+
+.send--message {
+  text-decoration: none;
+  color: #383943;
+  font-size: 16px;
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+}
+
+.send--message:hover {
+  color: rgba(245, 118, 8);
 }

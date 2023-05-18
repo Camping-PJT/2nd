@@ -1,0 +1,111 @@
+.wid {
+  width: 80%;
+  margin: 2rem auto;
+}
+
+
+a {
+  text-decoration: none;
+}
+
+.participant-list {
+  max-height: 200px; 
+  overflow-y: auto; 
+}
+
+#participantModal {
+  margin-top: 100px;
+}
+
+.par-btn {
+  border: none;
+  background-color: transparent;
+}
+
+.save-btn {
+  border: none;
+  background-color: transparent;
+  color: #3788d8;
+}
+
+.calendar--btn {
+  align-items: center;
+}
+
+.schedule--li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.schedule--li p {
+  margin: 0;
+  margin-right: 0.5rem;
+
+}
+
+#schedule--title {
+  display: inline;
+  color: black;
+}
+
+#schedule--title:hover {
+  color: rgba(245, 118, 8);
+}
+
+.add_plan {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  gap: 15px;
+}
+
+.plan-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.plan {
+  display: grid;
+  grid-template-columns: repeat(3,auto);
+  align-items: center;
+}
+
+.plan input {
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+.plan form {
+  display: flex;
+}
+
+.schedule--plus {
+  margin-top: 20px;
+  white-space: nowrap;
+}
+
+.plan--save {
+  border: none !important;
+  background-color: transparent;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.calendar--profile {
+  margin-top: 20px;
+}
+
+.fc-scrollgrid-liquid a {
+  color: #383943 !important;
+}
+
+.fc-h-event {
+  background-color: rgba(245, 119, 8, 0.5);
+  border: 1px solid rgba(245, 118, 8);
+  display: block;
+}

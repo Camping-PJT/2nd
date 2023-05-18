@@ -53,7 +53,8 @@ def login(request):
             if prev_url:          
                 del request.session['prev_url']
                 return redirect(prev_url)
-        return redirect('main')
+            return redirect('main')
+        return redirect('accounts:login')
     else:
         form = CustomAuthenticationForm()
         request.session['prev_url'] = request.META.get('HTTP_REFERER')
@@ -121,6 +122,7 @@ def profile(request, username):
     priorities = Priority.objects.filter(user=request.user).order_by('priority')
     schedules = Schedule.objects.filter(user_id=user_id, start__gte=timezone.now()).order_by('start__date', 'end__date')
     messages = Message.objects.filter(receiver=request.user)
+    sentmessages = Message.objects.filter(sender=request.user)
 
     context = {
         'person': person,
@@ -132,6 +134,7 @@ def profile(request, username):
         # 'priority_range': priority_range,
         # 'priority_range2': priority_range2,
         'messages': messages,
+        'sentmessages': sentmessages,
     }
 
     return render(request, 'accounts/profile.html', context)

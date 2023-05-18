@@ -3,20 +3,23 @@ from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Message
 from .forms import ReplyMessageForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     fields = ['receiver', 'content']
-    success_url = '/my_messages/sent/'
 
     def form_valid(self, form):
         form.instance.sender = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        message_pk = self.object.pk
+        return reverse('my_messages:send_detail', kwargs={'message_pk': message_pk})
 
 
 class MessageListView(LoginRequiredMixin, ListView):
@@ -40,8 +43,7 @@ class SentMessagesView(LoginRequiredMixin, ListView):
 class ReplyMessageView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = ReplyMessageForm
-    success_url = reverse_lazy('my_messages:sent_messages')
-
+    
     def get_initial(self):
         initial = super().get_initial()
         User = get_user_model()
@@ -54,11 +56,27 @@ class ReplyMessageView(LoginRequiredMixin, CreateView):
         form.instance.receiver = get_object_or_404(get_user_model(), id=self.kwargs['sender_id'])
         return super().form_valid(form)
     
+    def get_success_url(self):
+        message_pk = self.object.pk
+        return reverse('my_messages:send_detail', kwargs={'message_pk': message_pk})
+    
 def delete(request, message_pk):
     message = Message.objects.get(pk=message_pk)
     message.delete()
-    if message.receiver == request.user:
-        return redirect('my_messages:inbox_messages')
-    elif message.sender == request.user:
-        return redirect ('my_messages:sent_messages')
+    return redirect('accounts:profile', request.user)
 
+
+
+def send_detail(request, message_pk):
+    message = Message.objects.get(pk=message_pk)
+    context = {
+        'message': message,
+    }
+    return render(request, 'my_messages/send_detail.html', context)
+
+def receive_detail(request, message_pk):
+    message = Message.objects.get(pk=message_pk)
+    context = {
+        'message': message,
+    }
+    return render(request, 'my_messages/receive_detail.html', context)

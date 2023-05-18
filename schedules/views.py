@@ -8,6 +8,8 @@ from utils.map import get_latlng_from_address
 import os
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+import math
+from datetime import datetime, date
 
 
 @login_required
@@ -94,6 +96,7 @@ def update_schedule(request, schedule_id):
     schedule = get_object_or_404(Schedule, id=schedule_id)
     users = get_user_model().objects.exclude(id=request.user.id)
     participants = schedule.participants.all()
+
     if request.method == 'POST':
         schedule.post_id = request.POST['post_id']
         schedule.title = schedule.post.title
@@ -101,8 +104,11 @@ def update_schedule(request, schedule_id):
         schedule.end = request.POST['end']
         schedule.description = request.POST['description']
 
+        selected_participants = request.POST.getlist('participants')
+        schedule.participants.set(selected_participants)
+
         schedule.save()
-        return redirect('schedules:calendar') 
+        return redirect('schedules:calendar')
 
     context = {
         'schedule': schedule,
@@ -110,24 +116,55 @@ def update_schedule(request, schedule_id):
         'participants': participants,
         'users': users,
     }
-    
+
     return render(request, 'schedules/calendar.html', context)
+
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+    R = 6371 
+    lat1, lon1, lat2, lon2 = float(lat1), float(lon1), float(lat2), float(lon2)
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+    a = math.sin(dlat/2) ** 2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon/2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    distance = R * c
+
+    return round(distance)
 
 
 @login_required
 def detail_schedule(request, schedule_id):
     kakao_script_key = os.getenv('kakao_script_key')
+    kakao_key = os.getenv('kakao_key')
     schedule = get_object_or_404(Schedule, id=schedule_id)
     address = schedule.address
     latitude, longitude = get_latlng_from_address(address)
     participants = schedule.participants.all()
+    u_address = request.user.address
+    u_latitude, u_longitude = get_latlng_from_address(u_address)
+    distance = calculate_distance(latitude, longitude, u_latitude, u_longitude)
+    start_date = schedule.start.date()
+    current_date = date.today()
+    d_day = (start_date - current_date).days
+    title = schedule.post.title
     
     context = {
         'schedule': schedule,
         'kakao_script_key': kakao_script_key,
+        'kakao_key': kakao_key,
         'latitude': latitude,
         'longitude': longitude,
         'participants': participants,
+        'u_latitude': u_latitude,
+        'u_longitude': u_longitude,
+        'distance': distance,
+        'd_day': d_day,
+        'title': title,
     }
     
     return render(request, 'schedules/detail.html', context)

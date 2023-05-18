@@ -321,7 +321,7 @@ def search(request):
     query = request.GET.get('q')
 
     if query:
-        posts = Post.objects.filter( Q(title__icontains=query) | Q(address__icontains=query) )
+        posts = Post.objects.filter(Q(title__icontains=query) | Q(address__icontains=query) | Q(tags__name__icontains=query)).distinct()
         post_images = []
         for post in posts:
             images = PostImage.objects.filter(post=post)
@@ -338,7 +338,7 @@ def search(request):
         context = {
             'query': query,
             'posts': page_obj,
-            'postall':posts,
+            'postall': posts,
         }
     else:
         context = {}
@@ -432,7 +432,7 @@ def category(request, category):
     
 
     REGION_CHOICES = [ 
-        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('세종특별자치시', '세종특별자치시'), ('제주특별자치도', '제주특별자치도'), ('경기', '경기'), ('강원', '강원'), ('충북', '충북'), ('충남', '충남'), ('전북', '전북'), ('전남', '전남'), ('경북', '경북'), ('경남', '경남'),
+        ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('경기', '경기'), ('강원', '강원'), ('충북', '충북'), ('충남', '충남'), ('전북', '전북'), ('전남', '전남'), ('경북', '경북'), ('경남', '경남'), ('세종특별자치시', '세종특별자치시'), ('제주특별자치도', '제주특별자치도'),
     ]
 
     context = {

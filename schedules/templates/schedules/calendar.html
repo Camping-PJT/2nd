@@ -1,105 +1,95 @@
 {% extends 'base.html' %} 
-{% block title %}{% endblock title %} 
+{% block title %}일정{% endblock title %} 
 {% load static %}
 {% block head %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/src/plugins/select2-4.0.13/dist/css/select2.min.css">
 <script type="text/javascript" src="/src/plugins/select2-4.0.13/dist/js/select2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/calendar.css' %}"> 
 {% endblock head %}
-{% block style %}
-<style>
-  a {
-    text-decoration: none;
-  }
 
-  .participant-list {
-    max-height: 200px; 
-    overflow-y: auto; 
-  }
-
-  #participantModal {
-    margin-top: 100px;
-  }
-
-  .par-btn {
-    border: none;
-    background-color: transparent;
-  }
-
-  .save-btn {
-    border: none;
-    background-color: transparent;
-    color: #3788d8;
-  }
-</style>
-{% endblock style %}
 {% block content %}
 
-<div class="p-5">
+<div class="wid">
 
   <!-- 진짜 달력 본체 -->
   <div id='calendar'></div>
 
   <hr>
-  <div class="d-flex align-items-center justify-content-center gap-2">
+  <div class="plan">
     <p class="schedule--plus">일정 추가 </p>
-    <form method="POST" action="{% url 'schedules:create' %}">
+    <form method="POST" action="{% url 'schedules:create' %}" class="plan--form">
       {% csrf_token %}
-      <label for="post">캠핑 장소:</label>
-      <select name="post_id" id="post">
-        {% for post in posts %}
-        <option value="{{ post.id }}">{{ post.title }}</option>
-        {% endfor %}
-      </select>
-
-      <!-- Modal -->
-      <div class="modal fade" id="participantModal" tabindex="-1" role="dialog" aria-labelledby="participantModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="participantModalLabel">동행자 선택</h5>
-            </div>
-            <div class="modal-body">
-              <div class="participant-list">
-                {% for user in users %}
-                  <input type="checkbox" id="participant_{{ user.id }}" name="participants" value="{{ user.id }}">
-                  <label for="participant_{{ user.id }}">{{ user.username }}</label><br>
-                {% endfor %}
+      <div class="add_plan">
+        <div class="plan-item">
+          <label for="post">캠핑 장소:</label>
+          <select name="post_id" id="post">
+            {% for post in posts %}
+            <option value="{{ post.id }}">{{ post.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="plan-item">
+          <label for="participants">동행자:</label>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#participantModal" class="par-btn">검색 <i class="bi bi-search"></i></button>
+    
+          <div class="modal fade" id="participantModal" tabindex="-1" role="dialog" aria-labelledby="participantModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="participantModalLabel">동행자 선택</h5>
+                </div>
+                <div class="modal-body">
+                  <div class="participant-list">
+                    {% for user in users %}
+                      <div class="d-flex align-self-center">
+                        <input type="checkbox" id="participant_{{ user.id }}" name="participants" value="{{ user.id }}" style="margin-right: 0.5rem;">
+                        <label for="participant_{{ user.id }}">{{ user.username }}</label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="save-btn" data-bs-dismiss="modal">저장</button>
+                  <button type="button" data-bs-dismiss="modal" class="par-btn">닫기</button>
+                </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="save-btn" data-bs-dismiss="modal">저장</button>
-              <button type="button" data-bs-dismiss="modal" class="par-btn">닫기</button>
             </div>
           </div>
         </div>
+        <div class="plan-item">
+          <label for="start">시작일:</label>
+          <input type="datetime-local" name="start" id="start">
+        </div>
+        <div class="plan-item">
+          <label for="end">종료일:</label>
+          <input type="datetime-local" name="end" id="end">
+        </div>
+        <div class="plan-item">
+          <label for="description">메모:</label>
+          <input type="textarea" name="description" id="description">
+        </div>
       </div>
-      <label for="start">시작일:</label>
-      <input type="datetime-local" name="start" id="start">
-      <label for="end">종료일:</label>
-      <input type="datetime-local" name="end" id="end">
-      <label for="description">메모:</label>
-      <input type="textarea" name="description" id="description">
-      <label for="participants">동행자:</label>
-      <button type="button" data-bs-toggle="modal" data-bs-target="#participantModal" class="par-btn"><i class="bi bi-search"></i></button>
-      <input type="submit" value="일정 생성">
+      <input type="submit" value="일정 생성" class="plan--save">
     </form>
-    <a href="{% url 'accounts:profile' request.user %}" class="calendar--profile ">프로필로 가기</a>
+    <a href="{% url 'accounts:profile' request.user %}" class="calendar--profile">프로필보기</a>
   </div>
   <hr>
 
   <ul style="list-style-type: none; padding: 0; margin: 0;">
     {% for schedule in schedules %}
     <li class="schedule--list">
-      {{ forloop.counter }}.
-      <a href="{% url 'posts:detail' post_pk=schedule.post.pk %}"><span>장소 : {{ schedule.title }}</span></a>
-      <span>날짜 : {{ schedule.start|date:"m월 d일" }}부터</span>
-      <span>{{ schedule.end|date:"m월 d일" }}까지</span>
-  
-      <!-- 모달 트리거 버튼 -->
-      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ schedule.id }}" class="calendar--btn">일정 변경</button>
-      <a href="{% url 'schedules:delete' schedule.id %}" onclick="return confirm('일정을 삭제하시겠습니까?')" class="calendar--btn" >삭제</a>
-
+      <div class="schedule--li">
+        <p>{{ forloop.counter }}.</p>
+        <p>장소 : </p>
+        <p><a href="{% url 'posts:detail' post_pk=schedule.post.pk %}" id="schedule--title">{{ schedule.title }}</a></p>
+        <p>날짜 : {{ schedule.start|date:"m월 d일" }}부터</p>
+        <p>{{ schedule.end|date:"m월 d일" }}까지</p>
+        <!-- 모달 트리거 버튼 -->
+        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ schedule.id }}" class="calendar--btn">일정 변경</button>
+        <a href="{% url 'schedules:delete' schedule.id %}" onclick="return confirm('일정을 삭제하시겠습니까?')" class="calendar--btn">삭제</a>
+      </div>
+    
       <!-- 일정 변경 모달 -->
       <div class="modal fade mt-5" id="exampleModal{{ schedule.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -119,14 +109,17 @@
                   </select>
                 </p>
                 <p>
-                  <label for="participants">Participants:</label>
-                  <select name="participants" id="participants" multiple>
+                  <label for="participants">동행자:</label>
+                  <ul style="list-style: none;">
                     {% for user in users %}
-                    <option value="{{ user.id }}" {% if user in participants %}selected{% endif %}>{{ user.username }}</option>
+                      <li>
+                        <input type="checkbox" name="participants" value="{{ user.id }}"
+                          {% if user in schedule.participants.all %}checked{% endif %}>
+                        {{ user.username }}
+                      </li>
                     {% endfor %}
-                  </select>
-                
-                </p>
+                  </ul>
+                </p>          
                 <p>
                   <label for="start">시작일:</label>
                   <input type="datetime-local" name="start" id="start" value="{{ schedule.start|date:'Y-m-d\TH:i' }}"> 
@@ -140,8 +133,8 @@
                   <input type="textarea" name="description" id="description" value="{{ schedule.description }}">
                 </p>
                 <div class="modal-footer">
-                  <input type="submit" class="btn btn-primary" value="일정 변경">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                  <input type="submit" class="save-btn" value="일정 변경">
+                  <button type="button" class="par-btn" data-bs-dismiss="modal">닫기</button>
                 </div>
               </form>
             </div>
@@ -169,8 +162,6 @@
     $('#participantModal').modal();
   });
 </script>
-
-
 
 
 {% endblock script %}

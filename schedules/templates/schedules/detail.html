@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{% endblock title %} 
+{% block title %}일정 - {{ schedule.title }}{% endblock title %} 
 {% load static %}
 {% block head %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
@@ -8,20 +8,68 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/schedule_detail.css' %}"> 
 {% endblock head %}
 {% block content %}
-<div class="p-5">
-<h2>내 일정</h2>
-<p>캠핑 장소: <a href="{% url 'posts:detail' post_pk=schedule.post.pk %}">{{ schedule.title }}</a></p>
-<p>동행자 : 
-  {% for participant in participants %}
-    {{participant}}
-  {% endfor %}
-</p>
-<p>시작일: {{ schedule.start }}</p
-<p>종료일: {{ schedule.end }}</p>
-<p>메모: {{ schedule.description }}</p>
-<p class="map m-0 p-0" id="map" style="width:400px; height:400px;" data-longitude="{{ longitude }}" data-latitude="{{ latitude }}"></p>
-<a href="" onclick="printThis(); return false;" class="icon-btn"><i class="bi bi-printer"></i></a>
+
+<div class="detail--header">
+  <div class="detail--title">
+    <h2>내 일정 (D-DAY {{ d_day }})</h2>
+    <div class="detail--title__align">
+      <div class="detail--title__location m">
+        캠핑 장소: <a href="{% url 'posts:detail' post_pk=schedule.post.pk %}">{{ schedule.title }}</a>
+      </div>
+      <div class="detail--rating">
+        <i class="bi bi-star-fill"></i> 
+        {{ schedule.post.rating }}
+      </div>
+    </div>
+  </div>
+  {% if participants %}
+    <div class="detail--participants">
+      <div class="participant--title">
+        동행자
+      </div>
+      <div class="detail__participants">
+        {% for participant in participants %}
+          <a href="{% url 'accounts:profile' participant.username %}">{{participant}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="btn--box">
+    <a href="" onclick="copy_trackback(this.href); return false;" class="icon-btn"><i class="bi bi-link-45deg"></i></a>
+    <a href="" onclick="printThis(); return false;" class="icon-btn"><i class="bi bi-printer"></i></a>
+    <button class="icon-btn map-btn" id="map-btn" style="border:none;"><i class="bi bi-arrow-90deg-right"></i></button>
+  </div>
 </div>
+
+<div class="detail--info">
+  <div class="map" id="map" data-longitude="{{ longitude }}" data-latitude="{{ latitude }}">
+    <p class="detail--address">
+      {{ schedule.post.address }}<br>
+      {{ schedule.post.extra_address }}
+    </p>
+  </div>
+  <div class="info--box">
+    <p><span class="info--title">일정</span>{{ schedule.start }} ~ {{ schedule.end }}</p><hr>
+    <p><span class="info--title">주소</span>{{ schedule.post.address }} {{ post.extra_address }} ({{ distance }} km)</p><hr>
+    <p><span class="info--title">문의처</span>{{ schedule.post.phone }}</p><hr>
+    <p><span class="info--title">입실시간</span>{{ schedule.post.open_hour }}</p><hr>
+    <p><span class="info--title">퇴실시간</span>{{ schedule.post.close_hour }}</p><hr>
+    <p><span class="info--title">캠핑장 유형</span>{{ schedule.post.category }}</p><hr>
+    <p><span class="info--title">캠핑장 환경</span>{{ schedule.post.nature}}</p>
+  </div>
+</div>
+
+
+<div class="camp--title">메모</div>
+<div class="content--box">
+  <div class="content--info">
+    {{ schedule.description }}
+  </div>
+</div>
+
+
+
 {% endblock content %}
 {% block script %}
 <script src='{% static "js/index.global.js" %}'></script>
@@ -57,5 +105,32 @@
       });
       marker.setMap(map);
   });
-  </script>
+</script>
+<script>
+  document.getElementById("map-btn").addEventListener("click", function() {
+    const apiKey = "{{ kakao_key }}";
+    const apiUrl = "https://dapi.kakao.com/v2/local/geo/transcoord.json?x=127.423084&y=37.078956&input_coord=WGS84&output_coord=TM";
+  
+    fetch(apiUrl, {
+      headers: {
+        "Authorization": "KakaoAK " + apiKey
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      const latitude = "{{ latitude }}";
+      const longitude = "{{ longitude }}";
+      const title = "{{ title }}";
+  
+      const directionsUrl = "https://map.kakao.com/link/to/" + title + "," + latitude + "," + longitude;
+    
+      window.open(directionsUrl, "_blank");
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  });
+  
+
+</script>
 {% endblock script %}

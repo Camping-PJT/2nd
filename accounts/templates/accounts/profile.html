@@ -19,14 +19,13 @@
       <label for="tab02">Content</label>
       {% if person == request.user %}
         <input type="radio" name="tabmenu" id="tab03">
-        <label for="tab03"><i class="bi bi-calendar-week"></i></label>
+        <label for="tab03">Schedule</label>
       
         <input type="radio" name="tabmenu" id="tab04">
-        <label for="tab04">♥</label>
+        <label for="tab04">Prefer</label>
 
         <input type="radio" name="tabmenu" id="tab05">
-        <label for="tab05"><i class="bi bi-envelope-heart"></i></label>
-
+        <label for="tab05">Message</label>
       {% endif %}
 
       {% comment %} 첫번째 탭 {% endcomment %}
@@ -169,7 +168,6 @@
           </div>
         </div>
       </div>
-
       {% comment %} 세번째 일정 탭 {% endcomment %}
       <div class="profile--card card3">
         <h2 class="schedule--title">앞으로의 남은 일정</h2>
@@ -177,16 +175,26 @@
         <div class="box3">
           <div class="box3--carousel">
             {% for schedule in schedules %}
-            <div class="myschedule">
-              <div class="d-flex justify-content-between">
-                <p>일정: {{ schedule.start|date:"M d일" }} 부터  {{ schedule.end|date:"M d일" }} 까지</p>
-                <a href="{% url 'schedules:delete' schedule.id %}" class="text-primary" onclick="return confirm('일정을 삭제하시겠습니까?')" ><i class="bi bi-trash3"></i></a>
+            <a href="{% url 'schedules:detail' schedule.id %}">
+              <div class="myschedule">
+                <div class="d-flex justify-content-between">
+                  <p>일정: {{ schedule.start|date:"M d일" }} 부터  {{ schedule.end|date:"M d일" }} 까지</p>
+                  <a href="{% url 'schedules:delete' schedule.id %}" class="text-primary" onclick="return confirm('일정을 삭제하시겠습니까?')" ><i class="bi bi-trash3"></i></a>
+                </div>
+                <p><a href="{% url 'posts:detail' schedule.post.pk %}">장소: {{ schedule.title }}</a></p>
+                {% if schedule.description %}
+                  <p>메모: {{ schedule.description }}</p>
+                {% endif %}
+                <div class="d-flex gap-1" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                  {% if schedule.participants.all %}
+                    <span>동행:</span>
+                    {% for participant in schedule.participants.all %}
+                      <span>{{ participant }}</span>
+                    {% endfor %}
+                  {% endif %}
+                </div>
               </div>
-              <P><a href="{% url 'posts:detail' schedule.post.pk %}">장소: {{ schedule.title }}</a></P>
-              {% if schedule.description %}
-              <p>메모: {{ schedule.description }}</p>
-              {% endif %}
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
@@ -223,25 +231,64 @@
       {% comment %} 다섯번째 쪽지 탭 {% endcomment %}
       <div class="profile--card card5">
         <div class="box5">
-          <h2>받은 쪽지함<i class="bi bi-envelope-heart ms-2"></i></h2>
-          {% if messages %}
-            <ul>
-              {% for message in messages %}
-                <li>
-                  <div class="message--box">
-                    <div class="message--sender">보낸이 :<span class="message--sender" style="margin-left:5px;">{{ message.sender }} <a href="{% url 'my_messages:reply' message.sender.id %}">
-                      <i class="bi bi-envelope-paper-heart chat--btn--txt"></i></a></span>
-                      <a href="{% url 'my_messages:delete' message.pk %}" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+          <div class="box5--sub">
+            <h2>받은 쪽지함<i class="bi bi-envelope-heart ms-2"></i></h2>
+            <div class="message--boxes">
+              {% if messages %}
+                <ul>
+                  {% for message in messages %}
+                  <li>
+                    <div class="message--box">
+                      <div class="message--sender">보낸이 :
+                        <a href="{% url 'accounts:profile' message.sender.username %}">{{ message.sender.username }} </a>
+                        <a href="{% url 'my_messages:reply' message.sender.id %}">
+                          <i class="bi bi-envelope-paper-heart chat--btn--txt"></i>
+                        </a>
+                        <a href="{% url 'my_messages:delete' message.pk %}" onclick="return confirm('삭제하시겠습니까?')">
+                          <i class="bi bi-trash3"></i>
+                        </a>
+                      </div>
+                      <div class="message--title">받은시간 :<span class="message--title">{{ message.timestamp }}</span></div>
+                      <a href="{% url 'my_messages:receive_detail' message.pk %}" class="message--detail">></a>
                     </div>
-                    <div class="message--title">받은시간 :<span class="message--title">{{ message.timestamp }}</span></div>
-                    <div class="message--txt">{{ message.content }}</div>
-                  </div>
-                </li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p>받은 쪽지가 없습니다.</p>
-          {% endif %}
+                  </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>받은 쪽지가 없습니다.</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="box5--sub">
+            <h2>보낸 쪽지함 <i class="bi bi-envelope-open-heart  ms-2"></i>
+              <a href="{% url 'my_messages:send_message' %}" class="send--message">쪽지보내기</a>
+            </h2>
+            <div class="message--boxes">
+              {% if sentmessages %}
+                <ul>
+                {% for message in sentmessages %}
+                  <li>
+                    <div class="message--box">
+                      <div class="message--sender">받는이 :
+                        <a href="{% url 'accounts:profile' message.receiver.username %}">{{ message.receiver.username }}</a>
+                        <a href="{% url 'my_messages:reply' message.receiver.id %}">
+                          <i class="bi bi-envelope-paper-heart chat--btn--txt"></i>
+                        </a>
+                        <a href="{% url 'my_messages:delete' message.pk %}" onclick="return confirm('삭제하시겠습니까?')">
+                          <i class="bi bi-trash3"></i>
+                        </a>
+                      </div>
+                      <div class="message--title">보낸시간 :<span class="message--title">{{ message.timestamp }}</span></div>
+                      <a href="{% url 'my_messages:send_detail' message.pk %}" class="message--detail">></a>
+                    </div>
+                  </li>
+                {% endfor %}
+                </ul>
+              {% else %}
+                <p>보낸 쪽지가 없습니다.</p>
+              {% endif %}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -275,7 +322,7 @@
                       <img src="{% static 'image/profile-none.png' %}" alt="follower image" class="object-fit-fill profile">
                     </div>
                   {% endif %}
-                  {{ follower.username }}
+                  <span>{{ follower.username }}</span>
                 </a>
             </li>
             {% empty %}
@@ -316,7 +363,7 @@
                       <img src="{% static 'image/profile-none.png' %}" alt="following image" class="object-fit-fill profile">
                     </div>
                   {% endif %}
-                  {{ following.username }}
+                  <span>{{ following.username }}</span>
                 </a>
             </li>
             {% empty %}
