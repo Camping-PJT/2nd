@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['port-0-camping-gajo-pi0mb2blhqzspw1.sel4.cloudtype.app', '127.0.0.1', 'localhost', 'campinggajo.kro.kr']
+ALLOWED_HOSTS = ['port-0-camping-13aenn2blhtl40fz.sel4.cloudtype.app', '127.0.0.1', 'localhost', 'campinggajo.kro.kr']
 
 
 # Application definition
