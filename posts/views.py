@@ -71,7 +71,7 @@ def index(request):
     return render(request, 'posts/index.html', context)
 
 
-def thema(request):
+def theme(request):
     categories = request.GET.getlist('category')
     natures = request.GET.getlist('nature')
     facilities = request.GET.getlist('facility')
@@ -112,7 +112,7 @@ def thema(request):
         'facilities': facilities,
         'postall' : posts,
     }
-    return render(request, 'posts/index_thema.html', context)
+    return render(request, 'posts/index_theme.html', context)
 
 
 @login_required

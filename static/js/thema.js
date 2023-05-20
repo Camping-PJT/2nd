@@ -1,4 +1,4 @@
-document.getElementById("thema").addEventListener("click", function(event) {
+document.getElementById("theme").addEventListener("click", function(event) {
   event.preventDefault();
 
   const modal = document.getElementById("myModal");
@@ -78,7 +78,7 @@ document.getElementById("thema").addEventListener("click", function(event) {
       }
     });
     
-    const url = '/posts/thema/?' +  selectedCategories.join('&') + '&' + selectedNatures.join('&') + '&' + selectedFacilities.join('&');
+    const url = '/posts/theme/?' +  selectedCategories.join('&') + '&' + selectedNatures.join('&') + '&' + selectedFacilities.join('&');
     window.location.href = url;
 
   });

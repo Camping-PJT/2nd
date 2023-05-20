@@ -1,4 +1,4 @@
-document.getElementById("thema2").addEventListener("click", function(event) {
+document.getElementById("theme2").addEventListener("click", function(event) {
   event.preventDefault();
 
   const modal2 = document.getElementById("myModal2");
@@ -78,7 +78,7 @@ document.getElementById("thema2").addEventListener("click", function(event) {
       }
     });
     
-    const url = '/posts/thema/?' +  selectedCategories.join('&') + '&' + selectedNatures.join('&') + '&' + selectedFacilities.join('&');
+    const url = '/posts/theme/?' +  selectedCategories.join('&') + '&' + selectedNatures.join('&') + '&' + selectedFacilities.join('&');
     window.location.href = url;
 
   });
