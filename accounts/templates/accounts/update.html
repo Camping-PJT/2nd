@@ -7,7 +7,6 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">  
 {% endblock head %}
-
 {% block content %}
 <div class="accounts--box">
   <p class="accounts--title">회원정보 수정</p>
@@ -29,7 +28,6 @@
     </div>
   </form>
 </div>
-
 {% endblock content %}
 {% block script %}
 <script>
@@ -37,7 +35,6 @@
     event.preventDefault(); 
     alert("성공적으로 변경되었습니다.");
     
-
     var form = event.target;
     form.submit();
   }

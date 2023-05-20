@@ -30,6 +30,7 @@ class MessageListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Message.objects.filter(receiver=self.request.user)
 
+
 class SentMessagesView(LoginRequiredMixin, ListView):
     model = Message
     template_name = 'my_messages/sent_messages.html'
@@ -37,7 +38,6 @@ class SentMessagesView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Message.objects.filter(sender=self.request.user)
-
 
 
 class ReplyMessageView(LoginRequiredMixin, CreateView):
@@ -60,11 +60,11 @@ class ReplyMessageView(LoginRequiredMixin, CreateView):
         message_pk = self.object.pk
         return reverse('my_messages:send_detail', kwargs={'message_pk': message_pk})
     
+    
 def delete(request, message_pk):
     message = Message.objects.get(pk=message_pk)
     message.delete()
     return redirect('accounts:profile', request.user)
-
 
 
 def send_detail(request, message_pk):
@@ -73,6 +73,7 @@ def send_detail(request, message_pk):
         'message': message,
     }
     return render(request, 'my_messages/send_detail.html', context)
+
 
 def receive_detail(request, message_pk):
     message = Message.objects.get(pk=message_pk)

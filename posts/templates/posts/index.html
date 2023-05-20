@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} List {% endblock title %}
+{% block title %}List{% endblock title %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 {% endblock head %}
-
-
 {% block content %}
 <div class="index--title">
   <h1>{% if category %}{{ category }} {% else %} 모든 {% endif %} 캠핑 장소({{postall|length}})</h1>
@@ -141,7 +139,6 @@
             {% endif %}
           {% endif %}
         {% endfor %}
-  
   
         {% if posts.has_next %}
           <li class="page-item">

@@ -108,6 +108,7 @@ def detail(request, review_pk):
 #     }
 #     return JsonResponse(context)
 
+
 @login_required
 def review_likes(request, review_pk):
     review = Review.objects.get(pk=review_pk)
@@ -124,6 +125,7 @@ def review_likes(request, review_pk):
         'review_dislikes_count': review.dislike_users.count(),
     }
     return JsonResponse(context)
+
 
 @login_required
 def review_dislikes(request, review_pk):

@@ -36,7 +36,6 @@ class Post(models.Model):
     tags = TaggableManager()
     rating = models.DecimalField(default=0, max_digits=5, decimal_places=1)
 
-
     def __str__(self):
         return self.title
     
@@ -66,8 +65,10 @@ class Facility(models.Model):
     TOILET = '화장실'
     FACILITY_CHOICES = [(WIFI, '와이파이'), (STORE, '매점'), (SHOWER, '샤워시설'), (ELECTRO, '전기'), (WARM, '온수제공'), (LEND, '대여'), (WOOD, '장작'), (SINK, '개수대'), (TOILET, '화장실')]
     facility = models.CharField(max_length=10, choices=FACILITY_CHOICES)
+    
     def __str__(self):
         return self.get_facility_display()
+
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -86,5 +87,4 @@ class PostImage(models.Model):
             if not os.listdir(dir_path):
                 os.rmdir(dir_path)
         super(PostImage, self).delete(*args, **kargs)
-
-
+        

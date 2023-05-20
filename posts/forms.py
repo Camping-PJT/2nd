@@ -6,6 +6,7 @@ from taggit.managers import TaggableManager
 from django.conf import settings
 import os
 
+
 class PostForm(forms.ModelForm):
     nature = forms.ChoiceField(
         choices=Post.NATURE_CHOICES,
@@ -42,7 +43,6 @@ class PostForm(forms.ModelForm):
             }
         )
     )
-
     # address = forms.CharField(
     #     max_length=200, 
     #     label='주소(필수)', 
@@ -112,7 +112,6 @@ class PostForm(forms.ModelForm):
         ), 
         input_formats=['%H:%M']
     )
-
     extra_address = forms.CharField(
     max_length=100, 
     label=False,
@@ -193,9 +192,9 @@ class DeleteFacilityForm(forms.Form):
         return delete_f_ids
 
 
-
 class CustomClearableFileInput(ClearableFileInput):
     template_name = 'posts/custom_clearable_file_input.html'
+
 
 class PostImageForm(forms.ModelForm):
     image = forms.ImageField(
@@ -212,6 +211,7 @@ class PostImageForm(forms.ModelForm):
     class Meta:
         model = PostImage
         fields = ('image',)
+
 
 class DeleteImageForm(forms.Form):
     delete_images = forms.MultipleChoiceField(
@@ -235,3 +235,4 @@ class DeleteImageForm(forms.Form):
             for image in images:
                 os.remove(os.path.join(settings.MEDIA_ROOT, image.image.path))
             images.delete()
+            

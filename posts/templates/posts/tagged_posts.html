@@ -4,8 +4,6 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 {% endblock head %}
-
-
 {% block content %}
 <div class="search--page">
   <h2>#{{ tag }} ({{postall|length}})</h2>
@@ -119,7 +117,6 @@
             {% endif %}
           {% endif %}
         {% endfor %}
-  
   
         {% if posts.has_next %}
           <li class="page-item">

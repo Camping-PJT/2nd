@@ -1,17 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load filters %}
-
-{% block title %}
-{{post.title}}
-{% endblock title %}
-
+{% block title %}{{post.title}}{% endblock title %}
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}"> 
 {% endblock head %}
-
 {% block content %}
-
 {% comment %} header {% endcomment %}
 
 <div class="detail--header">
@@ -37,6 +31,7 @@
       <a href="" onclick="copy_trackback(this.href); return false;" class="icon-btn"><i class="bi bi-link-45deg"></i></a>
       <a href="" onclick="printThis(); return false;" class="icon-btn"><i class="bi bi-printer"></i></a>
       <button class="icon-btn map-btn" id="map-btn" style="border:none;"><i class="bi bi-signpost text-success"></i></button>
+      
       {% comment %} like {% endcomment %}
       <div class="icon-btn">
         {% if request.user.is_authenticated %}
@@ -58,6 +53,7 @@
           </button>
         {% endif %}
       </div>
+
       {% comment %} visit {% endcomment %}
       <div class="icon-btn">
         {% if request.user.is_authenticated %}
@@ -80,6 +76,7 @@
         {% endif %}
       </div>
     </div> 
+
     {% comment %} only staff {% endcomment %}
     <div class="button--box">
       <div class="staff-btn">
@@ -281,7 +278,6 @@
   </div>
 
 {% endblock content %}
-
 {% block script %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -328,9 +324,5 @@
       console.log(error);
     });
   });
-  
-
 </script>
-
-
 {% endblock script %}

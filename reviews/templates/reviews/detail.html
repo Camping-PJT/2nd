@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load filters %}
-
 {% block title %} {{review.title}} {% endblock title %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/reviews.css' %}"> 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock head %}
-
-
 {% block content %}
-
 <div class="review--container">
 
   <div class="review--header">
@@ -90,8 +86,6 @@
     </div>
   </div>
 
-  
-
     {% comment %} 리뷰 수정, 삭제 {% endcomment %}
     <div class="review--btn--box">
       {% if request.user == review.user %}
@@ -112,9 +106,7 @@
     <a href="{% url 'posts:detail' review.post.pk %}" class="list--view">게시글보기</a>
 
 </div>
-
 {% endblock content %}
-
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static '/js/reviews_detail.js' %}" type="text/javascript"></script>
@@ -133,5 +125,4 @@
     window.print();
   }
   </script>
-
 {% endblock script %}

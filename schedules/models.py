@@ -15,10 +15,8 @@ class Schedule(models.Model):
     extra_address = models.CharField(max_length=200)
     participants = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='participating', blank=True)
     
-
     def get_absolute_url(self):
         return reverse('posts:detail', kwargs={'post_pk': str(self.post.pk)})
-
 
     def __str__(self):
         return self.title, self.address, self.extra_address

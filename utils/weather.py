@@ -2,6 +2,7 @@ import json
 import requests
 import os
 
+
 def weather_json(w_city, apikey):
     api = f'http://api.openweathermap.org/data/2.5/weather?q={w_city}&appid={apikey}&lang=kr&units=metric'
     response = requests.get(api)

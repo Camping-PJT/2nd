@@ -4,9 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'css/city.css' %}"> 
 {% endblock head %}
-
 {% block content %}
-
   <div class="city--box">
     <div class="city--title">
       {{ request.user.region }} 캠핑 장소
@@ -99,7 +97,6 @@
     {% endif %}
 
 {% endblock content %}
-
 {% block script %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
 <script>

@@ -23,6 +23,7 @@ def staff_only(view_func):
             return redirect('main')
     return wrapper
 
+
 def index(request):
     
     so = request.GET.get('sortKind', '최신순')
@@ -69,6 +70,7 @@ def index(request):
     }
     return render(request, 'posts/index.html', context)
 
+
 def thema(request):
     categories = request.GET.getlist('category')
     natures = request.GET.getlist('nature')
@@ -113,7 +115,6 @@ def thema(request):
     return render(request, 'posts/index_thema.html', context)
 
 
-
 @login_required
 def city(request):
     kakao_script_key = os.getenv('kakao_script_key')
@@ -137,6 +138,7 @@ def city(request):
     if request.is_ajax():
         return JsonResponse(context)
     return render(request, 'posts/index_city.html', context)
+
 
 @staff_only
 @login_required
@@ -187,6 +189,7 @@ def create(request):
     }
     return render(request, 'posts/create.html', context)
 
+
 @login_required
 def detail(request, post_pk):
     kakao_script_key = os.getenv('kakao_script_key')
@@ -214,6 +217,7 @@ def detail(request, post_pk):
         'title': title,
     }
     return render(request, 'posts/detail.html', context)
+
 
 @staff_only
 @login_required
@@ -397,7 +401,6 @@ def update_priority_lists(request):
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
 
-
 def category(request, category):
     so = request.GET.get('sortKind', '최신순')
     region = request.GET.get('region', '') 
@@ -428,8 +431,6 @@ def category(request, category):
     per_page = 10
     paginator = Paginator(post_images, per_page)
     page_obj = paginator.get_page(page)
-
-    
 
     REGION_CHOICES = [ 
         ('서울', '서울'), ('인천', '인천'), ('부산', '부산'), ('울산', '울산'), ('대구', '대구'), ('광주', '광주'), ('대전', '대전'), ('경기', '경기'), ('강원', '강원'), ('충북', '충북'), ('충남', '충남'), ('전북', '전북'), ('전남', '전남'), ('경북', '경북'), ('경남', '경남'), ('세종특별자치시', '세종특별자치시'), ('제주특별자치도', '제주특별자치도'),

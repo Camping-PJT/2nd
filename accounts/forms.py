@@ -6,7 +6,6 @@ from django import forms
 from django.forms.widgets import ClearableFileInput
 
 
-
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserChangeForm):
         model = get_user_model()
@@ -41,8 +40,10 @@ class CustomUserCreationForm(UserCreationForm):
     is_owner = forms.ChoiceField(label='유저 타입', label_suffix='', choices=USER_TYPE_CHOICES, widget=forms.Select(
         attrs={'class': 'select--box','style' : 'width:195px;'}))
 
+
 class CustomClearableFileInput(ClearableFileInput):
     template_name = 'posts/custom_clearable_file_input.html'
+
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
@@ -91,6 +92,7 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     new_password2 = forms.CharField(label=False, label_suffix='', widget=forms.PasswordInput(
         attrs={'class': 'form-box','placeholder' : '새 비밀번호 확인','style' : 'width:400px;'}))
     
+    
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(
         label=False,
@@ -113,4 +115,3 @@ class CustomAuthenticationForm(AuthenticationForm):
         )
     )
     
-

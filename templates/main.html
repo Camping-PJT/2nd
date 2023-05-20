@@ -162,7 +162,6 @@
 
       {% comment %} post count {% endcomment %}
 
-
       <div class="post--count">
         <a href="{% url 'posts:index' %}">
           <div class="allcnt">
@@ -358,8 +357,6 @@
       <p>https://github.com/Camping-PJT/2nd</p>
     </div>
   </footer>
-
-
   <script src="{% static 'js/main_page.js' %}" type="text/javascript"></script>
   <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
   <script src="{% static 'js/main_map.js' %}" type="text/javascript"></script>
@@ -469,14 +466,12 @@
     sido('경기');
 
   </script>
-
   <script>
     const searchContainer = document.getElementById('search-container');
     const searchInput = document.getElementById('search-input');
     const modal = document.getElementById('login-modal');
     const modalContent = document.querySelector('.modal-content');
 
-  
     searchInput.addEventListener('focus', function() {
       if (!isLoggedIn()) {
         modal.style.display = 'block';

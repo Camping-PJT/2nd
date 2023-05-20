@@ -8,7 +8,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/schedule_detail.css' %}"> 
 {% endblock head %}
 {% block content %}
-
 <div class="detail--header">
   <div class="detail--title">
     <h2>내 일정 (D-DAY {{ d_day }})</h2>
@@ -60,15 +59,12 @@
   </div>
 </div>
 
-
 <div class="camp--title">메모</div>
 <div class="content--box">
   <div class="content--info">
     {{ schedule.description }}
   </div>
 </div>
-
-
 
 {% endblock content %}
 {% block script %}
@@ -130,7 +126,5 @@
       console.log(error);
     });
   });
-  
-
 </script>
 {% endblock script %}

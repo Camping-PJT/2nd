@@ -27,14 +27,12 @@ class User(AbstractUser):
     REGION_CHOICES = [
         (SEOUL, '서울'), (INCHEON, '인천'), (BUSAN, '부산'), (ULSAN, '울산'), (DAEGU, '대구'), (GWANGJU, '광주'), (DAEJEON, '대전'), (SEJONG, '세종특별자치시'), (JEJU, '제주특별자치도'), (GYEONGGI, '경기'), (GANGWON, '강원'), (CHUNGBUK, '충북'), (CHUNGNAM, '충남'), (JEONBUK, '전북'), (JEONNAM, '전남'), (GYEONGBUK, '경북'),(GYEONGNAM, '경남'),
     ]
-
     OWNER = '사장님'
     CUSTOMER = '고객님'
     USER_TYPE_CHOICES = [
         (OWNER, '사장님'),
         (CUSTOMER, '고객님'),
     ]
-    
     followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
     
     
@@ -52,6 +50,7 @@ class User(AbstractUser):
         if self.image:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(User, self).delete(*args, **kargs)
+
 
     def save(self, *args, **kwargs):
         if self.id:

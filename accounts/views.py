@@ -131,14 +131,11 @@ def profile(request, username):
         'priorities': priorities,
         'schedules': schedules,
         'liked_posts': liked_posts,
-        # 'priority_range': priority_range,
-        # 'priority_range2': priority_range2,
         'messages': messages,
         'sentmessages': sentmessages,
     }
 
     return render(request, 'accounts/profile.html', context)
-
 
 
 @login_required
@@ -195,4 +192,3 @@ def priority_list(request, username):
         post['pk'] = post_data['pk']
         data.append({'post': post})
     return JsonResponse(data, safe=False)
-

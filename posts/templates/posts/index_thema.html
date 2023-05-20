@@ -4,9 +4,7 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 {% endblock head %}
-
 {% block content %}
-
 <div class="index--title">
   <h1>
     선택 테마를 포함한 캠핑 장소({{ postall|length }})
@@ -113,9 +111,7 @@
   {% endif %}
 </div>
 {% endblock content %}
-
 {% block script %}
 <script src="{% static '/js/show_city.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/search_likes.js' %}" type="text/javascript"></script>
-
 {% endblock script %}

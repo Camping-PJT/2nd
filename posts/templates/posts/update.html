@@ -1,18 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}
-Post Update
-{% endblock title %}
-
+{% block title %}Post Update{% endblock title %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}"> 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock head %}
-
 {% block content %}
 <div class="accounts--box">
   <h1>게시글 수정</h1>
-
   <form action="{% url 'posts:update' post.pk %}" method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     <p>{{ post_form.title }}</p>
@@ -44,10 +39,7 @@ Post Update
     </div>
   </form>
 </div>
-
-
 {% endblock content %}
-
 {% block script %}
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey={{ kakao_script_key }}&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

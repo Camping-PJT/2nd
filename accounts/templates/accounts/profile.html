@@ -5,12 +5,10 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 {% endblock head %}
-
 {% block content %}
   <div class="profile--container">
-    
+
     {% comment %} 탭 {% endcomment %}
     <div class="profile--content">
       <input type="radio" name="tabmenu" id="tab01" checked>
@@ -67,7 +65,6 @@
             {% endif %}
           </div>
 
-
           {% comment %} 첫번째 탭 오른쪽 {% endcomment %}
           <div class="profile--card--right">
             {% if person.is_staff %}
@@ -106,7 +103,6 @@
         </div>
       </div>
 
-
       {% comment %} 두번째 컨텐츠 탭 {% endcomment %}
       <div class="profile--card card2">
         <div class="box2">
@@ -133,6 +129,7 @@
           <div class="like--camp">
             <h3>선호 캠핑장 우선순위</h3>
             <div id="priorityList" data-detail-url="{% url 'posts:detail' 0 %}"></div>
+            
             {% comment %} <div class="camp--content--box">
               {% for priority in priorities %}
               <div class="camp--content">
@@ -145,6 +142,7 @@
                 <h3>우선순위가 없습니다.</h3>
               {% endfor %}
             </div> {% endcomment %}
+
           </div>
           <div class="write--camp">
             <h3>작성한 리뷰</h3>
@@ -168,6 +166,7 @@
           </div>
         </div>
       </div>
+
       {% comment %} 세번째 일정 탭 {% endcomment %}
       <div class="profile--card card3">
         <h2 class="schedule--title">앞으로의 남은 일정</h2>
@@ -295,7 +294,7 @@
     </div>
   </div>
 
-{% comment %} Modal창 구역 {% endcomment %}
+{% comment %}Modal창 구역{% endcomment %}
 <!-- 팔로워 Modal -->
 <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -337,6 +336,7 @@
     </div>
   </div>
 </div>
+
 <!-- 팔로잉 Modal -->
 <div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="followingsModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -418,9 +418,7 @@
   </div>
 </div>
 
-
 {% endblock content %}
-
 {% block script %}
 <script>
   const p_csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -515,7 +513,6 @@
 
 </script>
 
-
 <script>
   function getPriorityList() {
     const priorityList = document.getElementById("priorityList");
@@ -549,9 +546,7 @@
   // 페이지 로드 시 우선순위 목록 가져오기
   getPriorityList();
 </script>
-
 <script src="{% static '/js/follow.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/profile.js' %}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js" integrity="sha512-zYXldzJsDrNKV+odAwFYiDXV2Cy37cwizT+NkuiPGsa9X1dOz04eHvUWVuxaJ299GvcJT31ug2zO4itXBjFx4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 {% endblock script %}

@@ -3,9 +3,7 @@
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/message.css' %}">
 {% endblock head %}
-
 {% block content %}
-
   <div class="message--detail">
     <input type="submit" value="<"  class="back2" onclick=window.history.back()>
     <div class="message--sender">보낸이 :<span class="message--sender" style="margin-left:5px;">{{ message.sender.username }} 

@@ -2,6 +2,7 @@ from django import forms
 from .models import Review
 from ckeditor.widgets import CKEditorWidget
 
+
 class ReviewForm(forms.ModelForm):
     title = forms.CharField(
         label = False,
